@@ -1,0 +1,96 @@
+/* body {
+    background: url(backdrop.gif) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+*/
+
+html {
+    overflow: hidden;
+}
+
+.container-fluid {
+    width: 100%;
+    margin: 2rem;
+}
+
+.form-check {
+    padding-top: 1.2rem;
+}
+
+
+.flex-jumbo {
+    display: inline-flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    align-content: stretch;
+    background-color: #91d370;
+    background-image: linear-gradient(319deg, #91d370 0%, #bca0ff 37%, #f2cd54 100%);
+    height: 6rem;
+    width: 100%;
+}
+
+.flex-items:nth-child(1) {
+    display: block;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-basis: center;
+    align-self: center;
+    order: 0;
+}
+
+.flex-items > h1 {
+    font-size: 3rem;
+    color: white;
+}
+
+.flex-intro {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+}
+
+.intro-item:nth-child(1) {
+    display: block;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-basis: auto;
+    align-self: auto;
+    order: 0;
+}
+
+button {
+    display: flex;
+    width: 100%;
+    flex-wrap: nowrap;
+    justify-content: center;
+    justify-self: center;
+    align-items: center;
+    align-content: center;
+
+}
+
+#msgBlock {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    
+}
+
+footer {
+    position: absolute;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    bottom: 0;
+    font-size: 11.5px;
+
+}
