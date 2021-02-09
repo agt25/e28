@@ -9,7 +9,7 @@ let newCost;
 /* When the button is clicked, run 'worth' —
  checks how much money the user would have
  today, if they had invested 10,000 in their preferred company
- on Jan 1 2000 */
+ on Jan 1 2009 (or 2010 for Tesla!) */
 
  // When an option is checked, run the function 
 
