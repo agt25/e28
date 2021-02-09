@@ -23,6 +23,29 @@
                 </div>
             </div>
         </header>
+
+        <!-- Guide Button That Shows Game Instructions -->
+        <button type="button" class="btn btn-warning" id="manualBtn">Guide</button>
+
+        <div class="container-fluid" id="manual">
+            <div class="flex-items" id="manualIntro">
+                Find out how much you'd be worth today had you invested $10,000...<br>
+                in a mystery stock back in 2009!
+                <br>
+                Win the game when you get 5 wins!<br>
+                Lose the game with 5 losses :(
+
+            </div>
+            <div class="flex-items" id="instructions">
+                <span id="howTo">How to Play</span>
+                <br>
+                1. Toggle the button of a mystery stock of your choice.<br>
+                2. Click the 'Invest 10,000' button to go through with the purchase.<br>
+                3. Ta-da! You'll know just how much (or little!) you won or lost!<br>
+                4. Play again! The mystery stocks shuffle after every play!<br>
+            </div>
+        </div>
+
         <main>
             <!-- Container of mystery stock options -->
             <div class="container-fluid">
@@ -181,6 +204,18 @@
             <div class="container-fluid text-center">
                 <div id="msgBlock" class="msgDiv"></div>
             </div>
+
+            <!-- Cards that keep count of wins and losses -->
+
+            <div class="container-fluid">
+                <div class="row counter">
+                    <div class="win col-4"></div>
+                    <div class="loss col-4"></div>
+                </div>
+            </div>
+
+            <!-- Programmatically return winner or game over message -->
+            <div id="end"></div>
         </main>
     </body>
 </html>

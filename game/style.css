@@ -36,6 +36,78 @@ h1 {
 }
 
 
+#manual {
+    width: 100%;
+    display: none;
+}
+
+#manualBtn {
+    width: 50px;
+    font-size: 11px;
+    position: absolute;
+    top: 40px;
+    padding: 2px;
+    
+}
+@import url('https://fonts.googleapis.com/css?family=Actor');
+
+#manualIntro {
+    font-family: Actor, sans-serif;
+    text-align: center;
+    font-size: 14px;
+    text-shadow: rgba(0, 0, 0, 0) 2px 2px 2px;
+}
+
+#howTo {
+    font-weight: 700;
+}
+@import url('https://fonts.googleapis.com/css?family=Encode+Sans+Semi+Expanded');
+
+#instructions {
+    font-family: "Encode Sans Semi Expanded", sans-serif;
+    text-align: center;
+    font-size: 15px;
+    color: rgb(7, 44, 17);
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    padding: 1em;
+}
+
+.flex-manual {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+}
+
+.manual-item:nth-child(1) {
+    display: block;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-basis: 100px;
+    align-self: center;
+    order: 0;
+    font-size: 14px;
+    justify-content: space-around;
+    
+}
+
+.manual-item:nth-child(2) {
+    display: block;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-basis: 100px;
+    align-self: center;
+    justify-content: space-around;
+    order: 0;
+    
+}
+
+
 .container-fluid {
     width: 100%;
     margin: 2rem 1rem 1rem 1rem;
@@ -95,6 +167,10 @@ h1 {
     order: 0;
 }
 
+#checkBtn {
+    margin-top: 1rem;
+}
+
 button {
     margin-top: 3rem;
     display: flex;
@@ -118,13 +194,37 @@ button {
     
 }
 
-footer {
-    position: absolute;
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    text-align: center;
-    bottom: 0;
-    font-size: 11.5px;
+.counter {
+    width: 100%; 
+    justify-content: space-around;   
 
 }
+
+.win {
+    border: 1px solid green;
+    width: 60px;
+    text-align: center;
+    font-size: 2rem;
+    left: 5%;
+    bottom: 15%;
+}
+
+.loss {
+    
+    border: 1px solid red;
+    width: 60px;
+    text-align: center;
+    font-size: 2rem;
+    right: 5%;
+    bottom: 15%
+
+}
+
+#end {
+    display: none;
+    bottom: 5%;
+    width: 100%;
+    text-align: center;
+}
+
+

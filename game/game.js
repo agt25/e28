@@ -6,6 +6,31 @@ let stockName;
 let oldCost;
 let newCost;
 
+// Set up counter variables
+let wins = 0;
+let losses = 0;
+let winDiv = document.querySelector('.win');
+let lossDiv = document.querySelector('.loss');
+
+winDiv.innerHTML = wins;
+lossDiv.innerHTML = losses;
+
+// Guide button gives game instructions when clicked
+let manBtn = document.getElementById('manualBtn');
+manualBtn.addEventListener('click', manual);
+
+function manual() {
+    let howTo = document.getElementById("manual");
+
+    if (howTo.style.display === "none") {
+        howTo.style.display = "block";
+        manBtn.innerHTML = 'Close';
+    } else {
+        howTo.style.display = "none";
+        manBtn.innerHTML = 'Guide';
+    }
+}
+
 // Shuffle the stock placements on page
 function shuffle() {
 
@@ -24,18 +49,21 @@ function shuffle() {
    5. shuffle() re-arranges the stock options
 */
 
+// Invest 10,000 button triggers the game
 checkBtn.addEventListener('click', del);
 
-// After any previous messages are deleted, call worth()
+// After any previous messages are deleted, recalculate winner or loser
 function del() {
+    document.getElementById('end').style.display = 'none';
     let oldMsg = document.getElementById('msgBlock');
     oldMsg.remove();
     worth();
 }
 
-/*  Calculates if user is a winner or loser based on
-their stock's return from opening day 2009 to February 9, 2021.
-Worth calls shuffle() */
+/* Worth calculates if user is a winner or loser based on
+their stock's return from 
+opening day 2009 to February 9, 2021.
+ */
 function worth() {
 
     // Save the checkbox option the user checked
@@ -77,15 +105,48 @@ function worth() {
     newDiv.id = 'result';
 
     // Append custom winner or loser message
-    resultMsg.appendChild(newDiv)
+    resultMsg.appendChild(newDiv);
+    winDiv.innerHTML = wins;
+    lossDiv.innerHTML = losses;
 
+    // Ultimate game won or game over message
+    endMsg = document.getElementById('end');
+
+    // If user is worth more today than the start amount, they won!
     if (todayWorth > startAmount) {
         resultMsg.style.color = 'green';
         resultMsg.innerHTML = `Winner! ${totalMsg}`;
+        wins++;
+        winDiv.innerHTML = wins;
 
+        // If user has won five times, they win the game
+        if (wins === 5) {
+            endMsg.style.display = 'block';
+            endMsg.innerHTML = '<h3>You won the game!</h3>';
+        }
+
+    // User has lost money
     } else {
         resultMsg.style.color = 'red';
         resultMsg.innerHTML = `Loser! ${totalMsg}`;
+        losses++;
+        lossDiv.innerHTML = losses;
+
+        // If user has lost five times, game over
+        if (losses === 5) {
+            endMsg.style.display = 'block';
+            endMsg.innerHTML = '<h3>Game Over :( </h3>';
+        }
+    }
+
+    // Reset counters after 3 seconds of a win or loss
+    if (wins === 5 || losses === 5) {
+        setTimeout(function () {
+            wins = 0;
+            losses = 0;
+            winDiv.innerHTML = wins;
+            lossDiv.innerHTML = losses;
+        }, 3000);
     }
 
     // After half a second, uncheck the checked stock
