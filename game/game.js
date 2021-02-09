@@ -10,13 +10,18 @@ let newCost;
  checks how much money the user would have
  today, if they had invested 10,000 in their preferred company
  on Jan 1 2000 */
-checkBtn.addEventListener('click', worth);
+
+ // When an option is checked, run the function 
+
+ checkBtn.addEventListener('click', worth);
+
 
 function worth() {
 
     // Save the checkbox option the user checked
     let checkbox = document.querySelectorAll('input[type=checkbox]:checked')
 
+    
     /* Get the selected stock's name,
     its old cost,
     and its new cost */
@@ -33,10 +38,10 @@ function worth() {
     // Today's networth
     let todayWorth = newCost * sharesOwned;
     todayWorth = Math.round(todayWorth);
-    todayWorth = todayWorth.toLocaleString();
+    finalAmount = todayWorth.toLocaleString();
 
     // End message
-    let totalMsg = `Today you'd be worth $${todayWorth} 
+    let totalMsg = `Today you'd be worth $${finalAmount} 
     had you invested in ${stockName}. <br>`
 
     // Select the div that will contain the message
@@ -49,15 +54,28 @@ function worth() {
     let newDiv = document.createElement('div');
     newDiv.className = 'response';
 
-    // Append the message to the new div
+    // Append custom winner and loser messages 
     resultMsg.appendChild(newDiv)
-    resultMsg.innerHTML = totalMsg;
 
-    // After 1.5 seconds, uncheck the checkbox
+    if (todayWorth > startAmount) {
+        resultMsg.style.color = 'green';
+        resultMsg.innerHTML = `Winner! ${totalMsg}`;
+
+    } else {
+        resultMsg.style.color = 'red';
+        resultMsg.innerHTML = `Loser! ${totalMsg}`;
+    }
+
+
+    // After half a second, uncheck the checkbox
     setTimeout(function () {
         document
             .getElementById(stockName)
             .checked = false;
-    }, 1500);
+    }, 500);
+
+    
+
+    
 
 }

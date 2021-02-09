@@ -8,12 +8,18 @@
 */
 
 html {
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
+
+#logo {
+    font-size: 14pt;
+}
+
 
 .container-fluid {
     width: 100%;
-    margin: 2rem;
+    margin: 2rem 1rem 1rem 1rem;
 }
 
 .form-check {
@@ -44,8 +50,11 @@ html {
 }
 
 .flex-items > h1 {
-    font-size: 3rem;
+    font-size: 2rem;
     color: white;
+    vertical-align: middle;
+    text-align: center;
+    
 }
 
 .flex-intro {
@@ -67,6 +76,7 @@ html {
 }
 
 button {
+    margin-top: 3rem;
     display: flex;
     width: 100%;
     flex-wrap: nowrap;
@@ -81,6 +91,8 @@ button {
     width: 100%;
     display: flex;
     justify-content: center;
+    word-wrap: break-word;
+    padding: 7px;
     
 }
 
