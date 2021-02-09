@@ -116,6 +116,8 @@ button {
     justify-content: center;
     word-wrap: break-word;
     padding: 7px;
+    text-align: center;
+    padding: 0.5rem;
     
 }
 
