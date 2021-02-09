@@ -2,7 +2,6 @@
 <html lang="en">
     <head>
         <title>Stonks Game!</title>
-        <!-- Make a width the size of the device viewport -->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link
@@ -10,11 +9,182 @@
             rel="stylesheet"
             integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
             crossorigin="anonymous">
-        <link rel="stylesheet" href="styles.css">
-        <script src='game.js' defer></script>
+        <link rel="stylesheet" href="style.css">
+        <script src="game.js" defer="defer"></script>
     </head>
     <body>
-        <h1 id="foo">Welcome to My Web Page!</h1>
-        <p class="bar">Hello, world! This is a paragraph of text.</p>
-    </body>
+        <header>
+            <!-- Show after 'play button is clicked'-->
+            <div class="flex-jumbo">
+                <div class="flex-items">
+                    <h1>Stonks
+                        <span>when they IPO'd</span></h1>
+                </div>
+            </div>
+        </header>
+        <main>
+            <!-- Show this with a black screen after body loads the background for 3
+            seconds-->
+            <!-- <div class="flex-intro"> <div class="intro-item"> <h2>Let's turn back
+            time</h2> <h3>The year is 2000</h3> <h4>You invested $10,000 in a company of
+            your chooice</h4> <h1>Are you a present day winner or loser?</h1> <h2>Find out
+            how much richer (or poorer!) you'd be today</h2> <button>Play</button> </div>
+            </div> -->
+
+            <!-- A stock's IPO price is calculated on a split-adjusted basis.-->
+
+            <div>
+                <div class="container-fluid">
+
+                    <div class="row justify-content-md-center">
+                        <div class="col-6 col-lg-3">
+                            <div class="form-check form-switch" id="check">
+                                <label><input
+                                    type="checkbox"
+                                    class="form-check-input"
+                                    value="0.10"
+                                    name="136.91"
+                                    id="Apple">Apple, 1980</label>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-lg-3">
+                            <div class="form-check form-switch" id="check">
+                                <label><input
+                                    type="checkbox"
+                                    class="form-check-input"
+                                    value="0.1658"
+                                    name="247.47"
+                                    id="Microsoft">Microsoft, 1987</label>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-lg-3">
+                            <div class="form-check form-switch">
+                                <label><input
+                                    type="checkbox"
+                                    class="form-check-input"
+                                    value="4.7780"
+                                    name="863.42"
+                                    id="Tesla">Tesla, 2010</label>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-lg-3">
+                            <div class="form-check form-switch">
+                                <label><input
+                                    type="checkbox"
+                                    class="form-check-input"
+                                    value="100.3350"
+                                    name="2092.91"
+                                    id="Google">Google, 2004</label>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-lg-3">
+                            <div class="form-check form-switch">
+                                <label><input
+                                    type="checkbox"
+                                    class="form-check-input"
+                                    value="1.1964"
+                                    name="547.92"
+                                    id="Netflix">Netflix, 2002</label>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-lg-3">
+                            <div class="form-check form-switch">
+                                <label><input
+                                    type="checkbox"
+                                    class="form-check-input"
+                                    value="38.2318"
+                                    name="266.58"
+                                    id="Facebook">Facebook, 2012</label>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-lg-3">
+                            <div class="form-check form-switch">
+                                <label><input
+                                    type="checkbox"
+                                    class="form-check-input"
+                                    value="4.9583"
+                                    name="3322.94"
+                                    id="Amazon">Amazon, 1998</label>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-lg-3">
+                            <div class="form-check form-switch">
+                                <label><input
+                                    type="checkbox"
+                                    class="form-check-input"
+                                    value="30.00"
+                                    name="261.69"
+                                    id="Etsy">Etsy, 2015</label>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-lg-3">
+                            <div class="form-check form-switch">
+                                <label><input
+                                    type="checkbox"
+                                    class="form-check-input"
+                                    value="41.5700"
+                                    name="59.29"
+                                    id="Uber">Uber, 2019</label>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-lg-3">
+                            <div class="form-check form-switch">
+                                <label><input
+                                    type="checkbox"
+                                    class="form-check-input"
+                                    value="0.0676"
+                                    name="145.03"
+                                    id="Walmart">Walmart, 1973</label>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-lg-3">
+                            <div class="form-check form-switch">
+                                <label><input
+                                    type="checkbox"
+                                    class="form-check-input"
+                                    value="8.3900"
+                                    name="55.05"
+                                    id="Verizon">Verizon, 1984</label>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-lg-3">
+                            <div class="form-check form-switch">
+                                <label><input
+                                    type="checkbox"
+                                    class="form-check-input"
+                                    value="9.7778"
+                                    name="140.14"
+                                    id="Chase">Chase, 1984</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-dark" id="checkBtn">Dark</button>
+
+    <div class="container-fluid text-center">
+        <div id="msgBlock" class="msgDiv"></div>
+    </div>
+
+</main>
+<footer>
+    Data by Macrotrends<br>
+    IPO costs are split-adjusted
+</footer>
+
+</body>
 </html>
