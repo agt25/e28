@@ -111,7 +111,10 @@ h1 {
 .container-fluid {
     width: 100%;
     margin: 2rem 1rem 1rem 1rem;
+    justify-content: space-around;
+    
 }
+
 
 .form-check {
     padding-top: 1.2rem;
