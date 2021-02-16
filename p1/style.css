@@ -1,0 +1,13 @@
+[v-cloak] {
+    display: none;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.correct {
+    color: green;
+    font-weight: bold;
+}

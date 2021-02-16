@@ -1,7 +1,7 @@
 # Project 1
 
 - By: _Angela T_
-- Production URL: <http://e28p1.yourdomain.com>
+- Production URL TBA: <http://e28p1.yourdomain.com>
 
 ## Outside resources
 
