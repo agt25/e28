@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang='en'>
+
+<head>
+    <title>Shopping List</title>
+    <meta charset='utf-8'>
+    <link href=data:, rel=icon>
+
+    <script src='https://unpkg.com/vue@next'></script>
+    <script src='script.js' defer></script>
+
+    <style>
+        [v-cloak] {
+            display: none
+        }
+
+        .no-items {
+            margin-top: 10px;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id='app' v-cloak>
+
+        <h1>Shopping List</h1>
+
+        <label for='item'>Item:</label>
+        <input id='item' type='text' v-model='item'>
+
+        <button v-on:click='addItem'>Add</button>
+
+        <div class='no-items' v-if='items.length == 0'>
+            You have no items on your list.
+        </div>
+        <div v-else>
+            <p>
+                Item count: {{ items.length }}
+            </p>
+
+            <ul>
+                <li v-for='thisItem in items'>
+                    {{ thisItem }}
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
