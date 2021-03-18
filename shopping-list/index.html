@@ -23,8 +23,10 @@
 </head>
 
 <body>
-
+    
     <div id='app' v-cloak>
+       <button v-on:click='addToCart'>Add to Cart</button>
+        <button @click='addToCart'>Add to Cart</button>
 
         <h1>Shopping List</h1>
 
@@ -49,6 +51,7 @@
         </div>
 
     </div>
+
 
 </body>
 
