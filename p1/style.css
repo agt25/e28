@@ -9,6 +9,13 @@ h1 {
     padding: 0.7em;
 }
 
+.won {
+    color: green;
+}
+
+.lost {
+    color: red;
+}
 
 
 .keyboard {
@@ -310,6 +317,7 @@ button {
      flex-basis: auto;
      align-self: auto;
      order: 0;
+     margin: 0.4rem;
 }
 
 .stats-item {

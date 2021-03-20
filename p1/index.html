@@ -51,7 +51,7 @@
                             </span>
                         </span>
                         your name....</h3>
-                    <input v-model.lazy='userName'/>
+                    <input v-model.lazy.trim='userName'/>
                 </div>
             </div>
 
@@ -69,12 +69,10 @@
                 <!-- How to Play Instructions -->
                 <button type="button" class="btn btn-warning" id="manualBtn">Guide</button>
 
-                
                 <!-- Main Component of the Game -->
                 <div class="container-fluid" id='stock-choices'>
                     <div class='top-stats-wrap'>
 
-                        
                         <!-- Show basic stats like current player and current round -->
                         <div v-bind:value='userName' class='top-stats-item'>
                             Playing:
@@ -87,33 +85,34 @@
                         <div class='top-stats-item'>
                             <button v-on:click='resetGame' id='reset'>Reset</button>
                         </div>
-                  
+
                     </div>
 
                     <!-- Mystery stock options to choose from -->
                     <div class="row justify-content-md-center">
-                        <div v-for="stock in stocks" v-bind:key="stock" class="col-6 col-lg-e">
-
+                        <div v-for="stock in stocks" v-bind:key="stock" class="col-6 col-lg-3 col-md-4">
+<div>
                             <button
+                            
                                 id="stock"
                                 v-bind:value="stock.name"
                                 v-bind:key='stock.name'
-                                v-on:click="stockReturn(stock), roundResult(stock), selectedStock = stock.name">{{stock.name}}</button>
+                                v-on:click="stockReturn(stock), roundResult(stock), selectedStock = stock.name">
+                                {{stock.name}}</button>
+                                </div>
 
                         </div>
-                        <!-- <button v-on:click='shuffleStocks'>Shuffle</button> -->
 
+                        <!-- If user has selected a stock, show basic stats -->
                         <div v-if='selectedStock != ""'>
-                        <!-- Current Play Stats -->
-                        <span class='shadow-3'>Selected:
-                            {{ selectedStock }}</span>
-                        <span>today:
-                            {{ displayWorth }}</span>
-                        <span>Result:
-                            {{ displayMessage }}</span>
+                            <span class='shadow-3'>Invested in {{ selectedStock }}</span> <br>
+                            <span> Networth: {{ formatPrice(todayWorth) }}</span> <br>
+                            <span v-bind:class="{ won: won, lost: !won}">{{ displayMessage }}</span> <br>
                         </div>
-                        <div v-else> 
-                            It's 2009. <br>
+                        <!-- Else, show game directions -->
+                        <div v-else>
+                            It's 2009.
+                            <br>
                             Select a mystery stock to invest in.
                             <div>Will you be a present day winner or loser?</div>
                         </div>
@@ -124,11 +123,11 @@
                         <span v-bind:value='userName' class='stats-item'>
                             {{ userName }}
                             <div v-bind:value='userPlays' class='stats-counts'>
-                                <div class='count-item'>Wins:
+                                <div class='count-item win'>Won:
                                     {{ userPlays.wins }}
                                 </div>
-                                <div class='count-item'>
-                                    Losses
+                                <div class='count-item loss'>
+                                    Lost:
                                     {{ userPlays.losses }}
                                 </div>
                             </div>
@@ -138,12 +137,12 @@
                         <span class='stats-item'>
                             Computer
                             <div v-bind:value='computerPlays' class='stats-counts'>
-                                <div class='count-item'>
-                                    Wins:
+                                <div class='count-item win'>
+                                    Won:
                                     {{ computerPlays.wins }}
                                 </div>
-                                <div class='count-item'>
-                                    Losses
+                                <div class='count-item loss'>
+                                    Lost:
                                     {{ computerPlays.losses }}
                                 </div>
                             </div>
@@ -173,9 +172,11 @@
                             <div v-else-if="round.winner != 'Computer'">
                                 Round
                                 {{ round.round }}
+                                <br>
                                 <div>
                                     Winner:
                                     {{ round.winner }}!
+                                    <br>
                                     <div>
                                         {{ userName }}
                                         invested in
