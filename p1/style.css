@@ -2,9 +2,80 @@
     display: none;
 }
 
+h1 {
+    text-align: center;
+    font-size: 1.8em;
+    font-family: monospace;
+    padding: 0.7em;
+}
+
+
+
+.keyboard {
+    text-align: center;
+    font-size: 14px;
+    font-family: sans-serif;
+}
+
+.keyboard__row {
+    display: inline-block;
+    height: 3em;
+    margin: 0.2em;
+}
+
+.keyboard__row--h1 {
+    height: 1.7em;
+    line-height: 1.4em;
+}
+
+.keyboard__row--h3 {
+    height: 3.3em;
+    
+}
+
+.keyboard__row>* {
+    position: relative;
+    background: #333;
+    text-align: center;
+    color: #eee;
+    float: left;
+    border-radius: 0.3em;
+    margin: 0.2em;
+    padding: 0.2em;
+    width: 3.3em;
+    height: 100%;
+    box-sizing: border-box;
+    cursor: pointer;
+    -webkit-user-select: none;
+    border: 1px solid #444;
+    box-shadow: 0 0.2em 0 0.05em #222;
+    border-bottom-color: #555;
+}
+
+.keyboard__row--h1> span {
+    width: 3.5em;
+}
+
+.keyboard__row> span [data-pressed],
+.keyboard__row>span:active {
+    background: #2a2a2a;
+    color: #aaa;
+    position: relative;
+    top: 0.2em;
+    box-shadow: 0 0 0 0.05em black;
+}
+
+.welcome-item {
+    text-align: center;
+   
+   
+}
+
+
 html {
     overflow-x: hidden;
     overflow-y: scroll;
+  
 }
 
 @import url('https://fonts.googleapis.com/css?family=Cutive+Mono');
@@ -30,17 +101,8 @@ h1 {
 }
 
 
-@import url('https://fonts.googleapis.com/css?family=Sanchez');
 
-#intro {
-    font-family: Arial, Helvetica, sans-serif;
-    text-align: center;
-    font-size: 18px;
-    letter-spacing: 3px;
-    color: rgb(112, 255, 181);
-    background-color: rgba(84, 84, 84, 0);
-    text-shadow: rgba(53, 0, 87, 0.74) 2px 2px 2px;
-}
+
 
 
 #manual {
@@ -50,9 +112,10 @@ h1 {
 
 #manualBtn {
     width: 50px;
-    font-size: 11px;
+    height: 20px;
+    font-size: 10px;
     position: absolute;
-    top: 40px;
+    top: 80px;
     padding: 2px;
 
 }
@@ -161,14 +224,7 @@ h1 {
 
 }
 
-.flex-intro {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: center;
-    align-content: center;
-}
+
 
 .intro-item:nth-child(1) {
     display: block;
@@ -206,29 +262,90 @@ button {
 
 }
 
+.stats {
+    width: 80%;
+}
+
+
 .counter {
-    width: 100%;
+    width: 50%;
     justify-content: space-around;
 
 }
 
 .win {
     border: 1px solid green;
-    width: 60px;
+    width: 100%;
     text-align: center;
-    font-size: 2rem;
-    left: 5%;
-    bottom: 15%;
+    font-size: 1rem;
+    
+    
+
+    
 }
 
 .loss {
 
     border: 1px solid red;
-    width: 60px;
+    width: 100%;
     text-align: center;
-    font-size: 2rem;
-    right: 5%;
-    bottom: 15%
+    font-size: 1rem;
+    
+
+}
+
+.stats-flex, .stats-counts {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: stretch;
+    align-content: stretch;
+}
+
+.count-item {
+     display: block;
+     flex-grow: 0;
+     flex-shrink: 1;
+     flex-basis: auto;
+     align-self: auto;
+     order: 0;
+}
+
+.stats-item {
+    display: block;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-basis: auto;
+    align-self: auto;
+    order: 0;
+    width: 200px;
+    justify-content: center;
+    flex-wrap: nowrap;
+    text-align: center;
+
+}
+
+.top-stats-wrap {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: normal;
+    align-content: stretch;
+}
+
+.top-stats-item {
+    display: block;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-basis: auto;
+    align-self: auto;
+    order: 0;
+}
+
+#reset {
+    width: 50px;
 }
 
 #end {
@@ -242,38 +359,27 @@ button {
 .red {
     background-color: red;
 }
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity .5s;
+
+.welcome-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    margin-top: 8em;
+
 }
 
-.fade-enter,
-.fade-leave-to
+.welcome-item:nth-child(1) {
+    display: block;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-basis: auto;
+    align-self: auto;
+    order: 0;
+    text-align: center;
 
-/* .fade-leave-active below version 2.1.8 */
-    {
-    opacity: 0;
 }
 
-.flip-list-move {
-    transition: transform 5s;
-}
 
-.list-complete-item {
-    transition: all 0.5s;
-    display: inline-block;
-    margin-right: 10px;
-}
-
-.list-complete-enter,
-.list-complete-leave-to
-
-/* .list-complete-leave-active below version 2.1.8 */
-    {
-    opacity: 0;
-    transform: translateY(30px);
-}
-
-.list-complete-leave-active {
-    position: absolute;
-}

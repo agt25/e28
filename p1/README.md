@@ -5,7 +5,7 @@
 
 ## Outside resources
 
-n/a
+Enter Keyboard Key by: https://codepen.io/gschier/pen/VKgyaY 
 
 ## Notes for instructor
 

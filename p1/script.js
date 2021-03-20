@@ -73,6 +73,8 @@ const Game = {
         this.userPlays.losses = 0;
         this.computerPlays.wins = 0;
         this.computerPlays.losses = 0;
+        this.selectedStock = '';
+        
     },
     stockReturn(stock) {
 
