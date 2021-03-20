@@ -67,7 +67,12 @@ const Game = {
     },
     resetGame() {
         this.rounds.splice(0);
-        gameRound == 1; 
+        this.gameRound = 1; 
+        // Better design opp? into two statements?
+        this.userPlays.wins = 0;
+        this.userPlays.losses = 0;
+        this.computerPlays.wins = 0;
+        this.computerPlays.losses = 0;
     },
     stockReturn(stock) {
 
