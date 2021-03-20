@@ -18,6 +18,7 @@
         <link
             href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.css"
             rel="stylesheet"/>
+        <!-- Bootstrap -->
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
             rel="stylesheet"
@@ -27,6 +28,9 @@
             type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.js"></script>
         <script src='https://unpkg.com/vue@next' defer="defer"></script>
+        <script src="https://unpkg.com/vue-currency-input"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.1/lodash.min.js"></script>
         <script src='script.js' defer="defer"></script>
     </head>
 
@@ -35,25 +39,97 @@
 
         <div id='app' v-cloak="v-cloak">
 
-            <!-- <div>Manual</div> -->
-
-            <div class="container-fluid" id='stock-choices'>
-                <div class="row justify-content-md-center">
-                     <button v-for="stock in stocks" id="stock" v-bind:value="stock.name"
-                        v-on:click='stockReturn(stock); picked = stock.name'>{{stock.name}}</button>
-
-                   
-                        <span>Selected:
-                            {{ picked }}</span>
-                    </div>
-
-                   
-                </div>
-           
-             
-                        
-                        
+            <!-- Ask user for their name -->
+            <div v-if='!userName' id='welcome'>
+                <h2>Welcome</h2>
+                <h3>Please enter your name....</h3>
+                <input v-model.lazy='userName'/>
             </div>
 
-        </body>
-    </html>
+            <!-- If user has inputted their name, render the game -->
+            <div v-if='userName' class="container-fluid" id='stock-choices'>
+                <button v-on:click='resetGame'>Reset</button>
+
+                <div class="row justify-content-md-center">
+                    <div v-for="stock in stocks" v-bind:key="stock" class="col-6 col-lg-e">
+
+                        <button
+                            id="stock"
+                            v-bind:value="stock.name"
+                            v-bind:key='stock.name'
+                            v-on:click="stockReturn(stock), roundResult(stock), selectedStock = stock.name">{{stock.name}}</button>
+
+                    </div>
+                    <!-- <button v-on:click='shuffleStocks'>Shuffle</button> -->
+
+                    <!-- Current Play Stats -->
+                    <span>Selected:
+                        {{ selectedStock }}</span>
+                    <span>today:
+                        {{ displayWorth }}</span>
+                    <span>Result:
+                        {{ displayMessage }}</span>
+                </div>
+
+                <!-- User Score Card -->
+                <div v-bind:value='userPlays'>
+                    Wins:
+                    {{ userPlays.wins }}
+                    Losses
+                    {{ userPlays.losses }}
+                </div>
+
+                <!-- Computer Score Card -->
+                <div v-bind:value='computerPlays'>
+                    Wins:
+                    {{ computerPlays.wins }}
+                    Losses
+                    {{ computerPlays.losses }}
+                </div>
+
+                <button v-on:click="show = !show">
+                    Game Log
+                </button>
+
+                <div v-if='show'>
+                    <div v-for='round in rounds'>
+                        <br>
+                        <div v-if="round.winner == 'Computer'">
+                            Round:
+                            {{ round.round }}
+                            <div>
+                                Winner:
+                                {{ round.winner }}!
+                                <div>Silly
+                                    {{ userName }}
+                                    invested in
+                                    {{ round.stock }}
+                                </div>
+                            </div>
+                        </div>
+                        <div v-else-if="round.winner != 'Computer'">
+                            Round
+                            {{ round.round }}
+                            <div>
+                                Winner:
+                                {{ round.winner }}!
+                                <div>
+                                    {{ userName }}
+                                    invested in
+                                    {{ round.stock }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- History / Game Log -->
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
