@@ -37,7 +37,7 @@
     <body>
 
         <div id='app' v-cloak="v-cloak">
-
+            
             <!-- Render on first load; Ask user for their name -->
             <div v-if='!userName' class='welcome-container'>
                 <div class='welcome-item'>
@@ -52,11 +52,12 @@
                         </span>
                         your name....</h3>
                     <input v-model.lazy.trim='userName'/>
+                    
                 </div>
             </div>
 
             <!-- If user has inputted their name, render the game -->
-            <div v-if='userName'>
+            <div v-if='userName' class='game'>
                 <!-- Header / Logo -->
                 <header>
                     <div class="flex-jumbo">
@@ -87,27 +88,47 @@
                         </div>
 
                     </div>
+                    <!-- <div v-for='num in imageNumbers'>
+                        <img v-bind:src="'/images/' + num + '.jpg'">
+
+                     -->
 
                     <!-- Mystery stock options to choose from -->
                     <div class="row justify-content-md-center">
-                        <div v-for="stock in stocks" v-bind:key="stock" class="col-6 col-lg-3 col-md-4">
-<div>
-                            <button
+                      
+                        
+                        
+                        <div v-for="(stock, index) in stocks" v-bind:key="stock" class="col-6 col-lg-3 col-md-4">
                             
-                                id="stock"
-                                v-bind:value="stock.name"
-                                v-bind:key='stock.name'
-                                v-on:click="stockReturn(stock), roundResult(stock), selectedStock = stock.name">
-                                {{stock.name}}</button>
-                                </div>
-
+                    
+                                <img id='case' src='/images/case.jpg'>
+                                <button
+    
+                                    id="stock"
+                                    v-bind:value="stock.name"
+                                    v-bind:key='stock.name'
+                                    v-on:click="stockReturn(stock), roundResult(stock), selectedStock = stock.name">
+        
+                                    {{stock.name}}
+                                </button>
+                                    
+                            </div>
+                            
+                                  
                         </div>
+                        
 
                         <!-- If user has selected a stock, show basic stats -->
                         <div v-if='selectedStock != ""'>
-                            <span class='shadow-3'>Invested in {{ selectedStock }}</span> <br>
-                            <span> Networth: {{ formatPrice(todayWorth) }}</span> <br>
-                            <span v-bind:class="{ won: won, lost: !won}">{{ displayMessage }}</span> <br>
+                            <span class='shadow-3'>Invested in
+                                {{ selectedStock }}</span>
+                            <br>
+                            <span>
+                                Networth:
+                                {{ formatPrice(todayWorth) }}</span>
+                            <br>
+                            <span v-bind:class="{ won: won, lost: !won}">{{ displayMessage }}</span>
+                            <br>
                         </div>
                         <!-- Else, show game directions -->
                         <div v-else>

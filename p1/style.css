@@ -17,7 +17,9 @@ h1 {
     color: red;
 }
 
-
+#case {
+    width: 100px;
+}
 .keyboard {
     text-align: center;
     font-size: 14px;
@@ -72,16 +74,61 @@ h1 {
     box-shadow: 0 0 0 0.05em black;
 }
 
-.welcome-item {
+.welcome-container {
     text-align: center;
-   
-   
+     display: flex;
+     flex-direction: row;
+     flex-wrap: nowrap;
+     justify-content: center;
+     align-items: normal;
+     align-content: normal;
+    
+  
 }
 
 
-html {
+.game {
+    
+}
+.welcome-item {
+    overflow-y: hidden !important;
     overflow-x: hidden;
-    overflow-y: scroll;
+    background-image: url(images/intro3.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover;
+    position: absolute;
+    background-color: none;
+    overflow-y: hidden;
+    display: block;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-basis: auto;
+    align-self: stretch;
+    order: 0;
+    position: relative;
+    height: 100vh;
+    width: 100%;
+}
+
+
+body {
+    max-height: 100%;
+    margin: 0! important;
+   
+    
+}
+
+
+
+html {
+    
+    background-color: #F8F8F8;
+    max-height: 100%;
+    margin: 0 ! important;
+    
+
+    
   
 }
 

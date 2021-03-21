@@ -13,14 +13,25 @@ const Game = {
                 wins: 0,
                 losses: 0
             },
+            symbols: {
+                Apple: {
+                    symbol: 'AAPL',
+                    oldPrice: 3.2411,
+                    currentPrice: '',
+                },
+                Microsoft: {
+                    symbol: 'MSFT',
+                    oldPrice: 20.3300,
+                    currentPrice: '',
+                }
+            },
+
+            tested: '',
             computerPlays: {
                 wins: 0,
                 losses: 0
             },
-            mysteryImages: [
-                '/images/1.jpg', '/images/2.jpg'
-            ],
-            selectedImage: null,
+            test: {},
             gameRound: 1,
             stocks: [
                 {
@@ -78,33 +89,45 @@ const Game = {
     },
     computed: {
         displayWorth() {
+
             // Display how much the user would be worth today
             return this.todayWorth;
         },
         displayMessage() {
+
             // Display whether the user is a winner or loser
             return this.roundMessage;
         },
         displayPlayer() {
+
+            // Display the current user playing
             return this.activeUser;
-        },
-        randomImage() {
-            this.selectedImage = this.randomItem(this.mysteryImages);
-
         }
-
     },
     created() {
-        
+        this.loadStocks();
 
     },
-
     methods: {
-        randomItem(items) {
-            return items[Math.floor(Math.random() * items.length)];
+        loadStocks() {
+            
+            let apiKey = 'c1blnrf48v6sp0s4v640';
+            // Get the current (latest) price of every stock in 'stocks'
+            Object
+                .values(this.symbols)
+                .forEach(stock => {
+                    fetch(`https://finnhub.io/api/v1/quote?symbol=${stock.symbol}&token=${apiKey}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        stock.currentPrice = data.c;
+                    })
+                    console.log(this.currentPrice);
+                });
         },
         formatPrice(value) {
-            var formatter = new Intl.NumberFormat('en-US', {
+
+            // Format user's networth as dollar currency
+            let formatter = new Intl.NumberFormat('en-US', {
                 style: 'currency',
                 currency: 'USD',
                 minimumFractionDigits: 0
@@ -112,10 +135,13 @@ const Game = {
             return formatter.format(value);
         },
         shuffle() {
+
+            // Suffle the stocks displayed
             this.stocks = _.shuffle(this.stocks);
-            this.mysteryImages = _.shuffle(this.mysteryImages)
         },
         resetGame() {
+
+            // Reset all game stats 
             this
                 .rounds
                 .splice(0);
