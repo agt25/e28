@@ -31,7 +31,9 @@
         <script src="https://unpkg.com/vue-currency-input"></script>
         <script
             src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.1/lodash.min.js"></script>
+            
         <script src='script.js' defer="defer"></script>
+       
     </head>
 
     <body>
@@ -59,16 +61,21 @@
             <!-- If user has inputted their name, render the game -->
             <div v-if='userName' class='game'>
                 <!-- Header / Logo -->
-                <header>
-                    <div class="flex-jumbo">
+                <header class='flex-jumbo'>
+                    <div class='flex-items'></div>
+                    
+                    </header>
+
+                    <!-- <div class="flex-jumbo">
                         <div class="flex-items">
                             <h1>Stonks
                                 <span id="logo">2009</span></h1>
                         </div>
                     </div>
-                </header>
+                </header> -->
                 <!-- How to Play Instructions -->
                 <button type="button" class="btn btn-warning" id="manualBtn">Guide</button>
+                <button v-on:click='limitDisplay'> </button>
 
                 <!-- Main Component of the Game -->
                 <div class="container-fluid" id='stock-choices'>
@@ -98,7 +105,7 @@
                       
                         
                         
-                        <div v-for="(stock, index) in stocks" v-bind:key="stock" class="col-6 col-lg-3 col-md-4">
+                        <div v-for="stock in stocks" v-bind:key="stock" class="col-6 col-lg-3 col-md-4">
                             
                     
                                 <img id='case' src='/images/case.jpg'>

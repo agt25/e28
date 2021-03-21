@@ -17,6 +17,7 @@ const Game = {
                 wins: 0,
                 losses: 0
             },
+            limit: 6,
             stocks: {
                 Apple: {
                     name: 'Apple',
@@ -92,6 +93,7 @@ const Game = {
                 },
 
             },
+            displayedStocks: [],
 
             tested: '',
             test: {},
@@ -117,13 +119,23 @@ const Game = {
 
             // Display the current user playing
             return this.activeUser;
-        }
+        },
     },
     created() {
         this.loadStocks();
+        
+        
 
     },
     methods: {
+        limitDisplay() {
+            let keys = Object.keys(this.stocks);
+            let randomIndex = keys[Math.floor(Math.random() * keys.length)];
+            let item = this.stocks[randomIndex];
+            console.log(item);
+            return this.item;
+        },
+
         loadStocks() {
             
             // Get the current (latest) price of every stock in 'stocks'

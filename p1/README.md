@@ -5,7 +5,7 @@
 
 ## Outside resources
 
-Enter Keyboard Key by: https://codepen.io/gschier/pen/VKgyaY 
+Enter Keyboard Key by: https://codepen.io/gschier/pen/VKgyaY
 
 Format Price method for currency: https://stackoverflow.com/questions/43208012/how-do-i-format-currencies-in-a-vue-component answer by Rhod
 
