@@ -15,15 +15,78 @@ const Game = {
             },
             symbols: {
                 Apple: {
+                    name: 'Apple',
                     symbol: 'AAPL',
                     oldPrice: 3.2411,
-                    currentPrice: '',
+                    currentPrice: null,
                 },
                 Microsoft: {
+                    name: 'Microsoft',
                     symbol: 'MSFT',
                     oldPrice: 20.3300,
-                    currentPrice: '',
-                }
+                    currentPrice: null,
+                },
+                PGE: {
+                    name: 'PG&E',
+                    symbol: 'PCG',
+                    oldPrice: 38.8100,
+                    currentPrice: null,
+                },
+                Flour: {
+                    name: 'Flour',
+                    symbol: 'FLR',
+                    oldPrice: 47.8900,
+                    currentPrice: null,
+                },
+                FirstSolar: {
+                    name: 'FirstSolar',
+                    symbol: 'FSLR',
+                    oldPrice: 151.500,
+                    currentPrice: null,
+                },
+                Tesla: {
+                    name: 'Tesla 2010',
+                    symbol: 'TSLA',
+                    oldPrice: 4.7780,
+                    currentPrice: null,
+                },
+                Netflix: {
+                    name: 'Netflix',
+                    symbol: 'NFLX',
+                    oldPrice: 4.2671,
+                    currentPrice: null,
+                },
+                TransOcean: {
+                    name: 'TransOcean',
+                    symbol: 'RIG',
+                    oldPrice: 52.0100,
+                    currentPrice: null,
+                },
+                Amazon: {
+                    name: 'Amazon',
+                    symbol: 'AMZN',
+                    oldPrice: 54.3600,
+                    currentPrice: null,
+                },
+                MurphyOil: {
+                    name: 'MurphyOil',
+                    symbol: 'MUR',
+                    oldPrice: 47.4500,
+                    currentPrice: null,
+                },
+                Target: {
+                    name: 'Target',
+                    symbol: 'TGT',
+                    oldPrice: 34.6300,
+                    currentPrice: null,
+                },
+                Target2: {
+                    name: 'Target2',
+                    symbol: 'TGT',
+                    oldPrice: 34.6300,
+                    currentPrice: null,
+                },
+
             },
 
             tested: '',
@@ -34,55 +97,7 @@ const Game = {
             test: {},
             gameRound: 1,
             stocks: [
-                {
-                    name: 'Apple',
-                    oldPrice: 3.2411,
-                    newPrice: 136.91
-                }, {
-                    name: 'PG&E',
-                    oldPrice: 38.8100,
-                    newPrice: 11.84
-                }, {
-                    name: 'Microsoft',
-                    oldPrice: 20.3300,
-                    newPrice: 247.47
-                }, {
-                    name: 'Flour',
-                    oldPrice: 47.8900,
-                    newPrice: 20.49
-                }, {
-                    name: 'FirstSolar',
-                    oldPrice: 151.500,
-                    newPrice: 100.10
-                }, {
-                    name: 'Tesla, 2010',
-                    oldPrice: 4.7780,
-                    newPrice: 863.42
-                }, {
-                    name: 'Netflix',
-                    oldPrice: 321.3200,
-                    newPrice: 547.92
-                }, {
-                    name: 'TransOcean',
-                    oldPrice: 52.0100,
-                    newPrice: 3.64
-                }, {
-                    name: 'Amazon',
-                    oldPrice: 54.3600,
-                    newPrice: 3322.94
-                }, {
-                    name: 'MurphyOil',
-                    oldPrice: 47.4500,
-                    newPrice: 14.42
-                }, {
-                    name: 'Target',
-                    oldPrice: 34.6300,
-                    newPrice: 193.95
-                }, {
-                    name: 'Target2',
-                    oldPrice: 34.6300,
-                    newPrice: 193.95
-                }
+                
             ],
             rounds: []
         };
@@ -121,7 +136,6 @@ const Game = {
                     .then(data => {
                         stock.currentPrice = data.c;
                     })
-                    console.log(this.currentPrice);
                 });
         },
         formatPrice(value) {
