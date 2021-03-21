@@ -13,7 +13,11 @@ const Game = {
                 wins: 0,
                 losses: 0
             },
-            symbols: {
+            computerPlays: {
+                wins: 0,
+                losses: 0
+            },
+            stocks: {
                 Apple: {
                     name: 'Apple',
                     symbol: 'AAPL',
@@ -90,15 +94,11 @@ const Game = {
             },
 
             tested: '',
-            computerPlays: {
-                wins: 0,
-                losses: 0
-            },
             test: {},
             gameRound: 1,
-            stocks: [
+            // stocks: [
                 
-            ],
+            // ],
             rounds: []
         };
     },
@@ -126,10 +126,11 @@ const Game = {
     methods: {
         loadStocks() {
             
-            let apiKey = 'c1blnrf48v6sp0s4v640';
             // Get the current (latest) price of every stock in 'stocks'
+            let apiKey = 'c1blnrf48v6sp0s4v640';
+
             Object
-                .values(this.symbols)
+                .values(this.stocks)
                 .forEach(stock => {
                     fetch(`https://finnhub.io/api/v1/quote?symbol=${stock.symbol}&token=${apiKey}`)
                     .then(response => response.json())
@@ -173,7 +174,7 @@ const Game = {
             // Calculcate Stock Return
 
             let sharesOwned = this.startAmount / stock.oldPrice;
-            let todaysWorth = stock.newPrice * sharesOwned;
+            let todaysWorth = stock.currentPrice * sharesOwned;
             todaysWorth = todaysWorth.toFixed(0);
             this.todayWorth = todaysWorth
             this.shuffle();
