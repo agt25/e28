@@ -53,7 +53,7 @@
                             </span>
                         </span>
                         your name....</h3>
-                    <input v-model.lazy.trim='userName' v-on:change='currentPlayer'/>
+                    <input v-model.lazy.trim='userName' placeholder='Your name...' v-on:change="newUsers()"/>
 
                 </div>
             </div>
@@ -122,7 +122,7 @@
                         <br>
                     </div>
                     <!-- Else, show game directions -->
-                    <div v-else="v-else">
+                    <div v-else>
                         It's 2009.
                         <br>
                         Select a mystery stock to invest in.

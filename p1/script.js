@@ -6,17 +6,21 @@ const Game = {
             startAmount: 10000,
             roundMessage: '',
             todayWorth: null,
-            userName: '',
+            userName: null,
             won: false,
             show: false,
             userPlays: {
+                networth: 10000,
                 wins: 0,
                 losses: 0
             },
             computerPlays: {
+                networth: 10000,
                 wins: 0,
                 losses: 0
             },
+            players: [],
+            logs: [],
             limit: 6,
             stocks: {
                 Apple: {
@@ -93,11 +97,7 @@ const Game = {
                 }
             },
             displayedStocks: [],
-
-            tested: '',
-            test: {},
             gameRound: 1,
-            // stocks: [ ],
             rounds: []
         };
     },
@@ -115,31 +115,48 @@ const Game = {
         displayPlayer() {
 
             // Display the current user playing
-            return this.activeUser;
-        },
-      
+            return this.userName;
+        }
     },
     created() {
         this.loadStocks();
         this.limitDisplay();
         this.computerSelects();
-      
 
     },
     methods: {
+        newUsers() {
+            var user = {
+                name: this.userName,
+                networth: 10000,
+                won: 0,
+                lost: 0
+            };
+            this.players.push(user);
+
+            var computer = {
+                name: 'Computer',
+                networth: 10000,
+                won: 0,
+                lost: 0
+            };
+            this.players.push(computer);
+            this.currentPlayer();
+
+        },
         currentPlayer() {
             if (this.gameRound % 2 == 0) {
-                this.activePlayer = 'Computer';
-                
+                this.activePlayer = this.players[1];
+
             } else {
-                this.activePlayer = this.userName;
+                this.activePlayer = this.players[0];
             }
-            console.log(this.activePlayer);
+            
         },
         computerSelects() {
 
-            /* Select a random stock from the ones displaying */ 
-            
+            /* Select a random stock from the ones displaying */
+
             let keys = Object.keys(this.displayedStocks);
             let randomIndex = keys[Math.floor(Math.random() * keys.length)];
             let comp = this.displayedStocks[randomIndex];
@@ -160,7 +177,7 @@ const Game = {
         },
         limitDisplay() {
 
-            /* Displays 6 random stocks by calling randomStock(). 
+            /* Displays 6 random stocks by calling randomStock().
             Pushes the results into an array */
 
             // Clear the array each call
@@ -174,13 +191,11 @@ const Game = {
 
             };
             this.currentPlayer();
-            
+
         },
         loadStocks() {
 
-            // Get the current (latest) price of every stock in 'stocks'
-
-            // Save the API key 
+            // Get the current (latest) price of every stock in 'stocks' Save the API key
             let apiKey = 'c1blnrf48v6sp0s4v640';
 
             Object
@@ -194,6 +209,7 @@ const Game = {
                             stock.currentPrice = data.c;
                         })
                 });
+                
         },
         formatPrice(value) {
 
@@ -230,11 +246,30 @@ const Game = {
         stockReturn(stock) {
 
             // Calculcate Stock Return
+            let oldBalance = this.activePlayer.networth;
+            let sharesOwned = oldBalance / stock.oldPrice; 
+            
 
-            let sharesOwned = this.startAmount / stock.oldPrice;
-            let todaysWorth = stock.currentPrice * sharesOwned;
-            todaysWorth = todaysWorth.toFixed(0);
-            this.todayWorth = todaysWorth
+            // Calculate new networth 
+            let newBalance = stock.currentPrice * sharesOwned;
+            newBalance = newBalance.toFixed(0);
+
+            
+           
+
+            this.activePlayer.networth = newBalance;
+
+            // Calculate change / roi 
+            let roi = newBalance - oldBalance; 
+            console.log(roi);
+        
+
+
+
+            // let sharesOwned = this.startAmount / stock.oldPrice; 
+            // let todaysWorth = stock.currentPrice *
+            // sharesOwned; todaysWorth = todaysWorth.toFixed(0); this.todayWorth =
+            // todaysWorth
 
         },
         roundResult(stock) {
