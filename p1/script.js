@@ -23,84 +23,81 @@ const Game = {
                     name: 'Apple',
                     symbol: 'AAPL',
                     oldPrice: 3.2411,
-                    currentPrice: null,
+                    currentPrice: null
                 },
                 Microsoft: {
                     name: 'Microsoft',
                     symbol: 'MSFT',
                     oldPrice: 20.3300,
-                    currentPrice: null,
+                    currentPrice: null
                 },
                 PGE: {
                     name: 'PG&E',
                     symbol: 'PCG',
                     oldPrice: 38.8100,
-                    currentPrice: null,
+                    currentPrice: null
                 },
                 Flour: {
                     name: 'Flour',
                     symbol: 'FLR',
                     oldPrice: 47.8900,
-                    currentPrice: null,
+                    currentPrice: null
                 },
                 FirstSolar: {
                     name: 'FirstSolar',
                     symbol: 'FSLR',
                     oldPrice: 151.500,
-                    currentPrice: null,
+                    currentPrice: null
                 },
                 Tesla: {
                     name: 'Tesla 2010',
                     symbol: 'TSLA',
                     oldPrice: 4.7780,
-                    currentPrice: null,
+                    currentPrice: null
                 },
                 Netflix: {
                     name: 'Netflix',
                     symbol: 'NFLX',
                     oldPrice: 4.2671,
-                    currentPrice: null,
+                    currentPrice: null
                 },
                 TransOcean: {
                     name: 'TransOcean',
                     symbol: 'RIG',
                     oldPrice: 52.0100,
-                    currentPrice: null,
+                    currentPrice: null
                 },
                 Amazon: {
                     name: 'Amazon',
                     symbol: 'AMZN',
                     oldPrice: 54.3600,
-                    currentPrice: null,
+                    currentPrice: null
                 },
                 MurphyOil: {
                     name: 'MurphyOil',
                     symbol: 'MUR',
                     oldPrice: 47.4500,
-                    currentPrice: null,
+                    currentPrice: null
                 },
                 Target: {
                     name: 'Target',
                     symbol: 'TGT',
                     oldPrice: 34.6300,
-                    currentPrice: null,
+                    currentPrice: null
                 },
                 Target2: {
                     name: 'Target2',
                     symbol: 'TGT',
                     oldPrice: 34.6300,
-                    currentPrice: null,
-                },
-
+                    currentPrice: null
+                }
             },
             displayedStocks: [],
 
             tested: '',
             test: {},
             gameRound: 1,
-            // stocks: [
-                
-            // ],
+            // stocks: [ ],
             rounds: []
         };
     },
@@ -120,42 +117,74 @@ const Game = {
             // Display the current user playing
             return this.activeUser;
         },
+        // limited() {     return this.displayedStocks; }
     },
     created() {
         this.loadStocks();
-        
-        
+        this.limitDisplay();
 
     },
     methods: {
-        limitDisplay() {
-            let limited = 6;
+        computerSelects() {
 
-            
+            /* Select a random stock from the ones displaying */ 
+            let keys = Object.keys(this.displayedStocks);
+            let randomIndex = keys[Math.floor(Math.random() * keys.length)];
+            let comp = this.displayedStocks[randomIndex];
+            console.log(comp);
+            return comp;
+
+        },
+        randomStock() {
+
+            /* Select a random stock from the list of stocks.
+            To be used by limitDisplay() and computerSelects() */
+
             let keys = Object.keys(this.stocks);
             let randomIndex = keys[Math.floor(Math.random() * keys.length)];
             let item = this.stocks[randomIndex];
-            this.selectedStock = item.name;
-        },
+            return item;
 
+        },
+        limitDisplay() {
+
+            /* Displays 6 random stocks by calling randomStock(). 
+            Pushes the results into an array */
+
+            // Clear the array each call
+            this.displayedStocks = [];
+
+            // Make the calls to randomStock
+            for (i = 0; i < 6; i++) {
+                this
+                    .displayedStocks
+                    .push(this.randomStock());
+
+            };
+        },
         loadStocks() {
-            
+
             // Get the current (latest) price of every stock in 'stocks'
+
+            // Save the API key 
             let apiKey = 'c1blnrf48v6sp0s4v640';
 
             Object
                 .values(this.stocks)
                 .forEach(stock => {
                     fetch(`https://finnhub.io/api/v1/quote?symbol=${stock.symbol}&token=${apiKey}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        stock.currentPrice = data.c;
-                    })
+                        .then(
+                            response => response.json()
+                        )
+                        .then(data => {
+                            stock.currentPrice = data.c;
+                        })
                 });
         },
         formatPrice(value) {
 
             // Format user's networth as dollar currency
+
             let formatter = new Intl.NumberFormat('en-US', {
                 style: 'currency',
                 currency: 'USD',
@@ -167,10 +196,11 @@ const Game = {
 
             // Suffle the stocks displayed
             this.stocks = _.shuffle(this.stocks);
+            this.limitDisplay();
         },
         resetGame() {
 
-            // Reset all game stats 
+            // Reset all game stats
             this
                 .rounds
                 .splice(0);
@@ -191,7 +221,6 @@ const Game = {
             let todaysWorth = stock.currentPrice * sharesOwned;
             todaysWorth = todaysWorth.toFixed(0);
             this.todayWorth = todaysWorth
-            this.shuffle();
 
         },
         roundResult(stock) {
@@ -237,6 +266,7 @@ const Game = {
                         stock: stock.name
                     });
             }
+            this.shuffle();
         }
     }
 }
