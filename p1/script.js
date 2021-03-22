@@ -1,11 +1,11 @@
 const Game = {
     data() {
         return {
+            activePlayer: null,
             selectedStock: '',
             startAmount: 10000,
             roundMessage: '',
             todayWorth: null,
-            activeUser: '',
             userName: '',
             won: false,
             show: false,
@@ -117,17 +117,29 @@ const Game = {
             // Display the current user playing
             return this.activeUser;
         },
-        // limited() {     return this.displayedStocks; }
+      
     },
     created() {
         this.loadStocks();
         this.limitDisplay();
+        this.computerSelects();
+      
 
     },
     methods: {
+        currentPlayer() {
+            if (this.gameRound % 2 == 0) {
+                this.activePlayer = 'Computer';
+                
+            } else {
+                this.activePlayer = this.userName;
+            }
+            console.log(this.activePlayer);
+        },
         computerSelects() {
 
             /* Select a random stock from the ones displaying */ 
+            
             let keys = Object.keys(this.displayedStocks);
             let randomIndex = keys[Math.floor(Math.random() * keys.length)];
             let comp = this.displayedStocks[randomIndex];
@@ -161,6 +173,8 @@ const Game = {
                     .push(this.randomStock());
 
             };
+            this.currentPlayer();
+            
         },
         loadStocks() {
 
@@ -238,7 +252,7 @@ const Game = {
                     .rounds
                     .push({
                         round: this.gameRound++,
-                        winner: this.userName,
+                        winner: this.activePlayer,
                         stock: stock.name
                     });
             } else if (this.todayWorth < this.startAmount) {
