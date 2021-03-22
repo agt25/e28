@@ -129,11 +129,13 @@ const Game = {
     },
     methods: {
         limitDisplay() {
+            let limited = 6;
+
+            
             let keys = Object.keys(this.stocks);
             let randomIndex = keys[Math.floor(Math.random() * keys.length)];
             let item = this.stocks[randomIndex];
-            console.log(item);
-            return this.item;
+            this.selectedStock = item.name;
         },
 
         loadStocks() {
@@ -225,6 +227,7 @@ const Game = {
                         stock: stock.name
                     });
             } else {
+
                 this.roundMessage = `You did not win or lose anything`;
                 this
                     .rounds

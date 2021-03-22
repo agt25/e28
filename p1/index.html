@@ -74,11 +74,12 @@
                     </div>
                 </header> -->
                 <!-- How to Play Instructions -->
-                <button type="button" class="btn btn-warning" id="manualBtn">Guide</button>
-                <button v-on:click='limitDisplay'> </button>
+               
+                
 
                 <!-- Main Component of the Game -->
                 <div class="container-fluid" id='stock-choices'>
+
                     <div class='top-stats-wrap'>
 
                         <!-- Show basic stats like current player and current round -->
@@ -93,6 +94,7 @@
                         <div class='top-stats-item'>
                             <button v-on:click='resetGame' id='reset'>Reset</button>
                         </div>
+                      
 
                     </div>
                     <!-- <div v-for='num in imageNumbers'>
@@ -108,7 +110,7 @@
                         <div v-for="stock in stocks" v-bind:key="stock" class="col-6 col-lg-3 col-md-4">
                             
                     
-                                <img id='case' src='/images/case.jpg'>
+                                <img id='case' src='/images/case.png'>
                                 <button
     
                                     id="stock"
@@ -145,6 +147,8 @@
                             <div>Will you be a present day winner or loser?</div>
                         </div>
                     </div>
+                     <button id='limit' v-on:click='limitDisplay'>Limit</button>
+                     {{ selectedStock }}
 
                     <!-- User Score Card -->
                     <div class='stats-flex'>
@@ -176,10 +180,11 @@
                             </div>
                         </span>
                     </div>
-
+                    
                     <button v-on:click="show = !show">
                         Game Log
                     </button>
+                     
 
                     <div v-if='show'>
                         <div v-for='round in rounds'>
