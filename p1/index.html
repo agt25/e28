@@ -88,14 +88,15 @@
                         </div>
 
                     </div>
+                
 
                     <!-- Display six random mystery stocks at a time -->
-                    <div class="row justify-content-md-center">
+                    <div class="row justify-content-evenly stocked">
 
                         <div
                             v-for="stock in displayedStocks"
                             v-bind:key="stock.id"
-                            class="col-6 col-md-4">
+                            class="col-6 col-md-4 col-lg-4">
 
                             <img id='case' src='/images/case.png'>
                             <button
@@ -103,7 +104,7 @@
                                 ref="submitStock"
                                 v-bind:value="stock.name"
                                 v-bind:key='stock.name'
-                                v-bind:class="{disabled : disabled}"
+                                class="stockBtn"
                                 v-on:click="stockReturn(stock), selectedStock = stock.name">
 
                                 {{stock.name}}
@@ -114,13 +115,13 @@
                     </div>
 
                     <!-- If user has selected a stock, show basic stats -->
-                    <div v-if='selected' >
+                    <div v-if='selected == true' class='alert alert-warning'>
                         <span v-bind:class="{ won: won, lost: !won}">{{ displayMessage }}</span>
                         <br>
                         <div v-bind='displayPrevious'>
                             {{ displayPrevious.player }} invested in {{ displayPrevious.stock }}
                             <br>
-                            {{ displayPrevious.change }}
+                            {{ displayPrevious.showChange }}
                         </div>
                         <!-- <span> {{ displayPrevious.player }}</span> -->
                         <br>
@@ -159,13 +160,7 @@
 
             </div>
 
-            <button v-if='userName' v-on:click="show = !show">
-                Game Log
-            </button>
-
-            <div v-if='show'>
-                <!-- User Score Card -->
-                <div v-if='gameStarted' class='stats-flex'>
+            <div v-if='gameStarted' class='stats-flex'>
                     <span v-bind:value='players' v-for='player in players' class='stats-item'>
                         {{ player.name }}
                         <span class='count-item win'>
@@ -177,32 +172,22 @@
                     </span>
                 </div>
 
+            <button v-if='userName' v-on:click="show = !show">
+                Game Log
+            </button>
+
+            <div v-if='show'>
+                
+
                 <div id='history'>
                     <game-logs v-for='round in rounds' v-bind:round='round.round'
                     v-bind:player='round.player'
                     v-bind:result='round.result'
-                    v-bind:change='round.change'
+                    v-bind:change='round.showChange'
                     v-bind:stock='round.stock'
-                    v-bind:networth='round.networth'>
+                    v-bind:networth='round.showNet'>
                 </game-logs>
                 </div>
-                <!-- Rounds History
-                <div v-for='round in rounds' class='history-wrapper'>
-                    <div class='history-item'>
-                        Round:
-                        {{ round.round }}
-                        <br>
-                        Player:
-                        {{ round.player }}
-                        {{ round.result }}
-                        {{ formatPrice(round.change) }}
-                        by investing in
-                        {{ round.stock }}
-                        <br>
-                        Networth:
-                        {{ formatPrice(round.networth) }}
-                    </div>
-                </div> -->
             </div>
 
         </div>
@@ -215,8 +200,8 @@
         <div>
             <ul>
                 <li> Round #: {{ round }}</li>
-                <li> Player: {{ player }}</li>
-                <li> Result: {{ result }} {{ change }} by investing in {{ stock }}</li>
+                <li> Player: {{ player }} {{ result }} {{ change }} by investing in {{ stock }}</li>
+            
                 <li> Networth: {{ networth }} </li>
             </ul>
         </div>

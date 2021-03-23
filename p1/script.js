@@ -129,6 +129,7 @@ const Game = {
         },
         newUsers() {
             /* Register a new user and computer object */
+            players = [];
 
             // The game has started
             this.gameStarted = true;
@@ -137,6 +138,7 @@ const Game = {
             var user = {
                 name: this.userName,
                 networth: 0,
+                showNet: null,
                 lastStock: null,
                 lastChange: 0,
                 showChange: null,
@@ -150,6 +152,7 @@ const Game = {
             var computer = {
                 name: 'Computer',
                 networth: 0,
+                showNet: null,
                 lastStock: null,
                 lastChange: 0,
                 showChange: null,
@@ -171,7 +174,7 @@ const Game = {
             if (this.gameRound % 2 == 0) {
 
                 // If round is even, the computer plays
-                this.playing = "Computer's turn";
+                this.playing = "Computer is selecting a stock";
                 this.activePlayer = this.players[1];
     
                 // Selects a random stock from those on the page
@@ -256,6 +259,7 @@ const Game = {
         resetGame() {
 
             // Reset all the rounds data
+            this.selected = false;
             this.rounds.splice(0);
             this.gameRound = 1;
 
@@ -283,17 +287,20 @@ const Game = {
 
             // Calculate ROI in dollars
             change = result - 10000;
-            // showChange = this.formatPrice(change);
             this.activePlayer.lastChange = change;
 
+            // ROI in dollar format 
             let formatChange = this.formatPrice(change);
             this.activePlayer.showChange = formatChange;
+
 
             // Update the user's total networth after investment 
             oldNet = this.activePlayer.networth;
             newNet = result + oldNet;
-            // showNet = this.formatPrice(newNet);
+
+            showNet = this.formatPrice(newNet);
             this.activePlayer.networth = newNet;
+            this.activePlayer.showNet = showNet; 
 
             // Get custom round messages based on the investment return
             this.roundResult(stock);
@@ -302,11 +309,13 @@ const Game = {
         roundResult(stock) {
 
             /* Generate Winner or Loser Message */
+            
 
 
             if (this.activePlayer.lastChange > this.startAmount) {
 
                 // User Won
+                
                 this.roundMessage = 'Winner';
                 this.won = true;
                 this.activePlayer.won++;
@@ -318,7 +327,9 @@ const Game = {
                         result: 'won',
                         stock: stock.name,
                         networth: this.activePlayer.networth,
+                        showNet: this.activePlayer.showNet,
                         change: this.activePlayer.lastChange,
+                        showChange: `+${this.activePlayer.showChange}`
                     });
             } else if (this.activePlayer.lastChange < this.startAmount) {
 
@@ -334,6 +345,7 @@ const Game = {
                         result: 'lost',
                         stock: stock.name,
                         networth: this.activePlayer.networth,
+                        showNet: this.activePlayer.showNet,
                         change: this.activePlayer.lastChange,
                         showChange: this.activePlayer.showChange
                     });
@@ -374,13 +386,13 @@ const GameLogs = {
 
         },
         change: {
-            type: Number
+            type: String
         },
         stock: {
             type: String
         },
         networth: {
-            type: Number
+            type: String
         }
     },
     data() {

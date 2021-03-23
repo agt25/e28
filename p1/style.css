@@ -235,6 +235,8 @@ h1 {
     justify-content: center;
 }
 
+
+
 .history-wrapper {
     display: flex;
     flex-direction: row;
@@ -244,6 +246,11 @@ h1 {
     
     
 }
+
+.stockBtn {
+    width: 150px;
+
+} 
 
 
 
@@ -282,6 +289,12 @@ h1 {
 .form-check {
     padding-top: 1.2rem;
 }
+
+.col-md-4 {
+    align-self: center;
+}
+
+
 
 #stock-choices {
     /* background-image: url(images/game-background.png);
