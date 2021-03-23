@@ -116,6 +116,7 @@ const Game = {
         }
     },
     created() {
+        
         this.loadStocks();
         this.limitDisplay();
 
