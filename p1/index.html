@@ -230,7 +230,7 @@
 
                     <!-- Show each user's networth -->
                     <div v-if='gameStarted' class='stats-flex'>
-                        <span v-bind:value='players' v-for='player in players' class='stats-item'>
+                        <span  v-for='player in players' v-bind:key='player.name' v-bind:value='players'  class='stats-item'>
                             {{ player.name }}
                             <span class='count-item networth'>
                                 {{ formatPrice(player.networth) }}
@@ -241,7 +241,7 @@
 
                     <!-- Display wins and losses score card for each user -->
                     <div v-if='gameStarted' class='stats-flex'>
-                        <span v-bind:value='players' v-for='player in players' class='stats-item'>
+                        <span v-for='player in players' v-bind:key='player.name' v-bind:value='players' class='stats-item'>
                             Stats
 
                             <div class='row justify-content-center'>
@@ -285,6 +285,7 @@
                         <div id='history'>
                             <game-logs
                                 v-for='round in rounds'
+                                v-bind:key='round.round'
                                 v-bind:round='round.round'
                                 v-bind:player='round.player'
                                 v-bind:result='round.result'

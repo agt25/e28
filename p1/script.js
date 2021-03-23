@@ -92,11 +92,6 @@ const Game = {
         };
     },
     computed: {
-        displayWorth() {
-
-            // Display how much the user would be worth today
-
-        },
         displayMessage() {
 
             // Display whether the user is a winner or loser
