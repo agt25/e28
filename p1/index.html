@@ -64,9 +64,9 @@
 
             <!-- If user has inputted their name, render the game -->
             <div v-if='userName' class='game'>
+
                 <!-- Header / Logo -->
                 <header class='flex-jumbo'>
-                    <!-- <div class='flex-items'></div> -->
                 </header>
 
                 <!-- Main Component of the Game -->
@@ -75,15 +75,15 @@
                     <div class='top-stats-wrap'>
 
                         <!-- Show basic stats like current player and current round -->
-                        <div v-if='activePlayer' v-bind:value='playing' class='top-stats-item'>
+                        <div v-if='activePlayer' v-bind:value='playing' class='col-4 col-md-4 col-lg-4 top-stats-item'>
                             Playing:
                             {{ playing }}
                         </div>
-                        <div v-bind:value='gameRound' class='top-stats-item'>
+                        <div v-bind:value='gameRound' class='col-4 col-md-4 col-lg-4 top-stats-item'>
                             Round #
                             {{ gameRound }}
                         </div>
-                        <div class='top-stats-item'>
+                        <div class='top-stats-item' class='col-4 col-md-4 col-lg-4'>
                             <button v-on:click='resetGame' id='reset'>Reset</button>
                         </div>
 
@@ -92,13 +92,12 @@
 
                     <!-- Display six random mystery stocks at a time -->
                     <div class="row justify-content-evenly stocked">
-
                         <div
                             v-for="stock in displayedStocks"
                             v-bind:key="stock.id"
-                            class="col-6 col-md-4 col-lg-4">
+                            class="col-6 col-md-4 col-lg-4 centered">
 
-                            <img id='case' src='/images/case.png'>
+                            <img id='case' src='/images/case.png' class='img-responsive'>
                             <button
                                 id="stock"
                                 ref="submitStock"
@@ -111,7 +110,7 @@
                             </button>
 
                         </div>
-
+                   
                     </div>
 
                     <!-- If user has selected a stock, show basic stats -->
@@ -121,29 +120,11 @@
                         <div v-bind='displayPrevious'>
                             {{ displayPrevious.player }} invested in {{ displayPrevious.stock }}
                             <br>
-                            {{ displayPrevious.showChange }}
+                            <span v-bind:class="{ won: won, lost: !won}"> {{ displayPrevious.showChange }}</span>
                         </div>
-                        <!-- <span> {{ displayPrevious.player }}</span> -->
-                        <br>
-                        <!-- <span>
-                            Networth:
-                            {{ formatPrice(displayPrevious.networth) }}</span> -->
-                        <br>
-                        
-                        <!-- <br>
-                        <span v-bind:value='displayPrevious' class='shadow-3'>
-                           
-                            invested in
-                            {{ selectedStock }}
-                            <span v-bind:class="{ won: won, lost: !won}">
-                                {{ formatPrice(activePlayer.lastChange) }}
-
-                            </span>
-                        </span>
-                        <br> -->
-
                     </div>
 
+                    <!-- If user has not yet selected a stock, guide them -->
                     <div v-if='!selected'>
                         It's 2009.
                         <br>
@@ -157,9 +138,19 @@
                         Whoever hits the networth target first wins the game!
                     </div>
                 </div>
-
             </div>
 
+            <div v-if='gameStarted'>
+                    <span v-bind:value='players' v-for='player in players' class='stats-item'>
+                        {{ player.name }}
+                        <span class='count-item'>
+                            {{ formatPrice(player.networth) }}
+                        </span>
+                        
+                    </span>
+                </div>
+
+            <!-- Display wins and losses score card -->
             <div v-if='gameStarted' class='stats-flex'>
                     <span v-bind:value='players' v-for='player in players' class='stats-item'>
                         {{ player.name }}
@@ -172,13 +163,13 @@
                     </span>
                 </div>
 
+            <!-- Button for GameLog component -->
             <button v-if='userName' v-on:click="show = !show">
                 Game Log
             </button>
 
+            <!-- If button is clicked, show the game logs --> 
             <div v-if='show'>
-                
-
                 <div id='history'>
                     <game-logs v-for='round in rounds' v-bind:round='round.round'
                     v-bind:player='round.player'
@@ -196,6 +187,7 @@
 </div>
 
 </div>
+    <!-- Template for game-logs --> 
     <script id='game-logs' type='text/x-template'>
         <div>
             <ul>

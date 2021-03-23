@@ -247,10 +247,17 @@ h1 {
     
 }
 
+
+
 .stockBtn {
     width: 150px;
+    
 
 } 
+
+.stockBtn:hover, .stockBtn:active {
+    color: green;
+}
 
 
 

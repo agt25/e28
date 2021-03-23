@@ -180,7 +180,7 @@ const Game = {
                 // Selects a random stock from those on the page
                 setTimeout(function () {
                    this.$refs.submitStock.click();
-                }.bind(this), 3000)
+                }.bind(this), 3200)
                 
             } else {
     
@@ -190,6 +190,7 @@ const Game = {
             }
 
         },
+
         randomStock() {
 
             /* Select a random stock from the list of stocks.
@@ -309,6 +310,8 @@ const Game = {
         roundResult(stock) {
 
             /* Generate Winner or Loser Message */
+
+            
             
 
 
@@ -367,7 +370,11 @@ const Game = {
             this.selected = true;
             this.lastRound();
             this.shuffle();
-
+            if (this.activePlayer.networth >= 1000000) {
+                this.roundMessage = 'Game Won!';
+                
+            }
+            
         }
     }
 }
