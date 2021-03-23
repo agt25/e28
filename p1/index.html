@@ -114,8 +114,8 @@
                     </div>
 
                     <!-- If user has selected a stock, show basic stats -->
-                    <div v-if='activePlayer'>
-                        
+                    <div v-if='selected'>
+
                         <br>
                         <span>
                             Networth:
@@ -123,19 +123,32 @@
                         <br>
                         <span v-bind:class="{ won: won, lost: !won}">{{ displayMessage }}</span>
                         <br>
-                        <span v-bind:value='activePlayer' class='shadow-3'> 
-                            {{ activePlayer.name }} invested in {{ activePlayer.lastStock }}
+                        <span v-bind:value='activePlayer' class='shadow-3'>
+                            {{ activePlayer.name }}
+                            invested in
+                            {{ activePlayer.lastStock }}
+                            <span v-bind:class="{ won: won, lost: !won}">
+                                {{ activePlayer.lastChange }}
+
+                            </span>
                         </span>
+                        <br>
+
                     </div>
-                    <!-- Else, show game directions -->
-                    <div>
+
+                    <div v-if='!selected'>
                         It's 2009.
                         <br>
-                        Select a mystery stock to invest in.
-                        <div>Will you be a present day winner or loser?</div>
+                        Select a mystery stock to invest $10,000 in.
+                        <br>
+                        Find out how much you'll have made or lost today.
+                        <div>The computer selects after you.</div>
+                        <br>
+                        Repeat until you're worth at least $3,000,000.
+                        <br>
+                        Whoever hits the networth target first wins the game!
                     </div>
                 </div>
-                <button id='limit' v-on:click='limitDisplay'>Limit</button>
 
             </div>
 
@@ -149,10 +162,10 @@
                     <span v-bind:value='players' v-for='player in players' class='stats-item'>
                         {{ player.name }}
                         <span class='count-item win'>
-                            {{ player.won }} 
+                            {{ player.won }}
                         </span>
                         <span class='count-item loss'>
-                            {{ player.lost }} 
+                            {{ player.lost }}
                         </span>
                     </span>
                 </div>
@@ -160,15 +173,18 @@
                 <!-- Rounds History -->
                 <div v-for='round in rounds' class='history-wrapper'>
                     <div class='history-item'>
-                    Round:
-                    {{ round.round }}
+                        Round:
+                        {{ round.round }}
                         <br>
-                    Player:
-                    {{ round.player }}
-                    {{ round.result }} {{ formatPrice(round.change) }} by investing in {{ round.stock }}
+                        Player:
+                        {{ round.player }}
+                        {{ round.result }}
+                        {{ formatPrice(round.change) }}
+                        by investing in
+                        {{ round.stock }}
                         <br>
-                    Networth:
-                    {{ formatPrice(round.networth) }}
+                        Networth:
+                        {{ formatPrice(round.networth) }}
                     </div>
                 </div>
             </div>

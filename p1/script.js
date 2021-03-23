@@ -2,7 +2,7 @@ const Game = {
     data() {
         return {
             activePlayer: null,
-            selectedStock: [],
+            selected: false,
             gameStarted: false,
             startAmount: 10000,
             roundMessage: '',
@@ -258,6 +258,8 @@ const Game = {
 
         },
         stockReturn(stock) {
+
+            this.selected = true;
             
             // Register the last stock user selected 
             this.activePlayer.lastStock = stock.name;
