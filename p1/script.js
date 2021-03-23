@@ -98,6 +98,8 @@ const Game = {
             return this.roundMessage;
         },
         displayPrevious() {
+
+            // Return the details of the last round played
             if (this.selected) {
                 let last = this.rounds[this.rounds.length - 1];
                 return last;
@@ -105,31 +107,36 @@ const Game = {
 
         }
     },
+
     created() {
         
+        /* 
+        Load all stocks by making the API call,
+        but render only 6 stocks at a time 
+        */
+
         this.loadStocks();
         this.limitDisplay();
 
     },
-    methods: {
-        lastRound() {
-            // let last = this.rounds[this.rounds.length - 1];
-            // return last;
-            
 
-        },
+    methods: {
         newUsers() {
-            /* Register a new user and computer object */
-            players = [];
+
+            /* 
+            Register the new user 
+            and the computer object 
+            */
 
             // The game has started
+            players = [];
             this.gameStarted = true;
 
-            // 
+            // Reset any changed default stats
             this.gameOver = false;
             this.userWins = false;
 
-            // Save the enter userName as the name of the user
+            // Save the entered userName as the name of the user
             var user = {
                 name: this.userName,
                 networth: 0,
@@ -140,10 +147,10 @@ const Game = {
                 won: 0,
                 lost: 0
             };
-            this
-                .players
-                .push(user);
+            this.players.push(user);
 
+
+            // Save a new computer object
             var computer = {
                 name: 'Computer',
                 networth: 0,
@@ -154,33 +161,35 @@ const Game = {
                 won: 0,
                 lost: 0
             };
-            this
-                .players
-                .push(computer);
+            this.players.push(computer);
+
+            // Check who the active user is
             this.currentPlayer();
 
         },
         currentPlayer() {
 
-            /* Switch active players,
-            based on whether the round is even or odd */
+            /* 
+            Switch active players,
+            based on whether the round is even or odd 
+            */
 
-            
+            // If the round is even, the computer selects a stock
             if (this.gameRound % 2 == 0) {
 
                 setTimeout(function () {
-                   this.playing = "Computer's turn";
-                this.activePlayer = this.players[1];
-                setTimeout(function () {
-                   this.$refs.submitStock.click();
+
+                    // Make computer the 'active' player 
+                    this.playing = "Computer's turn";
+                    this.activePlayer = this.players[1];
+
+                    // Wait 3 seconds total before selecting a stock 
+                    setTimeout(function () {
+                        this.$refs.submitStock.click();
+                    }.bind(this), 1500)
+
                 }.bind(this), 1500)
-                }.bind(this), 1500)
-                // If round is even, the computer plays
-                
-    
-                // Selects a random stock from those on the page
-                
-                
+
             } else {
     
                 // If round is odd, it's the user's turn
@@ -192,8 +201,10 @@ const Game = {
 
         randomStock() {
 
-            /* Select a random stock from the list of stocks.
-            To be used by limitDisplay() */
+            /* 
+            Select a random stock from the list of stocks.
+            To be used by limitDisplay() 
+            */
 
             let keys = Object.keys(this.stocks);
             let randomIndex = keys[Math.floor(Math.random() * keys.length)];
@@ -201,28 +212,34 @@ const Game = {
             return item;
 
         },
+
         limitDisplay() {
 
-            /* Displays 6 random stocks by calling randomStock().
-            Pushes the results into an array */
+            /* 
+            Displays 6 random stocks by calling randomStock().
+            Pushes the results into an array 
+            */
 
-            // Clear the array each call
+            // Clear the array on each call
             this.displayedStocks = [];
 
-            // Make the calls to randomStock
+            // Push six random stocks
             for (i = 0; i < 6; i++) {
-                this
-                    .displayedStocks
+                this.displayedStocks
                     .push(this.randomStock());
-
             };
+
+            // Update the current player 
             this.currentPlayer();
 
         },
+
         loadStocks() {
 
-            /* Get the current (latest) price of every stock in 'stocks'.
-            Save the API key */
+            /* 
+            Gets the latest price of every stock in 'stocks'.
+            Updates each stock object's current price.
+            */
 
             let apiKey = 'c1blnrf48v6sp0s4v640';
 
@@ -240,22 +257,27 @@ const Game = {
                 });
 
         },
+
         formatPrice(value) {
 
-            // Format user's networth as dollar currency
+            // Format currency as US dollars 
             let formatter = new Intl.NumberFormat('en-US', {
                 style: 'currency',
                 currency: 'USD',
                 minimumFractionDigits: 0
             });
             return formatter.format(value);
+
         },
+
         shuffle() {
 
-            // Suffle the stocks displayed
+            // Suffle the stocks currently displayed
             this.stocks = _.shuffle(this.stocks);
             this.limitDisplay();
+
         },
+
         resetGame() {
 
             // Reset all the rounds data
@@ -270,14 +292,18 @@ const Game = {
             this.newUsers();
 
         },
+
         stockReturn(stock) {
 
-            
-            
-            // Register the last stock user selected 
-            this.activePlayer.lastStock = stock.name;
+            /* 
+            Register the stock the user selected;
+            calculate the ROI (in dollars),
+            and update the user's networth 
+            */
 
-            // Save the user's old networth
+            
+            // Register the last selection and the user's prior worth
+            this.activePlayer.lastStock = stock.name;
             let oldNet = this.activePlayer.networth;
             
 
@@ -293,7 +319,7 @@ const Game = {
             this.activePlayer.lastChange = change;
             
 
-            // ROI in dollar format 
+            // Update ROI in currency format 
             let formatChange = this.formatPrice(change);
             this.activePlayer.showChange = formatChange;
 
@@ -304,24 +330,47 @@ const Game = {
             this.activePlayer.networth = newNet;
             this.activePlayer.showNet = showNet; 
 
-            // Get custom round messages based on the investment return
-            this.roundResult(stock);
+            // Check if the game has been won
+            this.checkGameStatus(stock);
 
         },
-        roundResult(stock) {
 
-            /* Generate Winner or Loser Message */
+        checkGameStatus(stock) {
+
+            /* 
+            Method checks if we have a round winner,
+            or a game winner. 
+            */ 
+
+
+            // If one's networth has hit the target, announce winner
             if (this.activePlayer.networth >= 3000000) {
+                 this.gameRound = 0;
+
+                // If the computer won, update 'gameOver'
                 if (this.activePlayer.name == 'Computer') {
-                    this.gameRound = 1;
                     this.gameOver = true;
                 }
                 else {
-                    this.gameRound = 1;
+                    // If the user won, update 'userWins'
                     this.userWins = true;
                 }
             }
 
+            // Save the result of this stock play/selection as a `round`
+            this.roundResult(stock);
+
+        },
+
+        roundResult(stock) {
+
+            /* 
+            Method adds a round to the array of rounds. 
+            Assigns the appropriate stats for that round (user playing, 
+            stock they picked, their return, and results) 
+            */
+
+            
 
             if (this.activePlayer.lastChange > this.startAmount) {
 
@@ -375,26 +424,21 @@ const Game = {
                         showChange: this.activePlayer.showChange
                     });
             }
+            // Announce that a selection was made
             this.selected = true;
-
-            // Access this last round 
-            this.lastRound();
 
             // Shuffle the stocks displaying 
             this.shuffle();
-
-            // Check if anyone won the game
-            
-            
         }
     }
 }
+
 
 const GameLogs = {
     name: 'GameLogs',
     props: {
         round: {
-            type: Number, 
+            type: Number
         },
         player: {
             type: String
@@ -420,6 +464,7 @@ const GameLogs = {
     },
     template: '#game-logs'
 }
+
 
 const app = Vue.createApp(Game)
 app.component('game-logs', GameLogs);
