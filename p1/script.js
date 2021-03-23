@@ -132,6 +132,7 @@ const Game = {
             var user = {
                 name: this.userName,
                 networth: 0,
+                lastStock: null,
                 lastChange: 0,
                 won: 0,
                 lost: 0
@@ -143,6 +144,7 @@ const Game = {
             var computer = {
                 name: 'Computer',
                 networth: 0,
+                lastStock: null,
                 lastChange: 0,
                 won: 0,
                 lost: 0
@@ -257,6 +259,10 @@ const Game = {
         },
         stockReturn(stock) {
             
+            // Register the last stock user selected 
+            this.activePlayer.lastStock = stock.name;
+
+
             // Check how many shares the user bought 
             let sharesOwned = 10000 / stock.oldPrice;
 
@@ -282,7 +288,7 @@ const Game = {
             /* Generate Winner or Loser Message */
 
 
-            if (this.activePlayer.networth > this.startAmount) {
+            if (this.activePlayer.lastChange > this.startAmount) {
 
                 // User Won
                 this.roundMessage = 'Winner';
@@ -298,7 +304,7 @@ const Game = {
                         networth: this.activePlayer.networth,
                         change: this.activePlayer.lastChange,
                     });
-            } else if (this.activePlayer.networth < this.startAmount) {
+            } else if (this.activePlayer.lastChange < this.startAmount) {
 
                 // Computer Won
                 this.won = false;

@@ -114,9 +114,8 @@
                     </div>
 
                     <!-- If user has selected a stock, show basic stats -->
-                    <div>
-                        <span class='shadow-3'>Invested in
-                        </span>
+                    <div v-if='activePlayer'>
+                        
                         <br>
                         <span>
                             Networth:
@@ -124,6 +123,9 @@
                         <br>
                         <span v-bind:class="{ won: won, lost: !won}">{{ displayMessage }}</span>
                         <br>
+                        <span v-bind:value='activePlayer' class='shadow-3'> 
+                            {{ activePlayer.name }} invested in {{ activePlayer.lastStock }}
+                        </span>
                     </div>
                     <!-- Else, show game directions -->
                     <div>
@@ -137,7 +139,7 @@
 
             </div>
 
-            <button v-on:click="show = !show">
+            <button v-if='userName' v-on:click="show = !show">
                 Game Log
             </button>
 
@@ -147,26 +149,27 @@
                     <span v-bind:value='players' v-for='player in players' class='stats-item'>
                         {{ player.name }}
                         <span class='count-item win'>
-                            {{ player.won }}
+                            {{ player.won }} 
                         </span>
                         <span class='count-item loss'>
-                            {{ player.lost }}
+                            {{ player.lost }} 
                         </span>
                     </span>
                 </div>
 
                 <!-- Rounds History -->
-                <div v-for='round in rounds'>
+                <div v-for='round in rounds' class='history-wrapper'>
+                    <div class='history-item'>
                     Round:
                     {{ round.round }}
-                    <br>
+                        <br>
                     Player:
                     {{ round.player }}
-                    {{ round.result }}
-                    <br>
+                    {{ round.result }} {{ formatPrice(round.change) }} by investing in {{ round.stock }}
+                        <br>
                     Networth:
-                   
                     {{ formatPrice(round.networth) }}
+                    </div>
                 </div>
             </div>
 

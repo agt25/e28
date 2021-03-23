@@ -230,6 +230,23 @@ h1 {
     align-content: center;
 }
 
+.rounds {
+    align-items: center;
+    justify-content: center;
+}
+
+.history-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 100%;
+    justify-content: center;
+    
+    
+}
+
+
+
 .manual-item:nth-child(1) {
     display: block;
     flex-grow: 0;
