@@ -301,7 +301,10 @@ h1 {
     
 }
 
-
+#reset3 {
+    left: -100%;
+    text-align: right;
+}
 
 .logs {
     list-style-type: none;

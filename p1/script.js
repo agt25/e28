@@ -174,14 +174,18 @@ const Game = {
             
             if (this.gameRound % 2 == 0) {
 
-                // If round is even, the computer plays
-                this.playing = "Computer is selecting a stock";
+                setTimeout(function () {
+                   this.playing = "Computer's turn";
                 this.activePlayer = this.players[1];
-    
-                // Selects a random stock from those on the page
                 setTimeout(function () {
                    this.$refs.submitStock.click();
-                }.bind(this), 3200)
+                }.bind(this), 2000)
+                }.bind(this), 2000)
+                // If round is even, the computer plays
+                
+    
+                // Selects a random stock from those on the page
+                
                 
             } else {
     

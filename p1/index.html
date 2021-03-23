@@ -81,14 +81,27 @@
                             <div class='col-4 col-md-4 col-lg-4 top-stats-item text-center'>
                                 <button v-on:click='resetGame' class='btn-primary text-center' id='reset'>Reset</button>
                             </div>
-                            <div class='col-4 col-md-4 col-lg-4 top-stats-item text-center'>
-                                <button class='text-center' v-on:click='resetGame' id='reset'>Reset</button>
+                            <div class='col-2 col-md-1 col-lg-1 top-stats-item text-center'>
+                                <button class='text-right' v-on:click='resetGame' id='reset3'>Reset</button>
                             </div>
                             
 
                         </div>
                         </div>
+                         <div class='container'>
+                        <div class='top-stats-wrap'>
 
+                            <!-- Show basic stats like current player and current round -->
+                            <div v-if='activePlayer'
+                            v-bind:value='playing'
+                                class='col-12 top-stats-item text-center'>
+                                {{ playing }}
+                            
+
+                        </div>
+                        </div>
+
+                        
                         
 
                         <div class='container'>
@@ -97,14 +110,13 @@
                             <!-- Show basic stats like current player and current round -->
                             <div
                                 v-if='activePlayer'
-                                v-bind:value='playing, gameRound'
+                                v-bind:value='playing, activePlayer, gameRound'
                                 class='col-4 col-md-4 col-lg-4 top-stats-item text-center'>
-                                #
-                                {{ gameRound }}
-                                {{ playing }}
+                                
+                                {{ activePlayer.name }} is playing...
                                 
                             </div>
-                            <div v-bind:value='gameRound' class='col-4 col-md-4 col-lg-4 top-stats-item text-center'>
+                            <div v-bind:value='gameRound, activePlayer' class='col-4 col-md-4 col-lg-4 top-stats-item text-center'>
                                 Round #
                                 {{ gameRound }}
                             </div>
@@ -147,8 +159,8 @@
                             <span v-bind:class="{ won: won, lost: !won}">{{ displayMessage }}</span>
                             <br>
                             <div v-bind='displayPrevious'>
-                                <mark><bold>
-                                {{ displayPrevious.player }} </mark></bold>
+                                <mark>
+                                {{ displayPrevious.player }} </mark>
                                 invested in
                                 {{ displayPrevious.stock }}
                                 <br>
@@ -239,7 +251,7 @@
 <div>
     <ul class='logs text-center'>
         <li>
-            Round #:
+            Round #
             {{ round }}</li>
         <li>
             Player:
