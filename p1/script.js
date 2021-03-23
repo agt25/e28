@@ -169,18 +169,6 @@ const Game = {
             }
 
         },
-        computerSelects() {
-
-            // /* Select a random stock from the ones displaying */
-
-            // let keys = Object.keys(this.displayedStocks);
-            // let randomIndex = keys[Math.floor(Math.random() * keys.length)];
-            // let stock = this.displayedStocks[randomIndex];
-            // console.log(stock);
-            // // calculate the return of the stock 
-            // this.stockReturn(stock);
-
-        },
         randomStock() {
 
             /* Select a random stock from the list of stocks.
@@ -262,9 +250,6 @@ const Game = {
         stockReturn(stock) {
             
 
-        
-            
-
             let sharesOwned = 10000 / stock.oldPrice;
 
             // Calculate new networth
@@ -294,7 +279,8 @@ const Game = {
                         round: this.gameRound++,
                         player: this.activePlayer.name,
                         result: 'won',
-                        stock: stock.name
+                        stock: stock.name,
+                        networth: this.activePlayer.networth,
                     });
             } else if (this.activePlayer.networth < this.startAmount) {
 
@@ -308,7 +294,8 @@ const Game = {
                         round: this.gameRound++,
                         player: this.activePlayer.name,
                         result: 'lost',
-                        stock: stock.name
+                        stock: stock.name,
+                        networth: this.activePlayer.networth,
                     });
             } else {
 
@@ -319,7 +306,8 @@ const Game = {
                         round: this.gameRound++,
                         player: this.activePlayer.name,
                         result: 'Tie',
-                        stock: stock.name
+                        stock: stock.name,
+                        networth: this.activePlayer.networth
                     });
             }
             this.shuffle();

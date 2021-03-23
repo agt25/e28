@@ -78,7 +78,7 @@
                         <!-- Show basic stats like current player and current round -->
                         <div v-bind:value='activePlayer' class='top-stats-item'>
                             Playing:
-                            {{ activePlayer }}
+                            {{ activePlayer.name }}
                         </div>
                         <div v-bind:value='gameRound' class='top-stats-item'>
                             Round #
@@ -176,6 +176,8 @@
                         Round: {{ round.round }}
                         <br>
                         Player: {{ round.player }} {{ round.result }}
+                        <br>
+                        Networth: {{ round.networth }}
                     </div>
                 </div>
 
