@@ -128,7 +128,7 @@ header {
 body {
     max-height: 100%;
     margin: 0! important;
-    background-image: url('images/back.svg');
+    background-image: url(images/back.svg);
     background-size: cover;
     background-position: center;
     background-size: auto;
@@ -326,6 +326,17 @@ h1 {
     width: 90px;
     text-align: right;
 }
+
+#game_over {
+    width: 300px;
+    height: 300px;
+}
+
+#user_wins {
+    width: 300px;
+    height: 300px;
+}
+
 
 .logs {
     list-style-type: none;

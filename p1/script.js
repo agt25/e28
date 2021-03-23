@@ -3,16 +3,15 @@ const Game = {
         return {
             playing: '',
             activePlayer: null,
-            selectedStock: null,
             selected: false,
             gameStarted: false,
             startAmount: 10000,
             roundMessage: '',
             isActive: false,
-            disabled: false,
-            todayWorth: null,
             userName: null,
             won: false,
+            gameOver: false,
+            userWins: false,
             show: false,
             guide: false,
             players: [],
@@ -136,6 +135,10 @@ const Game = {
             // The game has started
             this.gameStarted = true;
 
+            // 
+            this.gameOver = false;
+            this.userWins = false;
+
             // Save the enter userName as the name of the user
             var user = {
                 name: this.userName,
@@ -180,8 +183,8 @@ const Game = {
                 this.activePlayer = this.players[1];
                 setTimeout(function () {
                    this.$refs.submitStock.click();
-                }.bind(this), 2000)
-                }.bind(this), 2000)
+                }.bind(this), 1500)
+                }.bind(this), 1500)
                 // If round is even, the computer plays
                 
     
@@ -284,6 +287,9 @@ const Game = {
             // Register the last stock user selected 
             this.activePlayer.lastStock = stock.name;
 
+            // Save the user's old networth
+            let oldNet = this.activePlayer.networth;
+            
 
             // Check how many shares the user bought 
             let sharesOwned = 10000 / stock.oldPrice;
@@ -292,9 +298,10 @@ const Game = {
             let result = stock.currentPrice * sharesOwned;
             result = Math.round(result);
 
-            // Calculate ROI in dollars
-            change = result - 10000;
+            // Calculate ROI in total dollars
+            let change = result - 10000;
             this.activePlayer.lastChange = change;
+            
 
             // ROI in dollar format 
             let formatChange = this.formatPrice(change);
@@ -302,9 +309,7 @@ const Game = {
 
 
             // Update the user's total networth after investment 
-            oldNet = this.activePlayer.networth;
-            newNet = result + oldNet;
-
+            newNet = change + oldNet;
             showNet = this.formatPrice(newNet);
             this.activePlayer.networth = newNet;
             this.activePlayer.showNet = showNet; 
@@ -316,15 +321,23 @@ const Game = {
         roundResult(stock) {
 
             /* Generate Winner or Loser Message */
+            if (this.activePlayer.networth >= 40000) {
+                if (this.activePlayer.name == 'Computer') {
+                    this.gameRound = 1;
+                    this.gameOver = true;
 
-            
-            
+                }
+                else {
+                    this.gameRound = 1;
+                    this.userWins = true;
+                }
+                
+            }
 
 
             if (this.activePlayer.lastChange > this.startAmount) {
 
                 // User Won
-                
                 this.roundMessage = 'Winner';
                 this.won = true;
                 this.activePlayer.won++;
@@ -342,7 +355,7 @@ const Game = {
                     });
             } else if (this.activePlayer.lastChange < this.startAmount) {
 
-                // Computer Won
+                // User lost
                 this.won = false;
                 this.roundMessage = 'Loser';
                 this.activePlayer.lost++;
@@ -360,6 +373,7 @@ const Game = {
                     });
             } else {
 
+                // The stock did not change
                 this.roundMessage = `You did not win or lose anything`;
                 this
                     .rounds
@@ -374,12 +388,15 @@ const Game = {
                     });
             }
             this.selected = true;
+
+            // Access this last round 
             this.lastRound();
+
+            // Shuffle the stocks displaying 
             this.shuffle();
-            if (this.activePlayer.networth >= 1000000) {
-                this.roundMessage = 'Game Won!';
-                
-            }
+
+            // Check if anyone won the game
+            
             
         }
     }
