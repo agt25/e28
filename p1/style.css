@@ -196,6 +196,7 @@ h1 {
 
 #logBtn {
     width: 200px;
+    
 
 }
 
@@ -330,6 +331,8 @@ h1 {
     list-style-type: none;
     padding: 0.5rem 3.5rem 0.5rem 3.5rem;
     line-height: 2rem;
+    border-bottom: 1px solid slategray;
+    border-top: 1px dotted green;
 }
 
 .log-items {

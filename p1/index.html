@@ -231,7 +231,7 @@
                         <!-- Button that 'Resets' the game -->
                         <div class='row justify-content-around bottom-buttons'>
                             <div class='col-6 text-center' id='resetBtn'>
-                                <button class='text-center' v-on:click='resetGame' id='reset3'>Reset</button>
+                                <button class='text-center btn' v-on:click='resetGame' id='reset3'>Reset</button>
                             </div>
 
                         </div>
@@ -239,7 +239,7 @@
                         <!-- Button for Game Logs component -->
                         <div class='row justify-content-around bottom-buttons'>
                             <div class='col-6 text-center' id='logBtn'>
-                                <button v-if='userName' v-on:click="show = !show">
+                                <button v-if='userName' v-on:click="show = !show" class='btn btn-light'>
                                     Game Log
                                 </button>
                             </div>
