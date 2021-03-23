@@ -94,7 +94,9 @@
                         <div v-else-if='userWins'>
                             <div class='row justify-content-center text-center'>
                                 <img id='user_wins' src='images/winner.svg'>
-                                <p>Congrats! You are now rich!</p>
+                                <h6>Congrats!! You won the game!!</h6>
+                                <p>You found all this wealth during a pandemic...<br>
+                                    Some of us can't even find our phones :(</p>
                             </div>
                         </div>
 
@@ -129,6 +131,10 @@
                                         4. Allow the computer 4 seconds max to select a stock and play a round.<br>
                                         5. Whoever accumulates a networth of at least $3,000,000 first wins the game!
                                         <br>
+                                        <br>
+                                        PS, please do not select on behalf of the computer. 
+                                        <br> Let's be nice and let the computer play for once. 
+                                        They do so much for us :'(. 
                                     </div>
                                 </div>
                             </div>
@@ -257,7 +263,7 @@
                             <div class='col-6 text-center' id='resetBtn'>
                                 <button class='text-center btn' v-on:click='resetGame' id='reset3'>
                                     <p v-if='!gameOver && !userWins'>Reset</p>
-                                    <p v-else="v-else">Play Again</p>
+                                    <p v-else>Play Again</p>
                                 </button>
                             </div>
 

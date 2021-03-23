@@ -2,12 +2,42 @@
     display: none;
 }
 
+html {
+
+    background-color: #F8F8F8;
+    max-height: 100%;
+    margin: 0 ! important;
+    overflow-x: hidden;
+
+
+}
+
+.game {
+    background-image: url(images/back.svg);
+     background-size: cover;
+     background-position: center;
+     background-size: auto;
+}
+
+body {
+    max-height: 100%;
+    margin: 0 ! important;
+    
+
+}
+
 h1 {
     text-align: center;
-    font-size: 1.8em;
+    font-size: 20px;
     font-family: monospace;
     padding: 0.7em;
 }
+
+h2, h3, h4, h5, h6 {
+    font-size: 1rem;
+}
+
+
 
 #limit {
     width: 80px;
@@ -125,32 +155,8 @@ header {
 }
 
 
-body {
-    max-height: 100%;
-    margin: 0! important;
-    background-image: url(images/back.svg);
-    background-size: cover;
-    background-position: center;
-    background-size: auto;
-    
-
-   /* background: rgb(255, 255, 255);
-   background: linear-gradient(90deg, rgba(255, 255, 255, 0.006039915966386533) 6%, rgba(255, 255, 255, 0) 12%, rgba(131, 255, 4, 0.19371498599439774) 14%, rgba(255, 4, 13, 0.21332282913165268) 15%, rgba(255, 145, 0, 0.13489145658263302) 16%, rgba(0, 212, 255, 0.09567577030812324) 24%, rgba(0, 212, 255, 0.022846638655462215) 64%); */
-}
 
 
-
-html {
-    
-    background-color: #F8F8F8;
-    max-height: 100%;
-    margin: 0 ! important;
-    overflow-x: hidden;
-    
-
-    
-  
-}
 
 @import url('https://fonts.googleapis.com/css?family=Cutive+Mono');
 

@@ -84,12 +84,7 @@ const Game = {
                     oldPrice: 34.6300,
                     currentPrice: null
                 },
-                Target2: {
-                    name: 'Target2',
-                    symbol: 'TGT',
-                    oldPrice: 34.6300,
-                    currentPrice: null
-                }
+                
             },
             displayedStocks: [],
             gameRound: 1,
@@ -321,17 +316,15 @@ const Game = {
         roundResult(stock) {
 
             /* Generate Winner or Loser Message */
-            if (this.activePlayer.networth >= 40000) {
+            if (this.activePlayer.networth >= 3000000) {
                 if (this.activePlayer.name == 'Computer') {
                     this.gameRound = 1;
                     this.gameOver = true;
-
                 }
                 else {
                     this.gameRound = 1;
                     this.userWins = true;
                 }
-                
             }
 
 
