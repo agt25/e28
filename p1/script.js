@@ -371,7 +371,6 @@ const Game = {
             */
 
             
-
             if (this.activePlayer.lastChange > this.startAmount) {
 
                 // User Won

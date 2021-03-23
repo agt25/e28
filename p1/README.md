@@ -3,16 +3,21 @@
 - By: _Angela T_
 - Production URL: <http://stonks.vue28.me>
 
-## Outside resources
+## Outside Resources
 
-Enter Keyboard Key by: https://codepen.io/gschier/pen/VKgyaY
+### Design 
+Enter Keyboard Key by Gschier on [CodePen](https://codepen.io/gschier/pen/VKgyaY)
 
-Format Price method for currency: https://stackoverflow.com/questions/43208012/how-do-i-format-currencies-in-a-vue-component answer by Rhod
 
-Stock's Current Price API: FinnHub
+### Vue Methods Resources
 
-Stock's 2009 Year Open (Split Adjusted Prices) () from MacroTrends.net
+Format price method for currency as suggested by [u/Rhod on StackOverflow](https://stackoverflow.com/questions/43208012/how-do-i-format-currencies-in-a-vue-component)
+
+### Misc
+
+Latest stock prices provided by FinnHub's API. 
+All 2009 historical split-adjusted prices from  MacroTrends. 
 
 ## Notes for instructor
 
-n/a
+I hope you win and enjoy the game! 
