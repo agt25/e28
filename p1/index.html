@@ -85,16 +85,13 @@
                                 </button>
                             </div>
 
-                            <div v-if='guide' class='container'>
+                            <div v-if='guide' class='container frosted'>
                                 <div class='row'>
                                     <div class="col-12" id="manualIntro">
                                         Find out how much you'd be worth today had you invested $10,000...<br>
                                         in a mystery stock back in 2009!
                                         <br>
-                                        For every 'pick', your 2021 networth gets re-evaluated.<br>
-                                        You'll also know just how much you will have won or lost on that particular
-                                        mystery stock.
-                                        <br>
+                                        
 
                                     </div>
                                     <div class="col-12" id="instructions">
@@ -103,7 +100,7 @@
                                         1. When it's your turn, click on a mystery stock (briefcase)
                                         <br>
                                         2. Ta-da! You'll know just how much (or little!) you won or lost!<br>
-                                        3. You'll also know how much your current networth is<br>
+                                        3. You'll also know how much your 2021 networth is<br>
                                         4. Allow the computer 4 seconds max to select a stock and play a round.<br>
                                         5. Whoever accumulates a networth of at least $3,000,000 first wins the game!
                                         <br>
@@ -232,15 +229,15 @@
                     <div class='container bottom-buttons'>
 
                         <!-- Button that 'Resets' the game -->
-                        <div class='row justify-content-around'>
+                        <div class='row justify-content-around bottom-buttons'>
                             <div class='col-6 text-center' id='resetBtn'>
-                                <button class='text-right' v-on:click='resetGame' id='reset3'>Reset</button>
+                                <button class='text-center' v-on:click='resetGame' id='reset3'>Reset</button>
                             </div>
 
                         </div>
 
                         <!-- Button for Game Logs component -->
-                        <div class='row justify-content-around'>
+                        <div class='row justify-content-around bottom-buttons'>
                             <div class='col-6 text-center' id='logBtn'>
                                 <button v-if='userName' v-on:click="show = !show">
                                     Game Log

@@ -177,6 +177,12 @@ h1 {
 
 
 
+.frosted {
+    background-color: rgba(153, 194, 125, 0.122);
+    backdrop-filter: blur(5px);
+    border-radius: 1rem;
+    border: 1px solid rgba(243, 243, 195, 0.122);
+}
 
 
 #manual {
@@ -185,8 +191,7 @@ h1 {
 }
 
 .bottom-buttons {
-    margin: 3rem;
-   
+    margin: 1rem 0.5rem 1rem 0.5rem; 
 }
 
 #logBtn {
@@ -216,6 +221,7 @@ h1 {
     text-align: center;
     font-size: 14px;
     text-shadow: rgba(0, 0, 0, 0) 2px 2px 2px;
+    margin: 0.5rem;
 }
 
 #howTo {
@@ -312,7 +318,7 @@ h1 {
 }
 
 * {
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 
 #reset3 {
