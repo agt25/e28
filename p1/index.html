@@ -75,9 +75,9 @@
                     <div class='top-stats-wrap'>
 
                         <!-- Show basic stats like current player and current round -->
-                        <div v-if='activePlayer' v-bind:value='activePlayer' class='top-stats-item'>
+                        <div v-if='activePlayer' v-bind:value='playing' class='top-stats-item'>
                             Playing:
-                            {{ activePlayer.name }}
+                            {{ playing }}
                         </div>
                         <div v-bind:value='gameRound' class='top-stats-item'>
                             Round #
@@ -114,25 +114,32 @@
                     </div>
 
                     <!-- If user has selected a stock, show basic stats -->
-                    <div v-if='selected'>
-
-                        <br>
-                        <span>
-                            Networth:
-                            {{ formatPrice(todayWorth) }}</span>
-                        <br>
+                    <div v-if='selected' >
                         <span v-bind:class="{ won: won, lost: !won}">{{ displayMessage }}</span>
                         <br>
-                        <span v-bind:value='activePlayer' class='shadow-3'>
-                            {{ activePlayer.name }}
+                        <div v-bind='displayPrevious'>
+                            {{ displayPrevious.player }} invested in {{ displayPrevious.stock }}
+                            <br>
+                            {{ displayPrevious.change }}
+                        </div>
+                        <!-- <span> {{ displayPrevious.player }}</span> -->
+                        <br>
+                        <!-- <span>
+                            Networth:
+                            {{ formatPrice(displayPrevious.networth) }}</span> -->
+                        <br>
+                        
+                        <!-- <br>
+                        <span v-bind:value='displayPrevious' class='shadow-3'>
+                           
                             invested in
-                            {{ activePlayer.lastStock }}
+                            {{ selectedStock }}
                             <span v-bind:class="{ won: won, lost: !won}">
-                                {{ activePlayer.lastChange }}
+                                {{ formatPrice(activePlayer.lastChange) }}
 
                             </span>
                         </span>
-                        <br>
+                        <br> -->
 
                     </div>
 
@@ -170,7 +177,16 @@
                     </span>
                 </div>
 
-                <!-- Rounds History -->
+                <div id='history'>
+                    <game-logs v-for='round in rounds' v-bind:round='round.round'
+                    v-bind:player='round.player'
+                    v-bind:result='round.result'
+                    v-bind:change='round.change'
+                    v-bind:stock='round.stock'
+                    v-bind:networth='round.networth'>
+                </game-logs>
+                </div>
+                <!-- Rounds History
                 <div v-for='round in rounds' class='history-wrapper'>
                     <div class='history-item'>
                         Round:
@@ -186,7 +202,7 @@
                         Networth:
                         {{ formatPrice(round.networth) }}
                     </div>
-                </div>
+                </div> -->
             </div>
 
         </div>
@@ -195,6 +211,19 @@
 </div>
 
 </div>
+    <script id='game-logs' type='text/x-template'>
+        <div>
+            <ul>
+                <li> Round #: {{ round }}</li>
+                <li> Player: {{ player }}</li>
+                <li> Result: {{ result }} {{ change }} by investing in {{ stock }}</li>
+                <li> Networth: {{ networth }} </li>
+            </ul>
+        </div>
+
+    
+    
+    </script>
 
 </body>
 </html>

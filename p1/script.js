@@ -1,7 +1,9 @@
 const Game = {
     data() {
         return {
+            playing: '',
             activePlayer: null,
+            selectedStock: null,
             selected: false,
             gameStarted: false,
             startAmount: 10000,
@@ -12,16 +14,6 @@ const Game = {
             userName: null,
             won: false,
             show: false,
-            userPlays: {
-                networth: 10000,
-                wins: 0,
-                losses: 0
-            },
-            computerPlays: {
-                networth: 10000,
-                wins: 0,
-                losses: 0
-            },
             players: [],
             logs: [],
             limit: 6,
@@ -115,6 +107,13 @@ const Game = {
             // Display whether the user is a winner or loser
             return this.roundMessage;
         },
+        displayPrevious() {
+            if (this.selected) {
+                let last = this.rounds[this.rounds.length - 1];
+                return last;
+            }
+
+        }
     },
     created() {
         this.loadStocks();
@@ -122,6 +121,12 @@ const Game = {
 
     },
     methods: {
+        lastRound() {
+            // let last = this.rounds[this.rounds.length - 1];
+            // return last;
+            
+
+        },
         newUsers() {
             /* Register a new user and computer object */
 
@@ -134,6 +139,7 @@ const Game = {
                 networth: 0,
                 lastStock: null,
                 lastChange: 0,
+                showChange: null,
                 won: 0,
                 lost: 0
             };
@@ -146,6 +152,7 @@ const Game = {
                 networth: 0,
                 lastStock: null,
                 lastChange: 0,
+                showChange: null,
                 won: 0,
                 lost: 0
             };
@@ -164,6 +171,7 @@ const Game = {
             if (this.gameRound % 2 == 0) {
 
                 // If round is even, the computer plays
+                this.playing = "Computer's turn";
                 this.activePlayer = this.players[1];
     
                 // Selects a random stock from those on the page
@@ -174,6 +182,7 @@ const Game = {
             } else {
     
                 // If round is odd, it's the user's turn
+                this.playing = "Your turn";
                 this.activePlayer = this.players[0];
             }
 
@@ -259,7 +268,7 @@ const Game = {
         },
         stockReturn(stock) {
 
-            this.selected = true;
+            
             
             // Register the last stock user selected 
             this.activePlayer.lastStock = stock.name;
@@ -274,11 +283,16 @@ const Game = {
 
             // Calculate ROI in dollars
             change = result - 10000;
+            // showChange = this.formatPrice(change);
             this.activePlayer.lastChange = change;
+
+            let formatChange = this.formatPrice(change);
+            this.activePlayer.showChange = formatChange;
 
             // Update the user's total networth after investment 
             oldNet = this.activePlayer.networth;
             newNet = result + oldNet;
+            // showNet = this.formatPrice(newNet);
             this.activePlayer.networth = newNet;
 
             // Get custom round messages based on the investment return
@@ -321,6 +335,7 @@ const Game = {
                         stock: stock.name,
                         networth: this.activePlayer.networth,
                         change: this.activePlayer.lastChange,
+                        showChange: this.activePlayer.showChange
                     });
             } else {
 
@@ -334,12 +349,48 @@ const Game = {
                         stock: stock.name,
                         networth: this.activePlayer.networth,
                         change: this.activePlayer.lastChange,
+                        showChange: this.activePlayer.showChange
                     });
             }
+            this.selected = true;
+            this.lastRound();
             this.shuffle();
+
         }
     }
 }
 
+const GameLogs = {
+    name: 'GameLogs',
+    props: {
+        round: {
+            type: Number, 
+        },
+        player: {
+            type: String
+        },
+        result: {
+            type: String
+
+        },
+        change: {
+            type: Number
+        },
+        stock: {
+            type: String
+        },
+        networth: {
+            type: Number
+        }
+    },
+    data() {
+        return {
+
+        }
+    },
+    template: '#game-logs'
+}
+
 const app = Vue.createApp(Game)
+app.component('game-logs', GameLogs);
 app.mount('#app');
