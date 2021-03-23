@@ -3,6 +3,7 @@ const Game = {
         return {
             activePlayer: null,
             selectedStock: [],
+            gameStarted: false,
             startAmount: 10000,
             roundMessage: '',
             isActive: false,
@@ -114,11 +115,6 @@ const Game = {
             // Display whether the user is a winner or loser
             return this.roundMessage;
         },
-        displayPlayer() {
-
-            // Display the current user playing
-            return this.userName;
-        }
     },
     created() {
         this.loadStocks();
@@ -127,9 +123,16 @@ const Game = {
     },
     methods: {
         newUsers() {
+            /* Register a new user and computer object */
+
+            // The game has started
+            this.gameStarted = true;
+
+            // Save the enter userName as the name of the user
             var user = {
                 name: this.userName,
                 networth: 0,
+                lastChange: 0,
                 won: 0,
                 lost: 0
             };
@@ -140,6 +143,7 @@ const Game = {
             var computer = {
                 name: 'Computer',
                 networth: 0,
+                lastChange: 0,
                 won: 0,
                 lost: 0
             };
@@ -154,17 +158,20 @@ const Game = {
             /* Switch active players,
             based on whether the round is even or odd */
 
+            
             if (this.gameRound % 2 == 0) {
+
+                // If round is even, the computer plays
                 this.activePlayer = this.players[1];
-                
     
-                
+                // Selects a random stock from those on the page
                 setTimeout(function () {
                    this.$refs.submitStock.click();
                 }.bind(this), 3000)
                 
-                
             } else {
+    
+                // If round is odd, it's the user's turn
                 this.activePlayer = this.players[0];
             }
 
@@ -172,7 +179,7 @@ const Game = {
         randomStock() {
 
             /* Select a random stock from the list of stocks.
-            To be used by limitDisplay() and computerSelects() */
+            To be used by limitDisplay() */
 
             let keys = Object.keys(this.stocks);
             let randomIndex = keys[Math.floor(Math.random() * keys.length)];
@@ -200,9 +207,12 @@ const Game = {
         },
         loadStocks() {
 
-            // Get the current (latest) price of every stock in 'stocks' Save the API key
+            /* Get the current (latest) price of every stock in 'stocks'.
+            Save the API key */
+
             let apiKey = 'c1blnrf48v6sp0s4v640';
 
+            // For each stock in 'stocks', fetch the current price
             Object
                 .values(this.stocks)
                 .forEach(stock => {
@@ -235,9 +245,7 @@ const Game = {
         resetGame() {
 
             // Reset all the rounds data
-            this
-                .rounds
-                .splice(0);
+            this.rounds.splice(0);
             this.gameRound = 1;
 
             // Empty the players array
@@ -249,23 +257,30 @@ const Game = {
         },
         stockReturn(stock) {
             
-
+            // Check how many shares the user bought 
             let sharesOwned = 10000 / stock.oldPrice;
 
-            // Calculate new networth
+            // Calculate total value of the investment 
             let result = stock.currentPrice * sharesOwned;
             result = Math.round(result);
 
+            // Calculate ROI in dollars
+            change = result - 10000;
+            this.activePlayer.lastChange = change;
+
+            // Update the user's total networth after investment 
             oldNet = this.activePlayer.networth;
             newNet = result + oldNet;
-
             this.activePlayer.networth = newNet;
+
+            // Get custom round messages based on the investment return
             this.roundResult(stock);
 
         },
         roundResult(stock) {
 
-            // Generate Winner or Loser Message
+            /* Generate Winner or Loser Message */
+
 
             if (this.activePlayer.networth > this.startAmount) {
 
@@ -281,6 +296,7 @@ const Game = {
                         result: 'won',
                         stock: stock.name,
                         networth: this.activePlayer.networth,
+                        change: this.activePlayer.lastChange,
                     });
             } else if (this.activePlayer.networth < this.startAmount) {
 
@@ -296,6 +312,7 @@ const Game = {
                         result: 'lost',
                         stock: stock.name,
                         networth: this.activePlayer.networth,
+                        change: this.activePlayer.lastChange,
                     });
             } else {
 
@@ -307,7 +324,8 @@ const Game = {
                         player: this.activePlayer.name,
                         result: 'Tie',
                         stock: stock.name,
-                        networth: this.activePlayer.networth
+                        networth: this.activePlayer.networth,
+                        change: this.activePlayer.lastChange,
                     });
             }
             this.shuffle();

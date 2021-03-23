@@ -24,11 +24,10 @@
             rel="stylesheet"
             integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
             crossorigin="anonymous">
-       
 
-        <!-- Vue  --> 
+        <!-- Vue -->
         <script src='https://unpkg.com/vue@next' defer="defer"></script>
-        <!-- Lodash --> 
+        <!-- Lodash -->
         <script
             src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.1/lodash.min.js"></script>
 
@@ -45,7 +44,7 @@
                 <div class='welcome-item'>
                     <h2>Welcome</h2>
                     <h3>Please
-                        <!-- CSS 'enter' key from CodePen --> 
+                        <!-- CSS 'enter' key from CodePen -->
                         <span class="keyboard">
                             <span class="keyboard__row keyboard__row--h1">
                                 <span class="key--bottom-right key--word key--w5" data-key="13">
@@ -76,7 +75,7 @@
                     <div class='top-stats-wrap'>
 
                         <!-- Show basic stats like current player and current round -->
-                        <div v-bind:value='activePlayer' class='top-stats-item'>
+                        <div v-if='activePlayer' v-bind:value='activePlayer' class='top-stats-item'>
                             Playing:
                             {{ activePlayer.name }}
                         </div>
@@ -136,57 +135,45 @@
                 </div>
                 <button id='limit' v-on:click='limitDisplay'>Limit</button>
 
+            </div>
+
+            <button v-on:click="show = !show">
+                Game Log
+            </button>
+
+            <div v-if='show'>
                 <!-- User Score Card -->
-                <div class='stats-flex'>
-                    <span v-bind:value='userName' class='stats-item'>
-                        {{ userName }}
-                        <div v-bind:value='userPlays' class='stats-counts'>
-                            <div class='count-item win'>Won:
-                                {{ userPlays.wins }}
-                            </div>
-                            <div class='count-item loss'>
-                                Lost:
-                                {{ userPlays.losses }}
-                            </div>
-                        </div>
-                    </span>
-
-                    <!-- Computer Score Card -->
-                    <span class='stats-item'>
-                        Computer
-                        <div v-bind:value='computerPlays' class='stats-counts'>
-                            <div class='count-item win'>
-                                Won:
-                                {{ computerPlays.wins }}
-                            </div>
-                            <div class='count-item loss'>
-                                Lost:
-                                {{ computerPlays.losses }}
-                            </div>
-                        </div>
+                <div v-if='gameStarted' class='stats-flex'>
+                    <span v-bind:value='players' v-for='player in players' class='stats-item'>
+                        {{ player.name }}
+                        <span class='count-item win'>
+                            {{ player.won }}
+                        </span>
+                        <span class='count-item loss'>
+                            {{ player.lost }}
+                        </span>
                     </span>
                 </div>
 
-                <button v-on:click="show = !show">
-                    Game Log
-                </button>
-
-                <div v-if='show'>
-                    <div v-for='round in rounds'>
-                        Round: {{ round.round }}
-                        <br>
-                        Player: {{ round.player }} {{ round.result }}
-                        <br>
-                        Networth: {{ round.networth }}
-                    </div>
+                <!-- Rounds History -->
+                <div v-for='round in rounds'>
+                    Round:
+                    {{ round.round }}
+                    <br>
+                    Player:
+                    {{ round.player }}
+                    {{ round.result }}
+                    <br>
+                    Networth:
+                   
+                    {{ formatPrice(round.networth) }}
                 </div>
-
-                <!-- History / Game Log -->
-
             </div>
 
         </div>
+
     </div>
+</div>
 
 </div>
 
