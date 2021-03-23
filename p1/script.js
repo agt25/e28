@@ -2,9 +2,11 @@ const Game = {
     data() {
         return {
             activePlayer: null,
-            selectedStock: '',
+            selectedStock: [],
             startAmount: 10000,
             roundMessage: '',
+            isActive: false,
+            disabled: false,
             todayWorth: null,
             userName: null,
             won: false,
@@ -105,7 +107,7 @@ const Game = {
         displayWorth() {
 
             // Display how much the user would be worth today
-            return this.todayWorth;
+
         },
         displayMessage() {
 
@@ -121,47 +123,62 @@ const Game = {
     created() {
         this.loadStocks();
         this.limitDisplay();
-        this.computerSelects();
 
     },
     methods: {
         newUsers() {
             var user = {
                 name: this.userName,
-                networth: 10000,
+                networth: 0,
                 won: 0,
                 lost: 0
             };
-            this.players.push(user);
+            this
+                .players
+                .push(user);
 
             var computer = {
                 name: 'Computer',
-                networth: 10000,
+                networth: 0,
                 won: 0,
                 lost: 0
             };
-            this.players.push(computer);
+            this
+                .players
+                .push(computer);
             this.currentPlayer();
 
         },
         currentPlayer() {
+
+            /* Switch active players,
+            based on whether the round is even or odd */
+
             if (this.gameRound % 2 == 0) {
                 this.activePlayer = this.players[1];
-
+                
+    
+                
+                setTimeout(function () {
+                   this.$refs.submitStock.click();
+                }.bind(this), 3000)
+                
+                
             } else {
                 this.activePlayer = this.players[0];
             }
-            
+
         },
         computerSelects() {
 
-            /* Select a random stock from the ones displaying */
+            // /* Select a random stock from the ones displaying */
 
-            let keys = Object.keys(this.displayedStocks);
-            let randomIndex = keys[Math.floor(Math.random() * keys.length)];
-            let comp = this.displayedStocks[randomIndex];
-            console.log(comp);
-            return comp;
+            // let keys = Object.keys(this.displayedStocks);
+            // let randomIndex = keys[Math.floor(Math.random() * keys.length)];
+            // let stock = this.displayedStocks[randomIndex];
+            // console.log(stock);
+            // // calculate the return of the stock 
+            // this.stockReturn(stock);
 
         },
         randomStock() {
@@ -209,12 +226,11 @@ const Game = {
                             stock.currentPrice = data.c;
                         })
                 });
-                
+
         },
         formatPrice(value) {
 
             // Format user's networth as dollar currency
-
             let formatter = new Intl.NumberFormat('en-US', {
                 style: 'currency',
                 currency: 'USD',
@@ -230,78 +246,68 @@ const Game = {
         },
         resetGame() {
 
-            // Reset all game stats
+            // Reset all the rounds data
             this
                 .rounds
                 .splice(0);
             this.gameRound = 1;
-            // Better design opp? into two statements?
-            this.userPlays.wins = 0;
-            this.userPlays.losses = 0;
-            this.computerPlays.wins = 0;
-            this.computerPlays.losses = 0;
-            this.selectedStock = '';
+
+            // Empty the players array
+            this.players = [];
+
+            // Re-register the user + the computer
+            this.newUsers();
 
         },
         stockReturn(stock) {
-
-            // Calculcate Stock Return
-            let oldBalance = this.activePlayer.networth;
-            let sharesOwned = oldBalance / stock.oldPrice; 
             
 
-            // Calculate new networth 
-            let newBalance = stock.currentPrice * sharesOwned;
-            newBalance = newBalance.toFixed(0);
-
-            
-           
-
-            this.activePlayer.networth = newBalance;
-
-            // Calculate change / roi 
-            let roi = newBalance - oldBalance; 
-            console.log(roi);
         
+            
 
+            let sharesOwned = 10000 / stock.oldPrice;
 
+            // Calculate new networth
+            let result = stock.currentPrice * sharesOwned;
+            result = Math.round(result);
 
-            // let sharesOwned = this.startAmount / stock.oldPrice; 
-            // let todaysWorth = stock.currentPrice *
-            // sharesOwned; todaysWorth = todaysWorth.toFixed(0); this.todayWorth =
-            // todaysWorth
+            oldNet = this.activePlayer.networth;
+            newNet = result + oldNet;
+
+            this.activePlayer.networth = newNet;
+            this.roundResult(stock);
 
         },
         roundResult(stock) {
 
             // Generate Winner or Loser Message
 
-            if (this.todayWorth > this.startAmount) {
+            if (this.activePlayer.networth > this.startAmount) {
 
                 // User Won
                 this.roundMessage = 'Winner';
                 this.won = true;
-                this.userPlays.wins++;
-                this.computerPlays.losses++;
+                this.activePlayer.won++;
                 this
                     .rounds
                     .push({
                         round: this.gameRound++,
-                        winner: this.activePlayer,
+                        player: this.activePlayer.name,
+                        result: 'won',
                         stock: stock.name
                     });
-            } else if (this.todayWorth < this.startAmount) {
+            } else if (this.activePlayer.networth < this.startAmount) {
 
                 // Computer Won
                 this.won = false;
                 this.roundMessage = 'Loser';
-                this.computerPlays.wins++;
-                this.userPlays.losses++;
+                this.activePlayer.lost++;
                 this
                     .rounds
                     .push({
                         round: this.gameRound++,
-                        winner: 'Computer',
+                        player: this.activePlayer.name,
+                        result: 'lost',
                         stock: stock.name
                     });
             } else {
@@ -311,7 +317,8 @@ const Game = {
                     .rounds
                     .push({
                         round: this.gameRound++,
-                        winner: 'Tie',
+                        player: this.activePlayer.name,
+                        result: 'Tie',
                         stock: stock.name
                     });
             }

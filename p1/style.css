@@ -292,23 +292,14 @@ h1 {
     /* padding-top: 1rem; */
 }
 
-.flex-items:nth-child(1) {
-    display: block;
-    flex-grow: 0;
-    flex-shrink: 1;
-    flex-basis: center;
-    align-self: center;
-    order: 0;
+.disabled {
+    
 }
 
-.flex-items>h1 {
-    font-size: 2rem;
-    color: white;
-    vertical-align: middle;
-    text-align: center;
-
+.isActive {
+    color: yellow;
+    background-color: pink;
 }
-
 
 
 .intro-item:nth-child(1) {
