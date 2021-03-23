@@ -184,12 +184,27 @@ h1 {
     display: none;
 }
 
+.bottom-buttons {
+    margin: 3rem;
+   
+}
+
+#logBtn {
+    width: 200px;
+
+}
+
+#resetBtn {
+    width: 200px;
+}
+
 #manualBtn {
     width: 50px;
     height: 20px;
     font-size: 10px;
     position: absolute;
-    top: 80px;
+    top: 200px;
+    left: 90%;
     padding: 2px;
 
 }
@@ -261,17 +276,6 @@ h1 {
 
 
 
-.stockBtn {
-    width: 150px;
-    
-
-} 
-
-.stockBtn:hover, .stockBtn:active {
-    color: green;
-}
-
-
 
 .manual-item:nth-child(1) {
     display: block;
@@ -307,8 +311,12 @@ h1 {
     
 }
 
+* {
+    border: 1px solid red;
+}
+
 #reset3 {
-    left: -100%;
+    width: 90px;
     text-align: right;
 }
 
@@ -329,6 +337,9 @@ h1 {
 
 }
 
+.networth {
+    border: 1px solid goldenrod;
+}
 
 .col-md-4 {
     align-self: center;
@@ -351,7 +362,7 @@ h1 {
 }
 
 #stock {
-    width: 70%;
+    width: 60%;
 }
 
 .stock-choices {
@@ -369,7 +380,7 @@ h1 {
 
 
 * {
-    border: 1px solid red;
+    
 }
 
 .flex-jumbo {

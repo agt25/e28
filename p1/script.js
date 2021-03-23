@@ -14,6 +14,7 @@ const Game = {
             userName: null,
             won: false,
             show: false,
+            guide: false,
             players: [],
             logs: [],
             limit: 6,
