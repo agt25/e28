@@ -39,7 +39,12 @@ input {
     outline: none;
 }
 
-
+mark {
+    font-weight: 500;
+    font-variant: small-caps;
+    font-size: 22px;
+    line-height: 3rem;
+}
 
 #welcome-head {
     letter-spacing: 0.65rem;
@@ -81,10 +86,12 @@ input {
 
 .won {
     color: green;
+    font-size: 24px;
 }
 
 .lost {
     color: red;
+    font-size: 22px;
 }
 
 #case {
@@ -246,7 +253,7 @@ h1 {
 }
 
 .top-player {
-    color: rgb(128, 156, 67);
+    color: rgb(84, 41, 150);
     letter-spacing: 2px;
     font-weight: 400;
 }
@@ -705,6 +712,7 @@ button {
     text-align: center;
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
+    font-size: 1.2rem;
 
 }
 
@@ -740,6 +748,14 @@ button {
     font-size: 19px;
     font-weight: 300;
     color: darkslategray;
+}
+
+
+
+.show_change {
+    font-size: 20px;
+    color: maroon;
+    letter-spacing: 2.5px;
 }
 
 #reset {

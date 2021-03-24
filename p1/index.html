@@ -135,6 +135,8 @@
                                         PS, please do not select on behalf of the computer. 
                                         <br> Let's be nice and let the computer play for once. 
                                         They do so much for us :'(. 
+                                        <br> Also, please do not reset the game while the computer is thinking...
+                                        <br> Don't be so rude! 
                                     </div>
                                 </div>
                             </div>
@@ -211,7 +213,7 @@
                                         invested in
                                         {{ displayPrevious.stock }}
                                         <br>
-                                        <span v-bind:class="{ won: won, lost: !won}">
+                                        <span v-bind:class="{ won: won, lost: !won}" class='show_change'>
                                             {{ displayPrevious.showChange }}</span>
                                     </div>
                                 </div>
@@ -230,8 +232,6 @@
                     </div>
 
                     <!-- Show each user's networth -->
-
-                    
                     <div v-if='gameStarted' class='stats-flex'>
                         <span  v-for='player in players' v-bind:key='player.name' v-bind:value='players'  class='stats-item'>
                             {{ player.name }}
