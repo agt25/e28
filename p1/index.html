@@ -52,8 +52,8 @@
             <!-- Render on first load; Ask user for their name -->
             <div v-if='!userName' class='welcome-container'>
                 <div class='welcome-item'>
-                    <h2>Welcome</h2>
-                    <h3>Please
+                    <p id='welcome-head'>Welcome</p>
+                    <h3>
 
                         <!-- CSS 'enter' key from CodePen -->
                         <span class="keyboard">
@@ -63,7 +63,7 @@
                                 </span>
                             </span>
                         </span>
-                        your name....</h3>
+                       <span id='name-text'>your name</span></h3>
                     <!-- Save the entered username as well as the user -->
                     <input
                         v-model.lazy.trim='userName'
@@ -139,6 +139,7 @@
                                 </div>
                             </div>
 
+                            
 
                             <div v-if='!gameOver && !userWins' class='top-stats-wrap'>
 
@@ -146,7 +147,7 @@
                                 <h3
                                     v-if='activePlayer'
                                     v-bind:value='playing'
-                                    class='col-12 top-stats-item text-center'>
+                                    class='col-12 top-stats-item text-center top-player'>
                                     {{ playing }}
                                 </h3>
                             </div>
@@ -229,11 +230,14 @@
                     </div>
 
                     <!-- Show each user's networth -->
+
+                    
                     <div v-if='gameStarted' class='stats-flex'>
                         <span  v-for='player in players' v-bind:key='player.name' v-bind:value='players'  class='stats-item'>
                             {{ player.name }}
                             <span class='count-item networth'>
-                                {{ formatPrice(player.networth) }}
+                               <button class='button'>{{ formatPrice(player.networth) }}
+                                   </button> 
                             </span>
 
                         </span>

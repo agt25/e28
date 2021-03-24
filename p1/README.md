@@ -8,6 +8,8 @@
 ### Design 
 Enter Keyboard Key by Gschier on [CodePen](https://codepen.io/gschier/pen/VKgyaY)
 
+Networth buttons customized from [fiddle](https://jsfiddle.net/q9mt0gzh/)
+
 
 ### Vue Methods Resources
 
