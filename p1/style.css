@@ -247,6 +247,8 @@ h1 {
 
 .top-player {
     color: rgb(128, 156, 67);
+    letter-spacing: 2px;
+    font-weight: 400;
 }
 
 /* Networth Buttons */
@@ -693,6 +695,14 @@ button {
     align-content: stretch;
 }
 
+.alert {
+    font-size: 19px;
+}
+
+#player_showing {
+    color: darkslategray;
+}
+
 .top-stats-item {
     display: block;
     flex-grow: 0;
@@ -700,6 +710,14 @@ button {
     flex-basis: auto;
     align-self: auto;
     order: 0;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+#round_showing {
+    font-size: 19px;
+    font-weight: 300;
+    color: darkslategray;
 }
 
 #reset {

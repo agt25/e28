@@ -160,7 +160,7 @@
                                     <h6
                                         v-if='activePlayer'
                                         v-bind:value='playing, activePlayer, gameRound'
-                                        class='col-4 col-md-4 col-lg-4 top-stats-item text-center'>
+                                        class='col-4 col-md-4 col-lg-4 top-stats-item text-center' id='player_showing'>
 
                                         {{ activePlayer.name }}
                                         is playing...
@@ -168,7 +168,7 @@
                                     <!-- Current round number --> 
                                     <div
                                         v-bind:value='gameRound, activePlayer'
-                                        class='col-4 col-md-4 col-lg-4 top-stats-item text-center'>
+                                        class='col-4 col-md-4 col-lg-4 top-stats-item text-center' id='round_showing'>
                                         Round #
                                         {{ gameRound }}
                                     </div>

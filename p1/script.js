@@ -374,7 +374,7 @@ const Game = {
             if (this.activePlayer.lastChange > this.startAmount) {
 
                 // User Won
-                this.roundMessage = 'Winner';
+                this.roundMessage = 'Winner!';
                 this.won = true;
                 this.activePlayer.won++;
                 this
@@ -393,7 +393,7 @@ const Game = {
 
                 // User lost
                 this.won = false;
-                this.roundMessage = 'Loser';
+                this.roundMessage = 'Loser!';
                 this.activePlayer.lost++;
                 this
                     .rounds
