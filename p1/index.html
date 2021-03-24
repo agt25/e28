@@ -244,16 +244,14 @@
                     </div>
 
                     <!-- Display wins and losses score card for each user -->
-                    <div v-if='gameStarted' class='stats-flex'>
-                        <span v-for='player in players' v-bind:key='player.name' v-bind:value='players' class='stats-item'>
-                            Stats
-
+                    <div v-if='gameStarted' class='stats-flex shadow-2 '>
+                        <span v-for='player in players' v-bind:key='player.name' v-bind:value='players' class='stats-item .shadow-4'>
                             <div class='row justify-content-center'>
-                                <span class='col-4 count-item win'>
-                                    {{ player.won }}
+                                <span class='col-4 count-item shadow-4 win'>
+                                    <span class='won_number'>{{ player.won }}</span>
                                 </span>
-                                <span class='col-4 count-item loss'>
-                                    {{ player.lost }}
+                                <span class='col-4 count-item shadow-4 loss'>
+                                    <span class='lost_number'>{{ player.lost }}</span>
                                 </span>
                             </div>
                         </span>

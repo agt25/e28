@@ -632,23 +632,42 @@ button {
 
 }
 
-.win {
-    border: 1px solid green;
-    width: 100%;
-    text-align: center;
-    font-size: 1rem;
+.won_number {
+    position: relative;
+    bottom: -30px;
+    font-size: 1.4rem;
     
-    
+}
 
+.lost_number {
+    position: relative;
+    bottom: -30px;
+    font-size: 1.4rem;
+
+}
+
+.win {
     
+    width: 100px;
+    text-align: center;
+    height: 80px;
+    background-image: url(/images/won.svg);
+    background-position: cover;
+    background-repeat: no-repeat;
+    background-size: contain;
+   
 }
 
 .loss {
 
-    border: 1px solid red;
-    width: 100%;
+    
+    width: 100px;
+    height: 80px;
     text-align: center;
-    font-size: 1rem;
+    background-position: cover;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url(/images/lost.svg);
     
 
 }
@@ -661,6 +680,7 @@ button {
     align-items: stretch;
     align-content: stretch;
 }
+
 
 .count-item {
      display: block;
@@ -683,6 +703,8 @@ button {
     justify-content: center;
     flex-wrap: nowrap;
     text-align: center;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
 
 }
 
