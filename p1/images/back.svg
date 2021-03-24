@@ -1,0 +1,15 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1400px' height='300px'>
+<defs>
+<linearGradient id='g1'>
+<stop stop-color='#fff'/>
+<stop offset='.06' stop-color='#fff' stop-opacity='.006039915966386533'/>
+<stop offset='.12' stop-color='#fff' stop-opacity='0'/>
+<stop offset='.14' stop-color='#83ff04' stop-opacity='.19371498599439774'/>
+<stop offset='.15' stop-color='#ff040d' stop-opacity='.21332282913165268'/>
+<stop offset='.16' stop-color='#ff9100' stop-opacity='.13489145658263302'/>
+<stop offset='.24' stop-color='#00d4ff' stop-opacity='.09567577030812324'/>
+<stop offset='.64' stop-color='#00d4ff' stop-opacity='.022846638655462215'/>
+</linearGradient>
+</defs>
+<rect width='100%' height='100%' fill='url(#g1)'/>
+</svg>
