@@ -1,7 +1,7 @@
 # Project 1
 
 - By: _Angela T_
-- Production URL: <http://stonks.vue28.me>
+- Production URL: [Stonks](http://e28p1.vue28.me)
 
 ## Outside Resources
 
