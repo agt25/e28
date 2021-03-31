@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang='en'>
+
+<head>
+    <title>Word Scramble - Refactored with SFC</title>
+    <meta charset='utf-8'>
+    <link href=data:, rel=icon>
+
+    <script src='/js/main.js' defer></script>
+
+    <style>
+        .mysteryWord {
+            font-family: consolas;
+            font-size: 25px;
+        }
+
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Word Scramble v2 - Refactored with SFC</h1>
+    <div id='app' v-cloak>
+
+        <div v-if='gameMode == "start"'>
+            <label for='name'>Enter your player name:</label>
+            <input type='text' id='name' v-model='name' v-on:keyup.enter='startGame'>
+            <button @click='startGame'>Let’s play!</button>
+        </div>
+
+        <div v-if='gameMode == "play"'>
+            <p>Game on, {{ name }}!</p>
+
+            <p>Your mystery word is: <span class='mysteryWord'>{{ displayWord }}</span></p>
+
+            <p>Hint: <em>{{ hint }}</em></p>
+
+            <label for='guess'>Your guess: </label>
+            <input type='text' id='guess' v-model.trim='guess'>
+            <button v-on:click='submitGuess' v-on:keyup.enter='submitGuess'>Submit guess</button>
+        </div>
+
+        <guess-feedback
+                        v-if='feedback'
+                        v-bind:correct='correct'
+                        v-on:load-game='loadGame()'>
+        </guess-feedback>
+    </div>
+</body>
+
+</html>

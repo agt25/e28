@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang='en'>
+
+<head>
+    <title>Week 5 Examples</title>
+    <meta charset='utf-8'>
+    <link href=data:, rel=icon>
+
+    <script src='https://unpkg.com/vue@next'></script>
+    <script src='script.js' defer></script>
+
+    <style>
+        [v-cloak] {
+            display: none
+        }
+
+        h2 {
+            font-family: Helvetica;
+            font-size: 15px;
+        }
+
+        img {
+            display: inline;
+            width: 50px;
+            margin-top: 10px;
+        }
+
+        .incorrect {
+            color: red;
+        }
+
+        .correct {
+            color: green;
+        }
+
+        .feedback {
+            font-family: Helvetica;
+            font-weight: bold;
+        }
+
+        label {
+            display: inline;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h1>Week 5 Examples</h1>
+
+    <div id='app' v-cloak>
+        <!-- 
+        <div>
+            <p>Choose a difficulty level:</p>
+
+            <input type='radio' value='easy' v-model='level' id='easy'>
+            <label for='easy'>Easy</label>
+
+            <input type='radio' value='medium' v-model='level' id='medium'>
+            <label for='medium'>Medium</label>
+
+            <input type='radio' value='hard' v-model='level' id='hard'>
+            <label for='hard'>Hard</label>
+        </div> 
+        -->
+
+        <div>
+            <p>Choose a difficulty level:</p>
+            <select v-model='level'>
+                <option value=''>Choose one...</option>
+                <option value='easy'>Easy</option>
+                <option value='medium'>Medium</option>
+                <option value='hard'>Hard</option>
+            </select>
+        </div>
+
+        <div v-if='level'>
+            <h2>Question</h2>
+            <label for='answer'>
+                What is {{ randomNumber1 }} + {{ randomNumber2 }}? </label>
+            <input type='text' id='answer' v-model.number='answer'>
+
+            <div>
+                <input type='checkbox' id='showHint' v-model='showHint'>
+                <label for='showHint'>Show hint?</label>
+            </div>
+
+            <div v-if='showHint'>
+                Count the stars: <span v-for='x in randomNumber1 + randomNumber2'> * </span>
+            </div>
+
+            <div>
+                <h2>Bonus Challenge</h2>
+                <p>Which of the following statements is true about your answer?</p>
+                <ul>
+                    <li v-for='(value, key) in bonusChallenges'>
+                        <input type='checkbox' v-bind:id='key' v-bind:value='key'
+                               v-model='statements'>
+                        <label v-bind:for='key'>{{ value }}</label>
+                    </li>
+                </ul>
+            </div>
+
+            <button v-on:click='submitAnswer'>Check your answers</button>
+
+            <div v-if='imageSource'>
+                <img v-bind:src='"images/" + imageSource + ".png"' v-bind:alt='imageAlt'>
+                <div class='feedback' v-bind:class='feedbackClass'>
+                    <p v-if='correct'>Good work - {{ answer }} is the correct answer!</p>
+                    <p v-else>{{ answer }} is not the correct answer; please try again.</p>
+                </div>
+
+                <div v-if='correct'>
+                    <h2>Bonus challenge feedback:</h2>
+                    <li v-for='(value, key) in bonusChallenges'>
+                        <label for='oddNumber'>{{ value }} </label>
+
+                        <span v-if='statementsFeedback[key][0]'> Yes. </span>
+                        <span v-else> Nope. </span>
+
+                        <span class='feedback correct' v-if='statementsFeedback[key][1]'> You got it correct. </span>
+                        <span class='feedback incorrect' v-else> Oops, you didn’t get this one. </span>
+                    </li>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+</body>
+
+</html>

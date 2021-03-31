@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang='en'>
+
+<head>
+    <title>Shopping List</title>
+    <meta charset='utf-8'>
+    <link href=data:, rel=icon>
+
+    <script src='https://unpkg.com/vue@next'></script>
+    <script src='script.js' defer></script>
+
+    <style>
+        [v-cloak] {
+            display: none
+        }
+
+        label {
+            margin-right: 10px;
+        }
+
+        .no-items {
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        #qty {
+            width: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id='app' v-cloak>
+
+        <h1>Shopping List</h1>
+
+        <label for='qty'>Qty: <input id='qty' type='text' v-model.number='qty'></label>
+        <label for='item'>Item: <input type='text' v-model='item' v-on:keyup.enter='addItem'></label>
+
+        <button v-on:click='addItem'>Add</button>
+
+        <div class='no-items' v-if='items.length == 0'>
+            You have no items on your list.
+        </div>
+        <div v-else>
+            <p>
+                Item count: {{ itemsCount }}
+            </p>
+
+            <ul>
+                <li v-for='thisItem in items'>
+                    <button v-on:click='removeItem(thisItem.name)' aria-label='Remove item'>x</button>
+                    {{ thisItem.qty }} x {{ thisItem.name }}
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+
+</html>
