@@ -1,6 +1,6 @@
 ## Project 2
 By: Angela T. 
-Production URL: http://e28p2.vue28.com
+Production URL: http://e28.p2.vue28.com
 
 ## Pages summary
 1. Lounge aka 'ListenPage.vue'
