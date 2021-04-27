@@ -1,0 +1,9 @@
+.DS_STORE
+.vscode
+*.code-workspace
+
+.config
+core/
+
+e28-api-notes.txt
+update

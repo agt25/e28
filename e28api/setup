@@ -1,0 +1,282 @@
+version=2021-04-07-16-33-54
+
+
+
+#
+# main
+#
+main() {
+    getLatestSetup
+
+    # If invoked as `bash setup update`, do update and exit
+    if [[ $1 == 'update' ]]; then
+        update
+        exit;
+    else 
+        # Do a version check and prompt for update if necessary
+        checkVersion
+
+        setup
+    fi
+}
+
+
+#
+# setup
+# 
+setup() {
+    # Confirm we’re running this script from within the e28api directory
+    if [[ ! $(pwd) =~ "e28api" || $(pwd) =~ "core" ]]; then
+        echo "This script must be run from within the e28api directory."
+        echo "Current directory: $(pwd)"
+        exit;
+    fi
+
+    # Create .config file if it does not exist
+    if [ ! -f ".config" ]; then
+        echo -e "PRODUCTION_APACHE_USER=\"www-data\"" >> .config
+    fi
+
+    # Load configs
+    source .config
+
+    apiDir=$(pwd)/
+    coreDir=$apiDir"core/"
+    publicDir=$coreDir"public/"
+
+    # Detect operating system based on location of XAMPP path
+    if [ -d "/Applications/XAMPP" ]; then
+        operating_system='mac'
+    elif [ -d "c:\xampp" ]; then
+        operating_system='windows'
+    elif [ -d "/opt/lampp/" ]; then
+        operating_system='linux'
+    else
+        operating_system='production'
+    fi
+
+    # PRODUCTION
+    if [[ $operating_system == 'production' ]]; then
+        server="production"
+        phpExecutable=$(which php)
+    # LOCAL
+    else
+        server="local"
+
+        # Windows
+        if [[ $operating_system == 'windows' ]]; then
+            phpExecutable="c:\xampp\php\php.exe"
+            # Replace the staring "/c/" with "c:/"
+            apiDir=${apiDir/\/c\//c:\/}
+            # Replace all forward slashes with backwards slashes
+            apiDir=${apiDir//\//\\}
+            coreDir=$apiDir"core\\"
+            publicDir=$coreDir"public\\"
+        # Mac
+        elif [[ $operating_system == 'mac' ]]; then
+            phpExecutable="/Applications/XAMPP/xamppfiles/bin/php"
+        # Linux
+        elif [[ $operating_system == 'linux' ]]; then
+            phpExecutable="/opt/lampp/bin/php"
+        fi
+    fi
+
+    # Welcome message
+    echo ""
+    echo "~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    echo "Welcome to the e28api setup script"
+    echo "Your version: $version"
+    echo "Latest version: $latest_version"
+    echo "System: $operating_system"
+    echo "Server: $server"
+    if [ $server == 'production' ]; then
+        echo "Apache user: $PRODUCTION_APACHE_USER"
+    fi
+    echo "PHP executable: $phpExecutable"
+    echo "API directory: $apiDir"
+    echo "Core directory: $coreDir"
+    echo "Public directory: $publicDir"
+    echo "~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    
+    # Update core
+    dump "Updating e28api-core"
+
+    # Make core directory if it doesn't exist
+    mkdir -p core
+
+    # All other commands should be run in core/
+    cd core
+
+    # Confirm we can communicate with Github
+    if ssh -q git@github.com &>/dev/null; [ $? -eq 255 ]; then
+        echo "FATAL ERROR: Unable to establish an SSH connection with Github. Possible cause: SSH keys not set up correctly."
+        exit;
+    fi
+    # Update e28api-core if it already exists (`app` directory present)
+    if [ -d "app" ]; then
+        git pull
+    # Clone e28api-core if it does not yet exist
+    else
+        git clone --config core.filemode=false git@github.com:susanBuck/e28api-core.git .
+    fi
+
+    # Packages
+    if [ $server == 'production' ]; then
+
+        # If we have sqlite3, we can assume server prep has already been completed - skip
+        if php -m | grep sqlite3 >/dev/null; then
+            dump "Server already prepped to run Laravel application"
+        else
+            dump "Prepping server to run Laravel application"
+
+            echo "Adding modules"
+            sudo add-apt-repository ppa:ondrej/php
+            sudo apt-get update
+            sudo apt-get install php7.4-mbstring zip unzip php7.4-xml php7.4-sqlite php-sqlite3
+
+            echo "Enabling modrewrite"
+            # Laravel requires Apache's `mod_rewrite` for URL routing, so we enable it:
+            sudo a2enmod rewrite
+
+            echo "Restarting Apache"
+            service apache2 restart
+        fi
+    fi
+
+
+    # Database
+    dump "Setting up database"
+    touch database/database.sqlite
+    echo "Created /core/database/database.sqlite"
+
+    # Do initial migration (so sessions and other fundamental tables exist, allowing artisan scripts to run w/o error)
+    $phpExecutable artisan migrate --force
+
+    # Laravel initial setup
+    if [[ ! -f ".env" ]]; then
+        dump "Laravel initial setup"
+
+        if [[ $server == "production" ]]; then
+            echo "Production: Setting $PRODUCTION_APACHE_USER as owner of directories that Apache needs write access to"
+            chown -R ${PRODUCTION_APACHE_USER} "${coreDir}database"
+            chown -R ${PRODUCTION_APACHE_USER} "${coreDir}storage"
+            chown -R ${PRODUCTION_APACHE_USER} "${coreDir}bootstrap/cache"
+            chown -R ${PRODUCTION_APACHE_USER} "${coreDir}database/migrations/"
+            chown -R ${PRODUCTION_APACHE_USER} "${coreDir}database/factories/GeneratedModels"
+            chown -R ${PRODUCTION_APACHE_USER} "${coreDir}app/Models/GeneratedModels/"
+            chown -R ${PRODUCTION_APACHE_USER} "${coreDir}app/Http/Controllers/GeneratedControllers/"
+            chown -R ${PRODUCTION_APACHE_USER} "${coreDir}app/Http/Requests/GeneratedRequests/"
+            chown -R ${PRODUCTION_APACHE_USER} "${coreDir}database/factories/GeneratedModels"
+            chown -R ${PRODUCTION_APACHE_USER} "${coreDir}routes"
+        elif [[ $operating_system != "windows" ]]; then
+            # File mode changes aren't necessary on Windows because XAMPP is running with the necessary
+            # permissions to write to the following directories. 
+            echo "Local: Setting write permissions on directories that Apache needs write access to"
+            chmod -R 777 "${coreDir}database"
+            chmod -R 777 "${coreDir}storage"
+            chmod -R 777 "${coreDir}bootstrap/cache"
+            chmod -R 777 "${coreDir}database/migrations/"
+            chmod -R 777 "${coreDir}database/factories/GeneratedModels"
+            chmod -R 777 "${coreDir}app/Models/GeneratedModels/"
+            chmod -R 777 "${coreDir}app/Http/Controllers/GeneratedControllers/"
+            chmod -R 777 "${coreDir}app/Http/Requests/GeneratedRequests/"
+            chmod -R 777 "${coreDir}database/factories/GeneratedModels"
+            chmod -R 777 "${coreDir}routes"
+        fi
+
+        echo "Creating environment file (.env)"
+        cp .env.example .env
+        
+        echo "Generating app key"
+        $phpExecutable artisan key:generate
+    fi
+
+
+    #
+    # Build API
+    #
+    dump "Build API"
+
+    $phpExecutable artisan e28api:setup
+}
+
+
+
+#
+# Get contents of the `setup` script currently on s3
+#
+getLatestSetup() {
+    setup_source="https://heswebdev.s3.amazonaws.com/scripts/setup"
+
+    # If curl is available, use that to download script
+    if [[ -x "$(command -v curl)" ]]; then
+        setup_from_source=$(curl -s $setup_source)
+    # If wget is available, use that to download script
+    elif [[ -x "$(command -v wget)" ]]; then
+        setup_from_source=$(wget -qO- $setup_source)
+    else 
+        setup_from_source=''
+    fi
+
+    # Read the first line of the script file to get the latest version #
+    setup_from_source_array=(${setup_from_source[@]})
+    latest_version="${setup_from_source_array[0]}"
+
+    # Check the first line includes the string `version`
+    # If it does not, it means we were unable to successfully grab the latest version
+    # and we should not prompt for an update
+    if [[ "$latest_version" == *"version"* ]]; then
+        can_update=true;
+    fi
+
+    # Remove "version=" from the line, leaving just the version #
+    latest_version=${latest_version/version=/} 
+}
+
+
+#
+# Compares the version of this script and the latest `setup` script on s3
+#
+checkVersion() {
+    if [[ ! -z "$setup_from_source" && $can_update && "$version" != $latest_version ]]; then
+        echo ""
+        echo "============= UPDATE NEEDED ==============="
+        echo "This setup script is currently at version $version"
+        echo "A newer version ($latest_version) is available."
+        echo "Run 'bash setup update' to update"
+        echo "==========================================="
+        exit;
+    fi
+}
+
+
+#
+# Replace current setup script with setup script from s3
+#
+update() {
+    if [[ ! -z "$setup_from_source" && $can_update ]]; then
+        echo "$setup_from_source" > setup
+        echo "Update complete ✓"
+        echo "Run 'bash setup' to build your API."
+        exit;
+    else 
+        echo "Update failed. Please create a post in the forum or email susanbuck@fas.harvard.edu for assistance troubleshooting this."
+    fi
+}
+
+
+
+#
+# Output
+#
+dump () {
+    echo ""
+    echo "===> $1"
+}
+
+
+
+#
+# main
+#
+main $1

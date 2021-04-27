@@ -1,0 +1,19 @@
+{
+    "permission_level": 0,
+    "fields": {
+        "product_id": {
+            "type": "integer",
+            "validators": [
+                "required",
+                "numeric"
+            ]
+        },
+        "user_id": {
+            "type": "integer",
+            "validators": [
+                "required",
+                "numeric"
+            ]
+        }
+    }
+}
