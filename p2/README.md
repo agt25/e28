@@ -1,5 +1,5 @@
 ## Project 2
-By: Angela T. 
+By: Angela T 
 Production URL: http://e28.p2.vue28.me/
 
 ## Pages summary
