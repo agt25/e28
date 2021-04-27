@@ -1,6 +1,4 @@
-# p2
-
-[Production Server](http://e28.p2.vue28.me/)
+# zipfoods
 
 ## Project setup
 ```

@@ -1,0 +1,230 @@
+/*----------------------------------------------------
+VARIABLES
+-----------------------------------------------------*/
+:root {
+    --radius: 5px;
+
+    --sans-serif-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --serif-font: Georgia, 'Times New Roman', Times, serif;
+
+    /* https://clrs.cc/ */
+    --blue: #0074D9;
+    --dark-blue: #044e8f;
+    --light-blue: #CAE9FB;
+    --teal: #39CCCC;
+    --green: #2ECC40;
+
+    --olive: #3D9970;
+
+    --yellow: #FFDC00;
+    --orange: #FF851B;
+    --red: #FF4136;
+
+    --white: #FFFFFF;
+    --silver: #DDDDDD;
+    --gray: #AAAAAA;
+    --black: #111111;
+}
+
+
+
+/*----------------------------------------------------
+MAIN LAYOUT
+-----------------------------------------------------*/
+/* universal box-sizing */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    /* http://snook.ca/archives/html_and_css/font-size-with-rem */
+    font-size: 62.5%;
+
+    color: var(--black);
+    font-family: var(--sans-serif-font);
+
+    /* Have the scroll bars always on so there's not a shift in the layout
+    when going from a non-scrolling page to a scrolling-page */
+    overflow-y: scroll;
+}
+
+body {
+    /* Default font-size */
+    font-size: 1.6rem;
+    width: 75%;
+    margin: auto;
+}
+
+h2 {
+    font-size: 2.75rem;
+}
+
+#app {
+    max-width: 1000px;
+    width: 100%;
+    margin: auto;
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+header {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#logo {
+    /* Actual width is 636; displaying at half-size for retina screens */
+    width: 318px;
+    margin-top: 15px;
+}
+
+nav ul {
+    list-style-type: none;
+}
+
+nav ul li {
+    display: inline-block;
+}
+
+nav ul li a:link,
+nav ul li a:visited,
+nav ul li a:hover,
+nav ul li a:active {
+    /* Ref: https://stackoverflow.com/a/49783868 for why inline-block is added */
+    display: inline-block;
+    text-transform: capitalize;
+    padding: 5px;
+    margin: 5px;
+    cursor: pointer;
+    color: var(--blue);
+    font-weight: bold;
+}
+
+nav ul li a.router-link-active:link,
+nav ul li a.router-link-active:visited,
+nav ul li a.router-link-active:hover,
+nav ul li a.router-link-active:active {
+    text-decoration: none;
+    color: var(--black);
+    background-color: var(--light-blue);
+    cursor: inherit;
+}
+
+/*----------------------------------------------------
+MISC
+-----------------------------------------------------*/
+.clean-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.alert {
+    background-color: var(--green);
+    color: var(--white);
+    border-radius: radius;
+    font-weight: bold;
+    padding: 5px;
+    margin: 5px;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity .5s;
+}
+
+/* .fade-leave-active below version 2.1.8 */
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
+}
+
+
+
+
+/*----------------------------------------------------
+Forms
+-----------------------------------------------------*/
+form {
+    text-align: left;
+}
+
+label {
+    display: block;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    margin: 20px 0 5px 0;
+    font-weight: bold;
+}
+
+input[type=text],
+input[type=password],
+input[type=email],
+textarea {
+    font-size: 1.6rem;
+    padding: 5px;
+    width: 100%;
+    border: 1px solid var(--silver);
+}
+
+.form-input-error {
+    border: 1px solid var(--red);
+}
+
+label.form-checkbox-label {
+    text-transform: none;
+}
+
+.form-group {
+    margin: 20px 0;
+}
+
+.form-help {
+    font-size: 1.4rem;
+    color: var(--gray);
+    margin-top: 5px;
+}
+
+.form-feedback {
+    font-size: 1.3rem;
+    font-weight: bold;
+    padding: 10px 0;
+}
+
+.form-feedback-error {
+    color: var(--red);
+
+}
+
+.form-feedback-success {
+    color: var(--green);
+
+}
+
+button {
+    background-color: var(--blue);
+    font-size: 20px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 0;
+    padding: 10px;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--dark-blue);
+
+}
+
+input[type=checkbox],
+input[type=radio] {
+    vertical-align: middle;
+    position: relative;
+    bottom: 1px;
+}
+
+input[type=radio] {
+    bottom: 2px;
+}
