@@ -63,7 +63,7 @@ export default {
     methods: {
         addProduct() {
             // url end-point is product
-            axios.post("/product", this.product).then((response) => {
+            axios.put("/product", this.product).then((response) => {
                 if (response.data.errors) {
                     this.errors = response.data.errors;
                     this.showConfirmation = false;

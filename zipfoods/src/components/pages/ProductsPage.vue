@@ -24,12 +24,7 @@ export default {
     components: {
         "show-product": ShowProduct,
     },
-    props: {
-        products: {
-            type: Array,
-            default: null,
-        },
-    },
+    
     data() {
         return {};
     },
