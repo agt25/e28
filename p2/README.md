@@ -1,6 +1,6 @@
 ## Project 2
 By: Angela T 
-Production URL: (Pandemic Cafe) [http://e28p2.vue28.me]
+Production URL: [Pandemic Cafe](http://e28p2.vue28.me)
 
 ## Pages summary
 1. Lounge aka 'ListenPage.vue'
