@@ -1,6 +1,6 @@
 ## Project 2
 By: Angela T 
-Production URL: http://e28.p2.vue28.me/
+Production URL: (Pandemic Cafe) [http://e28p2.vue28.me]
 
 ## Pages summary
 1. Lounge aka 'ListenPage.vue'
@@ -8,7 +8,7 @@ Production URL: http://e28.p2.vue28.me/
 3. Explore aka 'ExplorePage.vue'
 
 ## SFC summary
-1. CoffeePod.vue; presents a neomorphic-like "iPod" player which plays the current track.
+1. CoffeePod.vue; presents a neumorphic-like "iPod" player which plays the current track.
 2. LikedTrackDisplay.vue; presents a liked track object via its album cover, track name, and track artist(s).
 3. AboutSection.vue; pops a up a brief "about this app" section. 
 
