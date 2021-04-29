@@ -4,7 +4,7 @@ Update: Had forgotten to swap the local and production API urls. Project now wor
 
 By: Angela T. 
 -------------
-Production URL: http://e28.p2.vue28.me
+Production URL: http://e28p2.vue28.me
 
 
 ## Pages summary
