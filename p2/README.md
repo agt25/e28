@@ -1,11 +1,10 @@
 ## Project 2
-<<<<<<< HEAD
+
+Update: Had forgotten to swap the local and production API urls. Project now works. 
+
 By: Angela T. 
 Production URL: http://e28.p2.vue28.com
-=======
-By: Angela T 
-Production URL: [Pandemic Cafe](http://e28p2.vue28.me)
->>>>>>> 73e323760f511e4d4d7c63ae1482355aa3fbac39
+
 
 ## Pages summary
 1. Lounge aka 'ListenPage.vue'
