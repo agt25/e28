@@ -3,7 +3,8 @@
 Update: Had forgotten to swap the local and production API urls. Project now works. 
 
 By: Angela T. 
-Production URL: http://e28.p2.vue28.com
+-------------
+Production URL: http://e28.p2.vue28.me
 
 
 ## Pages summary
