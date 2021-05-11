@@ -43,7 +43,7 @@
                                 <button class="skip-button media-button" label="skip" v-on:click='nextTrack()'>
                                     <i class="button-icons"></i>
                                     <img class='controls' id="next-btn" src='../assets/images/forwardIcon.svg'>
-                                        <span class="button-text milli"></span>
+                                        <span class="button-text milli" v-bind:style="{ color: activeColor}"></span>
                                     </button>
 
                                 </div>
@@ -54,24 +54,17 @@
                                     
                                    <!-- Heart image depends on whether the track is liked or not liked -->
                                    <div v-if='user'>
-                                     <div v-if='currentLiked' v-on:click='unlikeTrack'>
-                                       <!-- <i class="bi bi-suit-heart-fill"></i></div> -->
-                                       <img v-if='!currentLiked' class='heartImg' id="like-btn" v-bind:src='filledHeart' v-on:click='heartImgSrc'>
-                                     <div v-else v-on:click='likeTrack'>
-                                       <!-- <i class="bi bi-suit-heart"></i> -->
-                                      
+                                     <div v-show='currentLiked' v-on:click='likeUnlikeTrack'>
+                                       <button v-bind:class="heartClass"></button>
+                                        
                                        
+                                       </div>
+                                     <div v-show='!currentLiked' v-on:click='likeUnlikeTrack'>
+                                       <button v-bind:class="heartClass"></button>
                                      </div>
-                                   <!-- <span v-for="track in currentTrack" v-bind:key="track.id">
-                                     <span v-if='!currentLiked' v-on:click='likeTrack'>
-                                      <img v-if='!currentLiked' class='heartImg' id="like-btn" v-bind:src='filledHeart' v-on:click='heartImgSrc'>
-                                      </span>
-                                     <span v-else v-on:click='likeTrack'>
-                                       <img class='heartImg' id='not-liked-btn' v-bind:src='emptyHeart' v-on:click='heartImgSrc'>
-                                      </span>
-                                      </span> -->
+                                   
                                       </div>
-                                        <span class="button-text milli"></span>
+                                        <button class="button-text milli"></button>
                                     </button>
                                 </div>
                             </div>
@@ -113,17 +106,15 @@ export default {
             },
             deleteFaveById: 0,
             currentLiked: false,
-            fullHeart: true,
+            isActive: null,
+            activeColor: null,
+            heartClass: 'bi bi-suit-heart-fill',
             
             
             
         };
     },
     computed: {
-        fullHeartSrc() {
-          // return require("@/assets/images/liked.svg");
-          return this.imgClicked ? '@/assets/images/liked.svg' : '@/assets/images/not-liked.svg'
-        },
         faveStatus() {
           return this.isLiked();
         },
@@ -167,26 +158,7 @@ export default {
             return require("@/assets/albumArt/1.svg");
           }
         },
-        filledHeart() {
-          /* 
-          Dynamically assign the heart button based on whether
-          the current track object is liked or not 
-          */ 
-
-          this.activeTrack = this.currentTrack;
-          if (this.activeTrack.[0].liked == 1) {
-            return require("@/assets/images/liked.svg");
-          } else {
-            return require("@/assets/images/not-liked.svg");
-          }
-        },
-        emptyHeart() {
-          /* 
-          Default to an empty heart on load 
-          */
-
-          return require("@/assets/images/not-liked.svg");
-        },
+        
         currentTrack() {
           /* 
           Computed property returning the currentTrack currently playing or showing 
@@ -214,28 +186,14 @@ export default {
                 if yes, proceed to delete that track from the favorites */
                 if (response.data.favorite.length != 0) {
                   this.currentLiked = true;
+                  this.heartClass = "bi bi-suit-heart-fill";
                  
                 } else {
                   this.currentLiked = false;
+                  this.heartClass = "bi bi-suit-heart";
                 }
             });   
-          // return this.favorites.filter((favorite) => {
-          //       return favorite.id == this.currentTrackId;
-          //   }, this.currentTrackId);
-          // axios
-          //   .get(`favorite/query?user_id=${this.user.id}&track_id=${this.currentTrackId}`)
-          //   .then((response) => {
-          //       console.log(response);
-
-          //       /* Check if favorite item that fits the query is returned;
-          //       if yes, proceed to delete that track from the favorites */
-          //       if (response.data.favorite.length != 0) {
-          //         return true;
-                  
-          //       } else {
-          //         return false;
-          //       }
-          //   });   
+           
         },
       checkFavorites() {
         if (this.user) {
@@ -273,6 +231,25 @@ export default {
                 this.trackPlaying = false;
             }
         },
+        likeUnlikeTrack() {
+          // Query for the id of the favorite object to be delete 
+          axios
+            .get(`favorite/query?user_id=${this.user.id}&track_id=${this.currentTrackId}`)
+            .then((response) => {
+                console.log(response);
+
+                /* Check if favorite item that fits the query is returned;
+                if yes, proceed to delete that track from the favorites */
+                if (response.data.favorite.length != 0) {
+                  this.deleteFaveById = response.data.favorite[0].id;
+                  this.heartClass = "bi bi-suit-heart";
+                  this.deleteFavoriteTrack(this.deleteFaveById);
+                } else {
+                  this.heartClass = "bi bi-suit-heart-fill";
+                  this.likeTrack();
+                }
+            });  
+        },
         likeTrack() {
           /* 
           Likes the current track by making a put
@@ -296,23 +273,7 @@ export default {
                 console.log(response);
             });
         },
-        unlikeTrack() {
-          
-          
-          // Query for the id of the favorite object to be delete 
-          axios
-            .get(`favorite/query?user_id=${this.user.id}&track_id=${this.currentTrackId}`)
-            .then((response) => {
-                console.log(response);
-
-                /* Check if favorite item that fits the query is returned;
-                if yes, proceed to delete that track from the favorites */
-                if (response.data.favorite.length != 0) {
-                  this.deleteFaveById = response.data.favorite[0].id;
-                  this.deleteFavoriteTrack(this.deleteFaveById);
-                } 
-            });   
-        },
+        
         nextTrack() {
           /* 
           Gets the next track object in the props array by incrementing
