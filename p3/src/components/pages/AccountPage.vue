@@ -6,12 +6,19 @@
               <p id="code"><span>CA</span>F<span>E</span></p></div>
 
     <div class='container-fluid'>
-        <div v-if="user || success" class='row justify-content-center'>
+        <div v-if="user" class='row justify-content-center'>
             <h2 data-test="welcome-message">Hi, {{ user.name }}!</h2>
             
            <br>
+       
         </div>
-        <div v-if="user || success" class='row justify-content-center'>
+        <!-- <div v-if='!user && success' class='row justify-content-center'>
+            Hold on tight while we set up your account!
+        </div> -->
+         <!-- <div v-if="greeting != null" class='row justify-content-center'>
+            Hi, {{ greeting }}
+        </div> -->
+        <div v-if="user" class='row justify-content-center'>
             <button v-on:click="logout" data-test="logout-button">
                 Logout
             </button>
@@ -21,7 +28,7 @@
             
         </div>
 
-        <div v-if='!user && !registerShowing && !success' id="loginForm" class='container-fluid'>
+        <div v-if='!user && !registerShowing' id="loginForm" class='container-fluid'>
             <div class='row justify-content-center login-header'>
             <h2>Login</h2>
             </div>
@@ -77,7 +84,7 @@
         </div>
        
     </div>
-     <div v-if='!user && registerShowing && !success'>
+     <div v-if='!user && registerShowing'>
                  <div id="signupForm" class='container-fluid'>
             <div class='row justify-content-center login-header'>
             <h2>Sign Up</h2>
@@ -171,9 +178,9 @@ export default {
             // Form is prefilled for demonstration purposes; remove in final application
             // jill@harvard.edu/asdfasdf is one of our seed users from e28api/seeds/user.json
             data: {
-                name: "",
-                email: "",
-                password: "",
+                name: '',
+                email: '',
+                password: '',
             },
             errors: null,
             favorites: [],
@@ -183,6 +190,8 @@ export default {
             loginShowing: true,
             loginErrors: null,
             registerErrors: null,
+            greeting: null,
+            
         };
 
     },
@@ -231,26 +240,38 @@ export default {
                         this.loginErrors = response.data.errors;
                     }
                 });
-                if(this.errors==null) {
+                if(this.errors) {
+                    this.loginErrors = response.data.errors;
+                } else {
                     this.success = true;
                 }
             }
         },
         register() {
-            this.registerShowing = true;
+            this.registering = true;
+            
+            this.greeting = this.data.name;
             if (this.validate()) {
+                
                 axios.post("register", this.data).then((response) => {
                     if (response.data.authenticated) {
                         this.$store.commit("setUser", response.data.user);
                         this.success = true;
+                        this.loginShowing = true;
                         this.registerShowing = false;
-                        this.loginShowing = false;
+                        
+                    
                     } else {
                         this.registerErrors = response.data.errors;
                     }
+                        
                 });
-                if(this.errors==null) {
+                if(this.errors) {
+                    this.loginErrors = response.data.errors;
+                } else {
                     this.success = true;
+                    this.loginShowing = true;
+                    this.registerShowing = false;
                 }
             }
         },
@@ -259,9 +280,9 @@ export default {
                 if (response.data.success) {
                     this.$store.commit("setUser", false);
                     this.success = false;
-                    // this.data.name = '';
-                    // this.data.email = '',
-                    // this.data.password = '';
+                    this.data.name = '';
+                    this.data.email = '',
+                    this.data.password = '';
                 }
             });
         },

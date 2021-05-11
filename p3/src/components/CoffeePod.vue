@@ -282,9 +282,11 @@ export default {
           */
 
           this.currentTrackId = this.currentTrackId + 1;
+          this.isLiked();
           let audio = document.getElementById("audio-player");
           audio.load();
           audio.play();
+          
           
         },
         previousTrack() {
@@ -295,6 +297,7 @@ export default {
           */
 
           this.currentTrackId = this.currentTrackId - 1;
+          this.isLiked();
           let audio = document.getElementById("audio-player");
           audio.load();
           audio.play();

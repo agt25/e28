@@ -33,19 +33,6 @@ export const store = createStore({
                 context.commit('setTracks', response.data.track);
             });
         },
-        // authUser(context) {
-        //     return new Promise((resolve) => {
-        //         axios.post('auth').then((response) => {
-        //             if (response.data.authenticated) {
-        //                 context.commit('setUser', response.data.user);
-        //             } else {
-        //                 context.commit('setUser', false);
-        //             }
-
-        //             resolve();
-        //         });
-        //     });
-        // },
         authUser(context) {
             return new Promise((resolve) => {
             axios.post('auth').then((response) => {
