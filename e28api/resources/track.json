@@ -1,5 +1,5 @@
 {
-    "permission_level": 0,
+    "permission_level": 1,
     "fields": {
         "title": {
             "type": "string",

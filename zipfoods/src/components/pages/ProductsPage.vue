@@ -7,6 +7,7 @@
                 v-for="product in products"
                 v-bind:to="'/product/' + product.id"
                 v-bind:key="product.id"
+                data-test="product-link"
             >
                 <show-product
                     v-bind:product="product"
@@ -24,9 +25,14 @@ export default {
     components: {
         "show-product": ShowProduct,
     },
-    
+    props: {},
     data() {
         return {};
+    },
+    computed: {
+        products() {
+            return this.$store.state.products;
+        },
     },
 };
 </script>

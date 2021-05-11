@@ -190,10 +190,6 @@ export default {
         
     },
     props: {
-        tracks: {
-            type: Array,
-           
-        },
         favorites: {
             type: Array,
            
@@ -210,6 +206,11 @@ export default {
             },
         }
 
+    },
+    computed: {
+        tracks() {
+            return this.$store.state.tracks;
+        },
     },
     mounted() {
       this.loadBarista();

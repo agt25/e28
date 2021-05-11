@@ -23,6 +23,7 @@ VARIABLES
     --white: #FFFFFF;
     --silver: #DDDDDD;
     --gray: #AAAAAA;
+    --darkgray: #808080;
     --black: #111111;
 }
 
@@ -112,6 +113,7 @@ nav ul li a.router-link-active:active {
     cursor: inherit;
 }
 
+
 /*----------------------------------------------------
 MISC
 -----------------------------------------------------*/
@@ -129,15 +131,21 @@ MISC
     margin: 5px;
 }
 
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity .5s;
-}
+/* 
+https://v3.vuejs.org/api/built-in-components.html#transition 
+https://v3.vuejs.org/guide/transitions-enterleave.html#transitioning-single-elements-components
+*/
 
-/* .fade-leave-active below version 2.1.8 */
-.fade-enter,
+/* Starting state */
+.fade-enter-from,
 .fade-leave-to {
     opacity: 0;
+}
+
+/* Active state */
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s ease;
 }
 
 
@@ -181,8 +189,8 @@ label.form-checkbox-label {
 }
 
 .form-help {
-    font-size: 1.4rem;
-    color: var(--gray);
+    font-size: 1.5rem;
+    color: var(--darkgray);
     margin-top: 5px;
 }
 

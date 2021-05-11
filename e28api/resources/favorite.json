@@ -1,7 +1,7 @@
 {
     "permission_level": 0,
     "fields": {
-        "product_id": {
+        "track_id": {
             "type": "integer",
             "validators": [
                 "required",

@@ -14,7 +14,7 @@
         <!-- Binding the API track data to router-view so we can use it as props on other pages 
         and trigger re-load based on 'favorite' being emitted by child component -->
         <router-view
-            v-bind:tracks="tracks" v-bind:favorites="favorites"
+            v-bind:favorites="favorites"
             v-on:favorite="loadTracks"
         ></router-view>
     </div>
@@ -31,7 +31,7 @@ export default {
     emits: ['favorite', 'tracks-loaded'],
     data() {
         return {
-            tracks: [],
+            // tracks: [],
             received: false,
             favorites: [],
 
@@ -46,12 +46,6 @@ export default {
             },
         };
     },
-    mounted() {
-
-        // Load the tracks when the app is mounted 
-        this.loadTracks();
-    },
-    
     computed: {
       getFaves() {
 
@@ -62,24 +56,41 @@ export default {
             return this.tracks.filter(function(track){
                 return track.liked == 1;
             });
-        }
+        },
+        tracks() {
+            return this.$store.state.tracks;
+        },
     },
+    mounted() {
+        // // Load the tracks when the app is mounted 
+        // this.loadTracks();
+        this.loadTracks();
+        // this.$store.commit("loadTracks")
+
+        // this.$store.commit("setCartCount", cart.count());
+
+        // this.$store.dispatch("authUser");
+           
+    },
+    
     methods: {
         loadTracks() {
+
+            this.$store.dispatch("fetchTracks");
 
             /* 
             Loads all the tracks from the API 
             via a get request to 'track'
             */ 
             
-            axios.get("track").then((response) => {
-                this.tracks = response.data.track;
-                this.received = true;
-                this.$emit('tracks-loaded');
-                this.favorites = this.faves();
-            });
-            this.favorites = this.faves();
-           
+            // axios.get("track").then((response) => {
+            //     this.tracks = response.data.track;
+            //     this.received = true;
+            //     this.$emit('tracks-loaded');
+            //     this.favorites = this.faves();
+            // });
+            // this.favorites = this.faves();
+            
         },
         faves() {
 

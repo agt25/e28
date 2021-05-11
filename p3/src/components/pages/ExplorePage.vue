@@ -43,10 +43,6 @@ export default {
            
     },
     props: {
-        tracks: {
-            type: Array,
-           
-        },
         favorites: {
             type: Array,
            
@@ -61,6 +57,10 @@ export default {
           }
         },
         computed: {
+          tracks() {
+            return this.$store.state.tracks;
+          },
+
           categories() {
             /* Extracts the categories found in the backend 
             SOURCE: May have copy / pased this one from Professor Buck's source code */ 

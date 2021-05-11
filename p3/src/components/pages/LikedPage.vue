@@ -48,10 +48,6 @@ export default {
         "liked-track-display": LikedTrackDisplay,
     },
     props: {
-        tracks: {
-            type: Array,
-           
-        },
 		favorites: {
             type: Array,
            
@@ -62,6 +58,11 @@ export default {
         return {
              
         };
+    },
+	computed: {
+        tracks() {
+            return this.$store.state.tracks;
+        },
     },
 	methods: {
 			

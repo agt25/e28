@@ -87,10 +87,7 @@ import { axios } from "@/common/app.js";
 
 export default {
     props: {
-        tracks: {
-            type: Array,
-            
-        },
+        
     },
     emits: ['favorite-added', 'favorite-removed'],
     data() {
@@ -105,6 +102,9 @@ export default {
         };
     },
     computed: {
+        tracks() {
+            return this.$store.state.tracks;
+        },
         audioSrc() {
             /* 
             Sets the audio source based on the current track's id 
