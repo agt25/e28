@@ -53,6 +53,7 @@ describe('Register User', () => {
     
     it('lets a user register then log out', () => {
         cy.visit('/account');
+        cy.get('[data-test=signup-button]').click();
         cy.get('[data-test=name-input]').clear().type(user.name);
         cy.get('[data-test=email-input]').clear().type(user.email);
         cy.get('[data-test=password-input]').clear().type(user.password);
