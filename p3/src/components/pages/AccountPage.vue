@@ -78,7 +78,7 @@
 
             <div class='row justify-content-center'>
                 Don't have an account?
-            <button v-on:click="renderRegister" data-test="login-button">Sign Up</button>
+            <button v-on:click="renderRegister" data-test="signup-button">Sign Up</button>
            
             </div>
         </div>
@@ -149,7 +149,7 @@
             </ul>
 
             <div class='row justify-content-center'>
-            <button v-on:click="register" data-test="login-button">Sign Up</button>
+            <button v-on:click="register" data-test="signup-button">Sign Up</button>
             </div>
 
             <div class='row justify-content-center'>

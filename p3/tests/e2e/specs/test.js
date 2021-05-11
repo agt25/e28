@@ -36,7 +36,7 @@ describe('Account Page', () => {
         cy.get('[data-test=email-input]').clear().type(user.email);
         cy.get('[data-test=password-input]').clear().type(user.password);
         cy.get('[data-test=login-button]').click();
-        cy.get('[data-test=logout-button]').click();
+        
 
     })
     
@@ -46,14 +46,14 @@ describe('Register User', () => {
 
     const user = {
         name: 'Jack Harvard',
-        email: 'jack1@harvard.edu',
+        email: 'jack122@harvard.edu',
         password: 'asdfasdf'
     }
 
     
     it('lets a user register then log out', () => {
         cy.visit('/account');
-        cy.get('[data-test=email-input]').clear().type(user.name);
+        cy.get('[data-test=name-input]').clear().type(user.name);
         cy.get('[data-test=email-input]').clear().type(user.email);
         cy.get('[data-test=password-input]').clear().type(user.password);
         cy.get('[data-test=signup-button]').click();
