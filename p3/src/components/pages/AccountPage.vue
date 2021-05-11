@@ -175,7 +175,7 @@ export default {
     },
     data() {
         return {
-            // Form is prefilled for demonstration purposes; remove in final application
+            
             // jill@harvard.edu/asdfasdf is one of our seed users from e28api/seeds/user.json
             data: {
                 name: '',

@@ -180,7 +180,7 @@ export default {
          axios
             .get(`favorite/query?user_id=${this.user.id}&track_id=${this.currentTrackId}`)
             .then((response) => {
-                console.log(response);
+                
 
                 /* Check if favorite item that fits the query is returned;
                 if yes, proceed to delete that track from the favorites */
@@ -236,7 +236,7 @@ export default {
           axios
             .get(`favorite/query?user_id=${this.user.id}&track_id=${this.currentTrackId}`)
             .then((response) => {
-                console.log(response);
+                
 
                 /* Check if favorite item that fits the query is returned;
                 if yes, proceed to delete that track from the favorites */
@@ -260,7 +260,7 @@ export default {
          
          
          
-         axios.post("/favorite", this.newFave ).then((response) => {console.log(response)})
+         axios.post("/favorite", this.newFave )
          
           
         
@@ -269,9 +269,7 @@ export default {
 
           // Deletes a track by id from the favorites by table 
           axios.delete(`/favorite/${trackId}`)
-          .then((response) => {
-                console.log(response);
-            });
+          
         },
         
         nextTrack() {
