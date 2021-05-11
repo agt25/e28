@@ -21,4 +21,4 @@
 ## E2E Testing screenshot
 *Include a screenshot showing the results of running all your E2E tests. This screenshot *must* be present to receive credit for the E2E testing requirement of this project. Below is an example screenshot of what is expected.*
 
-![PandemicCafe passing E2E tests]
+<img width="1638" alt="e2e" src="https://user-images.githubusercontent.com/57548500/117897148-21fa0400-b290-11eb-94de-b2dfbe841f14.png">
