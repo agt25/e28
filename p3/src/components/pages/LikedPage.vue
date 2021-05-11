@@ -1,4 +1,5 @@
 <template>
+	<div id='liked-page-container'>
     <div id='liked-page' class="content row justify-content-center">
 
         <!-- 'Likes' displays all the tracks the user likes -->
@@ -30,42 +31,65 @@
                     class='col-6 col-md-4 col-lg-3'
                     v-for="track in favorites"
                     v-bind:key='track.id'
-                    v-on:favorite='queryFaves'>
+                    >
                     <liked-track-display v-bind:track="track"></liked-track-display>
                 </div>
             </div>
         </div>
 
     </div>
+	</div>
 </template>
 
 
 <script>
 import LikedTrackDisplay from '../LikedTrackDisplay.vue';
+import { axios } from "@/common/app.js";
+
 
 export default {
 	components: {
         "liked-track-display": LikedTrackDisplay,
     },
     props: {
-		favorites: {
-            type: Array,
-           
-        },
+		
     },
 	emits: ["favorite"],
     data() {
         return {
-             
+             favorites: [],
         };
     },
 	computed: {
         tracks() {
             return this.$store.state.tracks;
         },
+		user() {
+            return this.$store.state.user;
+        },
+		faves() {
+			return this.loadFavorites();
+		}
     },
+	mounted(){
+		this.loadFavorites();
+	},
 	methods: {
-			
+			loadFavorites() {
+            if (this.user) {
+                axios
+                    .get("favorite/query?user_id=" + this.user.id)
+                    .then((response) => {
+                        this.favorites = response.data.favorite.map(
+                            (favorite) => {
+                                return this.$store.getters.getTrackById(
+                                    favorite.track_id
+                                );
+                            }
+                        );
+                    });
+            }
+        },
 	}
 }
 </script>
@@ -106,6 +130,9 @@ body{
     width: 100px;
 }
 
+#liked-page-container {
+	height: 100vh;
+}
 
 .btn-vintage{
 	display: block;

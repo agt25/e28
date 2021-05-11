@@ -53,14 +53,24 @@
                                     <i class="button-icons"></i>
                                     
                                    <!-- Heart image depends on whether the track is liked or not liked -->
-                                   <span v-for="track in currentTrack" v-bind:key="track.id">
-                                     <span v-if='track.liked == 1' v-on:click='unlikeTrack'>
-                                      <img class='heartImg' id="like-btn" v-bind:src='filledHeart' v-on:click='heartImgSrc'>
+                                   <div v-if='user'>
+                                     <div v-if='currentLiked' v-on:click='unlikeTrack'>
+                                       <!-- <i class="bi bi-suit-heart-fill"></i></div> -->
+                                       <img v-if='!currentLiked' class='heartImg' id="like-btn" v-bind:src='filledHeart' v-on:click='heartImgSrc'>
+                                     <div v-else v-on:click='likeTrack'>
+                                       <!-- <i class="bi bi-suit-heart"></i> -->
+                                      
+                                       
+                                     </div>
+                                   <!-- <span v-for="track in currentTrack" v-bind:key="track.id">
+                                     <span v-if='!currentLiked' v-on:click='likeTrack'>
+                                      <img v-if='!currentLiked' class='heartImg' id="like-btn" v-bind:src='filledHeart' v-on:click='heartImgSrc'>
                                       </span>
-                                     <span v-if='track.liked == 0' v-on:click='likeTrack'>
+                                     <span v-else v-on:click='likeTrack'>
                                        <img class='heartImg' id='not-liked-btn' v-bind:src='emptyHeart' v-on:click='heartImgSrc'>
                                       </span>
-                                      </span>
+                                      </span> -->
+                                      </div>
                                         <span class="button-text milli"></span>
                                     </button>
                                 </div>
@@ -86,10 +96,6 @@ import { axios } from "@/common/app.js";
 
 
 export default {
-    props: {
-        
-    },
-    emits: ['favorite-added', 'favorite-removed'],
     data() {
         return {
             currentTrackId: 1,
@@ -98,13 +104,40 @@ export default {
             activeTrack: [],
             trackPlaying: false,
             imgClicked: false,
+            favorites: [],
+            isCurrentTrackLiked: false,
+            result: [],
+            newFave: {
+              track_id: null,
+              user_id: null
+            },
+            deleteFaveById: 0,
+            currentLiked: false,
+            fullHeart: true,
+            
+            
             
         };
     },
     computed: {
+        fullHeartSrc() {
+          // return require("@/assets/images/liked.svg");
+          return this.imgClicked ? '@/assets/images/liked.svg' : '@/assets/images/not-liked.svg'
+        },
+        faveStatus() {
+          return this.isLiked();
+        },
+        
         tracks() {
             return this.$store.state.tracks;
         },
+        user() {
+            return this.$store.state.user;
+        },
+        faves() {
+			    return this.loadFavorites();
+		    },
+        
         audioSrc() {
             /* 
             Sets the audio source based on the current track's id 
@@ -164,7 +197,67 @@ export default {
             }, this.currentTrackId);
         }
     },
+    mounted(){
+      
+		  this.loadFavorites();
+      this.isLiked();
+      
+	  },
     methods: {
+      isLiked() {
+         axios
+            .get(`favorite/query?user_id=${this.user.id}&track_id=${this.currentTrackId}`)
+            .then((response) => {
+                console.log(response);
+
+                /* Check if favorite item that fits the query is returned;
+                if yes, proceed to delete that track from the favorites */
+                if (response.data.favorite.length != 0) {
+                  this.currentLiked = true;
+                 
+                } else {
+                  this.currentLiked = false;
+                }
+            });   
+          // return this.favorites.filter((favorite) => {
+          //       return favorite.id == this.currentTrackId;
+          //   }, this.currentTrackId);
+          // axios
+          //   .get(`favorite/query?user_id=${this.user.id}&track_id=${this.currentTrackId}`)
+          //   .then((response) => {
+          //       console.log(response);
+
+          //       /* Check if favorite item that fits the query is returned;
+          //       if yes, proceed to delete that track from the favorites */
+          //       if (response.data.favorite.length != 0) {
+          //         return true;
+                  
+          //       } else {
+          //         return false;
+          //       }
+          //   });   
+        },
+      checkFavorites() {
+        if (this.user) {
+          this.loadFavorites();
+        }
+      },
+      
+      loadFavorites() {
+            if (this.user) {
+                axios
+                    .get("favorite/query?user_id=" + this.user.id)
+                    .then((response) => {
+                        this.favorites = response.data.favorite.map(
+                            (favorite) => {
+                                return this.$store.getters.getTrackById(
+                                    favorite.track_id
+                                );
+                            }
+                        );
+                    });
+            }
+        },
         playTrack() {
             /* 
             When user clicks on the iPod button, pause or play audio 
@@ -185,52 +278,40 @@ export default {
           Likes the current track by making a put
           request in which the 'liked' property is set to 1
           */
+         this.newFave.track_id = this.currentTrackId;
+         this.newFave.user_id = this.user.id;
+         
+         
+         
+         axios.post("/favorite", this.newFave ).then((response) => {console.log(response)})
          
           
-          this.activeTrack = this.nowPlaying();
-          console.log('sent!')
-          console.log(this.activeTrack[0].id);
-
-          axios.put(`/track/${this.activeTrack[0].id}`, {
-            artist: this.activeTrack.[0].artist,
-            title: this.activeTrack.[0].title,
-            track: this.currentTrackId,
-            categories: this.activeTrack.[0].categories,
-            genre: this.activeTrack.[0].genre,
-            liked: 1,
-            skipped: 0,
-            }).then(function (response) {
-              console.log(response);
-          })
-
-          // Emit 'favorite-added' for the parent component
-          this.$emit('favorite-added');
         
         },
+        deleteFavoriteTrack(trackId) {
+
+          // Deletes a track by id from the favorites by table 
+          axios.delete(`/favorite/${trackId}`)
+          .then((response) => {
+                console.log(response);
+            });
+        },
         unlikeTrack() {
-          /* 
-          Unlikes the current track by making a put
-          request in which the 'liked' property is set to 0
-          */
-         
-          this.activeTrack = this.nowPlaying();
-
-
-          axios.put(`/track/${this.activeTrack[0].id}`, {
-            artist: this.activeTrack.[0].artist,
-            title: this.activeTrack.[0].title,
-            track: this.currentTrackId,
-            categories: this.activeTrack.[0].categories,
-            genre: this.activeTrack.[0].genre,
-            liked: 0,
-            skipped: 0,
-            }).then(function (response) {
-              // console.log(response);
-          })
-
-          // Emit the event for the parent component 
-          this.$emit("favorite-removed"); 
           
+          
+          // Query for the id of the favorite object to be delete 
+          axios
+            .get(`favorite/query?user_id=${this.user.id}&track_id=${this.currentTrackId}`)
+            .then((response) => {
+                console.log(response);
+
+                /* Check if favorite item that fits the query is returned;
+                if yes, proceed to delete that track from the favorites */
+                if (response.data.favorite.length != 0) {
+                  this.deleteFaveById = response.data.favorite[0].id;
+                  this.deleteFavoriteTrack(this.deleteFaveById);
+                } 
+            });   
         },
         nextTrack() {
           /* 
@@ -279,7 +360,7 @@ export default {
 @import url("https://fonts.googleapis.com/css?family=Sacramento&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap');
 
-
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css");
 
 #like-unlike {
   border: 1px solid rgb(3, 65, 65);

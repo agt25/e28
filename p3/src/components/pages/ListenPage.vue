@@ -17,7 +17,7 @@
                 <div class='col-12 col-md-8 col-lg-6'>
 
                     <!-- Show Mr. Coffee Pod component --> 
-                    <coffee-pod v-bind:tracks="tracks" v-on:favorite-added="announceFave" v-on:favorite-removed="announceFave"></coffee-pod>
+                    <coffee-pod></coffee-pod>
                     </div>
                     
                     <!-- Ambience sounds --> 
@@ -190,26 +190,25 @@ export default {
         
     },
     props: {
-        favorites: {
-            type: Array,
-           
-        },
+        
     },
 
     data() {
 
         return {
             collapseAbout: false,
-            user: {
-                name: null,
-                timeSpent: null
-            },
+           
+                
+            
         }
 
     },
     computed: {
         tracks() {
             return this.$store.state.tracks;
+        },
+        user() {
+            return this.$store.state.user;
         },
     },
     mounted() {
@@ -225,6 +224,7 @@ export default {
       
     },
     methods: {
+    
 
         /* 
         The methods below set the volume of all sound effect audio players to 0
@@ -608,6 +608,7 @@ input[type='range']:focus {
 text-align: center;
 
 }
+
 
 .aboutBtn {
   width: 100px;

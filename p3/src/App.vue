@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-cloak>
         <!-- Navigation --> 
         <nav class="navbar is-fixed-bottom">
             <div class="navbar-brand flex-container">
@@ -14,8 +14,8 @@
         <!-- Binding the API track data to router-view so we can use it as props on other pages 
         and trigger re-load based on 'favorite' being emitted by child component -->
         <router-view
-            v-bind:favorites="favorites"
-            v-on:favorite="loadTracks"
+            
+            
         ></router-view>
     </div>
 </template>
@@ -36,13 +36,14 @@ export default {
             favorites: [],
 
             /* Store links in an array to maintain order */
-            links: ["lounge", "likes", "explore"],
+            links: ["lounge", "likes", "explore", "account",],
 
             /* Map links to  the appropriate component */
             paths: {
                 lounge: "/",
                 likes: "/tracks/liked",
                 explore: "/tracks/categories",
+                account: "/account",
             },
         };
     },
@@ -60,14 +61,17 @@ export default {
         tracks() {
             return this.$store.state.tracks;
         },
+        user() {
+            return this.$store.state.user;
+        },
     },
     mounted() {
         // // Load the tracks when the app is mounted 
         // this.loadTracks();
         this.loadTracks();
         // this.$store.commit("loadTracks")
-
-        // this.$store.commit("setCartCount", cart.count());
+        
+        
 
         // this.$store.dispatch("authUser");
            
@@ -99,6 +103,7 @@ export default {
                 return track.liked == 1;
         });
         },
+        
     },
    
 }
@@ -107,6 +112,11 @@ export default {
 
 
 <style>
+
+[v-cloak] {
+    display: none;
+}
+
 
 /* Global CSS styles */
 
@@ -228,5 +238,20 @@ a {
   background-position: center;
   
 }
+
+.flex-items:nth-child(4) {
+  display: block;
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  align-self: auto;
+  order: 0;
+  background-image: url("assets/images/account.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  
+}
+
 
 </style>
