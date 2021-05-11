@@ -10,7 +10,7 @@
     --> 
     
       <!-- Ensure only the current track is binded -->
-      <p v-for="track in currentTrack" v-bind:key="track.id">
+      <p class='track-name' v-for="track in currentTrack" v-bind:key="track.id">
                {{ track.title }}
       </p>
 
