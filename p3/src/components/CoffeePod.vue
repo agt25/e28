@@ -55,12 +55,12 @@
                                    <!-- Heart image depends on whether the track is liked or not liked -->
                                    <div v-if='user'>
                                      <div v-show='currentLiked' v-on:click='likeUnlikeTrack'>
-                                       <button v-bind:class="heartClass"></button>
+                                       <span class='likeBtn' v-bind:class="heartClass"></span>
                                         
                                        
                                        </div>
                                      <div v-show='!currentLiked' v-on:click='likeUnlikeTrack'>
-                                       <button v-bind:class="heartClass"></button>
+                                       <span class='likeBtn' v-bind:class="heartClass"></span>
                                      </div>
                                    
                                       </div>
@@ -334,6 +334,13 @@ export default {
     
 }
 
+.bi, .bi-suit-heart, .bi-suit-heart-fill {
+  font-size: 2.2rem;
+  position: relative;
+  top: -14px;
+  color: rgb(189, 18, 18);
+}
+
 audio.main {
   position: relative;
   top: -250px;
@@ -382,6 +389,8 @@ button {
   
   
 }
+
+
 
 #like-btn {
     position: relative;
