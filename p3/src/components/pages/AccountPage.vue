@@ -6,12 +6,19 @@
               <p id="code"><span>CA</span>F<span>E</span></p></div>
 
     <div class='container-fluid'>
-        <div v-if="user || success">
+        <div v-if="user || success" class='row justify-content-center'>
             <h2 data-test="welcome-message">Hi, {{ user.name }}!</h2>
-
+            
+           <br>
+        </div>
+        <div v-if="user || success" class='row justify-content-center'>
             <button v-on:click="logout" data-test="logout-button">
                 Logout
             </button>
+           <br>
+        </div>
+            
+            
         </div>
 
         <div v-if='!user && !registering' id="loginForm" class='container-fluid'>
@@ -120,7 +127,7 @@
         </div>
        
     </div>
-    </div>
+
     
 </template>
 
