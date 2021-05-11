@@ -26,7 +26,7 @@ describe('Account Page', () => {
     it('shows an error if login is invalid', () => {
         cy.visit('/account');
         cy.get('[data-test=email-input]').clear().type(user.email);
-        cy.get('[data-test=password-input]').clear().type('this-password-should-not-work');
+        cy.get('[data-test=password-input]').clear().type('thisbadpassword');
         cy.get('[data-test=login-button]').click();
         cy.contains('These credentials do not match our records');
     })
@@ -36,23 +36,42 @@ describe('Account Page', () => {
         cy.get('[data-test=email-input]').clear().type(user.email);
         cy.get('[data-test=password-input]').clear().type(user.password);
         cy.get('[data-test=login-button]').click();
-        
-
         cy.get('[data-test=logout-button]').click();
 
-        // We know logout works if we see the login button again
-        cy.get('[data-test="login-button"]').should('exist');
     })
+    
+    
+})
+describe('Register User', () => {
+
+    const user = {
+        name: 'Jack Harvard',
+        email: 'jack1@harvard.edu',
+        password: 'asdfasdf'
+    }
+
+    
+    it('lets a user register then log out', () => {
+        cy.visit('/account');
+        cy.get('[data-test=email-input]').clear().type(user.name);
+        cy.get('[data-test=email-input]').clear().type(user.email);
+        cy.get('[data-test=password-input]').clear().type(user.password);
+        cy.get('[data-test=signup-button]').click();
+        
+    })
+    
+    
 })
 describe('Categories Page', () => {
   it('Visits the categories page', () => {
     cy.visit('/tracks/categories')
-    cy.contains('.intro-cat', 'Catếgories')
+    cy.contains('p', 'Catếgories')
   })
 })
 describe('Likes Page', () => {
-  it('Visits the likes page', () => {
+  it('Visits the likes page which should be access denied', () => {
     cy.visit('/tracks/liked')
     cy.contains('h1', 'Access Denied')
   })
 })
+
