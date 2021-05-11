@@ -21,7 +21,7 @@
             
         </div>
 
-        <div v-if='!user && !registering' id="loginForm" class='container-fluid'>
+        <div v-if='!user && !registerShowing && !success' id="loginForm" class='container-fluid'>
             <div class='row justify-content-center login-header'>
             <h2>Login</h2>
             </div>
@@ -32,8 +32,14 @@
                     type="text"
                     v-model="data.email"
                     data-test="email-input"
+                    v-on:blur='validate'
                     
                 />
+               
+            <error-field
+                v-if="errors && 'email' in errors"
+                v-bind:errors="errors.email"
+            ></error-field>
             </div>
             <div class='form-group row justify-content-center password'>   
                 <input
@@ -42,33 +48,37 @@
                     type="password"
                     v-model="data.password"
                     data-test="password-input"
+                    required
+                    v-on:blur='validate'
                     
                 />
+                <error-field
+                v-if="errors && 'password' in errors"
+                v-bind:errors="errors.password"
+            ></error-field>
             </div>
-
-            <div class='row justify-content-center'>
-            <button v-on:click="login" data-test="login-button">Login</button>
-            <ul v-if="errors">
-                <li class="error" v-for="(error, index) in errors" :key="index">
+            <ul v-if="loginErrors">
+                <li class="error" v-for="(error, index) in loginErrors" :key="index">
                     {{ error }}
                 </li>
             </ul>
+
+
+            <div class='row justify-content-center'>
+            <button v-on:click="login" data-test="login-button">Login</button>
+           
             </div>
 
             <div class='row justify-content-center'>
                 Don't have an account?
-            <button v-on:click="register" data-test="login-button">Sign Up</button>
-            <ul v-if="errors">
-                <li class="error" v-for="(error, index) in errors" :key="index">
-                    {{ error }}
-                </li>
-            </ul>
+            <button v-on:click="renderRegister" data-test="login-button">Sign Up</button>
+           
             </div>
         </div>
        
     </div>
-     <div v-if='!success && registering'>
-                 <div id="loginForm" class='container-fluid'>
+     <div v-if='!user && registerShowing && !success'>
+                 <div id="signupForm" class='container-fluid'>
             <div class='row justify-content-center login-header'>
             <h2>Sign Up</h2>
             </div>
@@ -79,10 +89,19 @@
                     type="text"
                     v-model="data.name"
                     data-test="name-input"
-                    v-on:keyup="validate"
+                    
+                    required
+                    v-on:blur='validate'
                     
                 />
+                 <small class="form-help">Required Field, Min: 2</small>
+                <error-field
+                v-if="errors && 'name' in errors"
+                v-bind:errors="errors.name"
+            ></error-field>
             </div>
+
+
             <div class='form-group row justify-content-center email'>   
                 <input
                     class='form-control'
@@ -90,9 +109,15 @@
                     type="email"
                     v-model="data.email"
                     data-test="email-input"
-                    v-on:keyup="validate"
+                    
+                    required
+                    v-on:blur='validate'
                     
                 />
+                <error-field
+                v-if="errors && 'email' in errors"
+                v-bind:errors="errors.email"
+            ></error-field>
             </div>
             <div class='form-group row justify-content-center password'>   
                 <input
@@ -101,28 +126,29 @@
                     type="password"
                     v-model="data.password"
                     data-test="password-input"
-                    v-on:keyup="validate"
+                    v-on:blur='validate'
+                    required
                     
                 />
+                <error-field
+                v-if="errors && 'password' in errors"
+                v-bind:errors="errors.password"
+            ></error-field>
             </div>
-
-            <div class='row justify-content-center'>
-            <button v-on:click="register" data-test="login-button">Sign Up</button>
-            <ul v-if="errors">
-                <li class="error" v-for="(error, index) in errors" :key="index">
+             <ul v-if="registerErrors">
+                <li class="error" v-for="(error, index) in registerErrors" :key="index">
                     {{ error }}
                 </li>
             </ul>
+
+            <div class='row justify-content-center'>
+            <button v-on:click="register" data-test="login-button">Sign Up</button>
             </div>
 
             <div class='row justify-content-center'>
                 Already have an account?
-            <button v-on:click="login" data-test="login-button">Login</button>
-            <ul v-if="errors">
-                <li class="error" v-for="(error, index) in errors" :key="index">
-                    {{ error }}
-                </li>
-            </ul>
+            <button v-on:click="renderLogin" data-test="login-button">Login</button>
+           
             </div>
         </div>
        
@@ -134,8 +160,12 @@
 <script>
 import { axios } from "@/common/app.js";
 import Validator from 'validatorjs'
+import ErrorField from "@/components/ErrorField.vue";
 
 export default {
+    components: {
+        "error-field": ErrorField,
+    },
     data() {
         return {
             // Form is prefilled for demonstration purposes; remove in final application
@@ -149,6 +179,10 @@ export default {
             favorites: [],
             registering: false,
             success: false,
+            registerShowing: false,
+            loginShowing: true,
+            loginErrors: null,
+            registerErrors: null,
         };
 
     },
@@ -161,6 +195,14 @@ export default {
         },
     },
     methods: {
+        renderRegister() {
+            this.registerShowing = true;
+            this.loginShowing = false;
+        },
+        renderLogin() {
+            this.loginShowing = true;
+            this.registerShowing = false;
+        },
         loadFavorites() {
             if (this.user) {
                 axios
@@ -177,26 +219,37 @@ export default {
             }
         },
         login() {
-            
-            axios.post("login", this.data).then((response) => {
-                if (response.data.authenticated) {
-                    this.$store.commit("setUser", response.data.user);
-                } else {
-                    this.errors = response.data.errors;
+            this.registering = false;
+            if (this.validate()) {
+                axios.post("login", this.data).then((response) => {
+                    if (response.data.authenticated) {
+                        this.$store.commit("setUser", response.data.user);
+                        this.success = true;
+                        this.loginShowing = false;
+                        this.registerShowing = false;
+                    } else {
+                        this.loginErrors = response.data.errors;
+                    }
+                });
+                if(this.errors==null) {
+                    this.success = true;
                 }
-            });
+            }
         },
         register() {
-            this.registering = true;
+            this.registerShowing = true;
             if (this.validate()) {
                 axios.post("register", this.data).then((response) => {
                     if (response.data.authenticated) {
                         this.$store.commit("setUser", response.data.user);
+                        this.success = true;
+                        this.registerShowing = false;
+                        this.loginShowing = false;
                     } else {
-                        this.errors = response.data.errors;
+                        this.registerErrors = response.data.errors;
                     }
                 });
-                if(this.errors==null){
+                if(this.errors==null) {
                     this.success = true;
                 }
             }
@@ -205,12 +258,15 @@ export default {
             axios.post("logout").then((response) => {
                 if (response.data.success) {
                     this.$store.commit("setUser", false);
+                    this.success = false;
+                    // this.data.name = '';
+                    // this.data.email = '',
+                    // this.data.password = '';
                 }
             });
         },
         validate() {
             let validator = new Validator(this.data, {
-                name: "required|between:2,75",
                 email: 'required|email',
                 password:"required|between:6,35|alpha_num",
             });
@@ -221,6 +277,7 @@ export default {
             }
             return validator.passes();
         },
+        
     },
     watch: {
         user() {
@@ -257,6 +314,13 @@ html, body {
 #loginForm {
     max-width: 300px;
 }
+
+#signupForm {
+    position: relative;
+    top: -600px;
+    max-width: 300px;
+}
+
 
 div.music {
   padding: 20px;
