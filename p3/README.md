@@ -1,24 +1,22 @@
-*Any instructions/notes in italics should be removed from the template before submitting*
-
 # Project 3
-+ By: *Angela T*
++ By: Angela T
 + Production URL: <http://e28p3.vue28.me>
 
-## Outside resources
-*Your list of outside resources go here*
 
 ## Notes for instructor
-*Any notes for me to refer to while grading; if none, omit this section*
+
+I'll miss you a ton! And I hope you have the best summer yet! This was my favorite course this term; I promise I don't say that to all of my professors. Vue is pretty cool! Thank you for your thorough guides, pleasant lectures (you have such a nice voice!), and awesome notes. PS, if it's not too much to ask, may you please leave the course notes up? They're great! 
 
 ## How is authentication being used in your application?
+
 1. Only authenticated users have access to the `Likes` page. 
 2. Only authenticated users are able to like / unlike a track on the home page —— as enabled by the heart icon. This icon, too, is not visible to non-users. 
 
 ## What data entities of your application are being managed via Vuex?
+
 1. Tracks
 2. Users 
 
 ## E2E Testing screenshot
-*Include a screenshot showing the results of running all your E2E tests. This screenshot *must* be present to receive credit for the E2E testing requirement of this project. Below is an example screenshot of what is expected.*
 
-<img width="1638" alt="e2e" src="https://user-images.githubusercontent.com/57548500/117897148-21fa0400-b290-11eb-94de-b2dfbe841f14.png">
+<img width="1871" alt="test" src="https://user-images.githubusercontent.com/57548500/117907893-94291380-b2a5-11eb-8456-ae86afa7b49e.png">
