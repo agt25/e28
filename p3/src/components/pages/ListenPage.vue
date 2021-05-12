@@ -156,19 +156,7 @@
                         Your browser does not support the audio element.  
                         </audio>
 
-                        <div class='row-fluid about-row justify-content-end'>
-                        <!-- About button --> 
-                        
-
-                        <!-- If about button is clicked, show the about-section component -->
-                        <div v-if='collapseAbout'>
-                            <about-section></about-section>
-                        </div>
-
-                        <button class='aboutBtn' v-on:click='showAbout()'>
-                            About
-                        </button>
-                        </div>
+                       
                     </div>
             </div>
         </div>
@@ -178,13 +166,12 @@
 
 <script>
 
-import AboutSection from '../AboutSection.vue';
+
 import CoffeePod from '../CoffeePod.vue'
 
 
 export default {
     components: {
-        "about-section": AboutSection,
         "coffee-pod": CoffeePod
        
         

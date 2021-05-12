@@ -77,17 +77,18 @@ export default {
 	methods: {
 			loadFavorites() {
             if (this.user) {
+				// Get the tracks this user has liked
                 axios
-                    .get("favorite/query?user_id=" + this.user.id)
-                    .then((response) => {
-                        this.favorites = response.data.favorite.map(
-                            (favorite) => {
-                                return this.$store.getters.getTrackById(
-                                    favorite.track_id
-                                );
-                            }
-                        );
-                    });
+				.get("favorite/query?user_id=" + this.user.id)
+				.then((response) => {
+					this.favorites = response.data.favorite.map(
+						(favorite) => {
+							return this.$store.getters.getTrackById(
+								favorite.track_id
+							);
+						}
+					);
+				});
             }
         },
 	}
