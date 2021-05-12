@@ -50,7 +50,15 @@ describe('Register User', () => {
         password: 'asdfasdf'
     }
 
-    
+    it('makes sure if does not register an existing email', () => {
+        cy.visit('/register');
+        cy.get('[data-test=name-input]').clear().type(user.name);
+        cy.get('[data-test=email-input]').clear().type('jill@harvard.edu');
+        cy.get('[data-test=password-input]').clear().type(user.password);
+        cy.get('[data-test=signup-button]').click();
+        cy.contains('The email has already been taken.');
+        
+    })
     it('lets a user register then log out', () => {
         cy.visit('/register');
         cy.get('[data-test=name-input]').clear().type(user.name);
@@ -61,7 +69,9 @@ describe('Register User', () => {
     })
     
     
+    
 })
+
 describe('Categories Page', () => {
   it('Visits the categories page', () => {
     cy.visit('/tracks/categories')
