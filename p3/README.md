@@ -19,4 +19,4 @@ I'll miss you a ton! And I hope you have the best summer yet! This was my favori
 
 ## E2E Testing screenshot
 
-<img width="1920" alt="last-test" src="https://user-images.githubusercontent.com/57548500/117909564-78733c80-b2a8-11eb-859b-83e5d1b61608.png">
+<img width="1820" alt="last-test" src="https://user-images.githubusercontent.com/57548500/117909741-cf791180-b2a8-11eb-92c9-da2e870598ea.png">
