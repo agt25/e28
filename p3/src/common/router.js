@@ -30,6 +30,10 @@ const routes = [
         
         
     },
+     {
+        path: '/register',
+        component: () => import('@/components/pages/RegisterPage.vue'),
+    },
     
     {
         // This is a route we can direct the user to if they try to access 
