@@ -6,7 +6,7 @@
                   <p> </p>
             </div>
             <div class='row justify-content-center input-row'>
-                  <button class='btn btn-primary' v-on:click="logout" data-test="logout-button">Logout</button>
+                  <button class='btn btn-warning' v-on:click="logout" data-test="logout-button">Logout</button>
             </div>
             
 
@@ -17,7 +17,7 @@
 
         <div v-else class='login-area'>
            <div class='row justify-content-center'>
-            <h2>Login Area</h2>
+            <h1>Login</h1>
             </div>
             <div class='row justify-content-center input-row'>
                 
@@ -32,8 +32,8 @@
                    
             </div>
             <div class='row justify-content-center input-row'>
-                 <button class='btn btn-primary' v-on:click="login" data-test="login-button">Login</button>
-                 <router-link to="/register" data-test="signup-button">Register</router-link>
+                 <button class='btn btn-warning' v-on:click="login" data-test="login-button">Login</button>
+                 <router-link class='register-link btn' to="/register" data-test="signup-button">Register</router-link>
 
             </div>
 
@@ -123,6 +123,13 @@ export default {
 
 }
 
+.register-link {
+    color: rgb(87, 79, 6);
+    border: 1px dotted saddlebrown;
+    
+}
+
+
 .user-area {
     margin-top: 4rem;
 }
@@ -139,15 +146,30 @@ export default {
     padding: 1rem;
 }
 
-input {
-    max-width: 500px;
+.login-input {
+    padding-left: 0.5rem;
 }
+
+input {
+    max-width: 600px;
+    background-color: transparent;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: 1px solid saddlebrown;
+    padding: 0.3rem;
+}
+
 
 .btn {
-    margin-right: 2rem;
+    margin: 1rem;
+    font-size: 1.2rem;
 }
 
-h2 {
-    color: teal;
+
+h1 {
+    color: rgb(173, 92, 12) !important;
+    font-size: 1.9rem;
+    margin-bottom: 1rem;
 }
 </style>

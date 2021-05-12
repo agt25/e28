@@ -2,7 +2,7 @@
     <div class='container' id='register-view'>
         <div class='row justify-content-center'>
                 
-                <h2>Join the Cafe</h2>
+                <h1>Join the Cafe</h1>
                 </div>
                  <div class='signup-area'>
                 <div class='row justify-content-center'>
@@ -27,9 +27,9 @@
                    
             </div>
             <div class='row justify-content-center input-row'>
-                <button class="btn btn-primary" v-on:click="register" data-test="signup-button">Register</button>
+                <button class="btn btn-warning" v-on:click="register" data-test="signup-button">Register</button>
                  <!-- <button class='btn btn-primary' v-on:click="login" data-test="login-button">Login</button> -->
-                 <router-link to="/account" data-test="login-button">Login</router-link>
+                 <router-link class='login-link btn' to="/account" data-test="login-button">Login</router-link>
 
             </div>
 
@@ -96,6 +96,11 @@ export default {
 
 }
 
+.login-link {
+     color: rgb(87, 79, 6);
+    border: 1px dotted saddlebrown;
+}
+
 #register-view {
     height: 100vh;
     margin-top: 4rem;
@@ -106,15 +111,28 @@ export default {
 }
 
 input {
-    max-width: 500px;
+    max-width: 600px;
+    background-color: transparent;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: 1px solid saddlebrown;
+    padding: 0.3rem;
+}
+
+.login-input {
+    padding-left: 0.5rem;
 }
 
 .btn {
-    margin-right: 2rem;
+    margin: 1rem;
+    font-size: 1.2rem;
 }
 
-h2 {
-    color: teal;
+h1 {
+    color: rgb(173, 92, 12) !important;
+    font-size: 1.9rem;
+    margin-bottom: 1rem;
 }
 
 </style>
