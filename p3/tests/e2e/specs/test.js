@@ -46,14 +46,13 @@ describe('Register User', () => {
 
     const user = {
         name: 'Jack Harvard',
-        email: 'jack122@harvard.edu',
+        email: 'jack1232@harvard.edu',
         password: 'asdfasdf'
     }
 
     
     it('lets a user register then log out', () => {
-        cy.visit('/account');
-        cy.get('[data-test=signup-button]').click();
+        cy.visit('/register');
         cy.get('[data-test=name-input]').clear().type(user.name);
         cy.get('[data-test=email-input]').clear().type(user.email);
         cy.get('[data-test=password-input]').clear().type(user.password);

@@ -11,23 +11,23 @@
              <div class='row justify-content-center input-row'>
                 
                    
-                    <input class='login-input' data-test="name" placeholder="Name" type="text" v-model="data.name"/>
+                    <input class='login-input' data-test="name-input" placeholder="Name" type="text" v-model="data.name" required/>
                    
             </div>
             <div class='row justify-content-center input-row'>
                 
                    
-                    <input class='login-input' data-test="email" placeholder="Email" type="text" v-model="data.email"/>
+                    <input class='login-input' data-test="email-input" placeholder="Email" type="text" v-model="data.email" required/>
                    
             </div>
             <div class='row justify-content-center input-row'>
                 
                    
-                    <input class='login-input' data-test="password" placeholder="Password" type="password" v-model="data.password" />
+                    <input class='login-input' data-test="password-input" placeholder="Password" type="password" v-model="data.password" required/>
                    
             </div>
             <div class='row justify-content-center input-row'>
-                <button class="btn btn-primary" v-on:click="register" data-test="register-button">Register</button>
+                <button class="btn btn-primary" v-on:click="register" data-test="signup-button">Register</button>
                  <!-- <button class='btn btn-primary' v-on:click="login" data-test="login-button">Login</button> -->
                  <router-link to="/account" data-test="login-button">Login</router-link>
 
@@ -39,10 +39,6 @@
             </div>
 
 
-
-            
-
-                
 
                 <div class='row justify-content-center'>
             <ul v-if="errors">
@@ -96,7 +92,7 @@ export default {
 
 .error {
     font-size: 1.2rem;
-    color: slategray;
+    color: saddlebrown;
 
 }
 

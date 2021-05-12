@@ -22,18 +22,18 @@
             <div class='row justify-content-center input-row'>
                 
                    
-                    <input class='login-input' data-test="email" placeholder="Email" type="text" v-model="data.email"/>
+                    <input class='login-input' data-test="email-input" placeholder="Email" type="text" v-model="data.email" required/>
                    
             </div>
             <div class='row justify-content-center input-row'>
                 
                    
-                    <input class='login-input' data-test="password" placeholder="Password" type="password" v-model="data.password" />
+                    <input class='login-input' data-test="password-input" placeholder="Password" type="password" v-model="data.password" required/>
                    
             </div>
             <div class='row justify-content-center input-row'>
                  <button class='btn btn-primary' v-on:click="login" data-test="login-button">Login</button>
-                 <router-link to="/register" data-test="register-button">Register</router-link>
+                 <router-link to="/register" data-test="signup-button">Register</router-link>
 
             </div>
 
@@ -46,7 +46,7 @@
             </ul>
             </div>
 
-            
+
             </div>
         </div>
     
@@ -119,7 +119,7 @@ export default {
 
 .error {
     font-size: 1.2rem;
-    color: slategray;
+    color: saddlebrown;
 
 }
 
