@@ -1,5 +1,5 @@
 <template>
-	<div id='liked-page-container'>
+	<div id='liked-page-container' v-cloak>
     <div id='liked-page' class="content row justify-content-center">
 
         <!-- 'Likes' displays all the tracks the user likes -->
@@ -100,6 +100,10 @@ export default {
 <style scoped>
 
 @import url('https://fonts.googleapis.com/css?family=Roboto+Slab:400,300');
+
+[v-cloak] {
+  display: none;
+}
 
 .display {
 	margin-bottom: 20rem;

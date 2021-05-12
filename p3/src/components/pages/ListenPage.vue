@@ -1,5 +1,5 @@
 <template>
-    <div id="listen-page">
+    <div id="listen-page" v-cloak>
 
         <!-- Logo of the home page --> 
         <div id='logo'>
@@ -431,6 +431,10 @@ export default {
 
 
 <style scoped>
+
+[v-cloak] {
+  display: none;
+}
 
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap');
 

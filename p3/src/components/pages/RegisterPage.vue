@@ -1,5 +1,5 @@
 <template>
-    <div class='container' id='register-view'>
+    <div class='container' id='register-view' v-cloak>
         <div class='row justify-content-center'>
                 
                 <h1>Join the Cafe</h1>
@@ -89,6 +89,12 @@ export default {
 </script>
 
 <style scoped>
+
+[v-cloak] {
+  display: none;
+}
+
+
 
 .error {
     font-size: 1.2rem;

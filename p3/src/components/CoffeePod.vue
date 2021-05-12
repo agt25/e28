@@ -1,5 +1,5 @@
 <template>
-  <div id='coffee-pod-wrapper' class='container'>
+  <div id='coffee-pod-wrapper' class='container' v-cloak>
     <!-- 
     This component renders a hidden audio player whose controls are 
     triggered by the buttons on the "iPod". 
@@ -323,6 +323,11 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap');
 
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css");
+
+[v-cloak] {
+  display: none;
+}
+
 
 #like-unlike {
   border: 1px solid rgb(3, 65, 65);

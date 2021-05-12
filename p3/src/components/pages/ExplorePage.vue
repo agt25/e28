@@ -1,5 +1,5 @@
 <template>
-  <div id='explore' class="container">
+  <div id='explore' class="container" v-cloak>
       <!-- 
       Page extracts the categories all tracks belong to and showcases each 
       -->
@@ -98,6 +98,10 @@ export default {
 @import url(https://fonts.googleapis.com/css?family=Monoton); 
 
 @import url('https://fonts.googleapis.com/css2?family=Tenor+Sans&display=swap');
+
+[v-cloak] {
+  display: none;
+}
 
 .cats {
  

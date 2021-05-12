@@ -1,5 +1,5 @@
 <template>
-    <div class='container' id="account-view">
+    <div class='container' id="account-view" v-cloak>
         <div v-if="user" class='user-area'>
 
             <!-- Greeting for logged in users --> 
@@ -109,6 +109,10 @@ export default {
 
 
 <style scoped>
+
+[v-cloak] {
+  display: none;
+}
 
 .error {
     font-size: 1.2rem;
